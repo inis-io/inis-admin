@@ -1,0 +1,57 @@
+/* 当屏幕宽度大于等于1920px时，应用以下样式 */
+@media screen and (min-width: 1920px) {
+    body[data-layout=topnav] .container-xxl{
+        max-width: 80% !important;
+    }
+    body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-lg, body[data-layout=topnav] .container-md,
+    body[data-layout=topnav] .container-sm, body[data-layout=topnav] .container-xl {
+        max-width: 1200px !important;
+    }
+}
+
+/* 当屏幕宽度大于等于1200px且小于1920px时，应用以下样式 */
+@media screen and (min-width: 1200px) and (max-width: 1919px) {
+    body[data-layout=topnav] .container-xxl{
+        max-width: 85% !important;
+    }
+    body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-lg, body[data-layout=topnav] .container-md,
+    body[data-layout=topnav] .container-sm, body[data-layout=topnav] .container-xl {
+        max-width: 1200px !important;
+        /*max-width: 85%;*/
+    }
+}
+
+/* 当屏幕宽度大于等于768px且小于1200px时，应用以下样式 */
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+    body[data-layout=topnav] .container-xxl{
+        max-width: 92% !important;
+    }
+    body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-lg, body[data-layout=topnav] .container-md,
+    body[data-layout=topnav] .container-sm, body[data-layout=topnav] .container-xl {
+        max-width: 85%;
+    }
+}
+
+/* 当屏幕宽度小于768px时，应用以下样式 */
+@media screen and (max-width: 767px) {
+    body[data-layout=topnav] .container-xxl{
+        padding-left: 10px;
+        padding-right: 10px;
+        max-width: 100% !important;
+    }
+    .page-title-box.hitokoto{
+        justify-content: flex-end;
+    }
+    .nav-custom{
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 99;
+    }
+    #app > .container-fluid{
+        margin-top: 60px;
+    }
+    footer{
+        position: unset;
+    }
+}

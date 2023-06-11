@@ -1,0 +1,52 @@
+:root{
+    --dark-color: 0, 0, 0;
+    --dark-font-color: 239, 239, 239;
+    --dark-opacity: 0.25;
+    --dark-blur: 10px;
+}
+body[inis-theme=dark] *{
+    color: rgb(var(--dark-font-color)) !important;
+}
+body[inis-theme=dark] .card{
+    background: rgba(var(--dark-color), var(--dark-opacity));
+    backdrop-filter: blur(10px);
+    border-radius: 6px;
+    box-shadow: unset !important;
+}
+body[inis-theme=dark] .card:hover{
+    /* transform: scale(1.01); */
+    transition: 0.5s;
+}
+body[inis-theme=dark] #app.admin .topnav{
+    background: rgba(var(--dark-color), var(--theme-opacity)) !important;
+    backdrop-filter: blur(10px);
+}
+body[inis-theme=dark] .modal .modal-header{
+    background: rgba(var(--dark-color), var(--dark-opacity));
+    backdrop-filter: var(--dark-blur);
+}
+body[inis-theme=dark] .modal .modal-body, body[inis-theme=dark] .modal .modal-footer, body[inis-theme=dark] .modal .modal-content{
+    background: rgb(0, 0, 0, 1) !important;
+    backdrop-filter: blur(10px);
+}
+body[inis-theme=dark] .modal .modal-dialog, body[inis-theme=dark] .modal .modal-content{
+    border-radius: 4px !important;
+}
+body[inis-theme=dark] .modal .modal-header{
+    border-radius: 4px 4px 0 0 !important;
+}
+body[inis-theme=dark] .modal .modal-footer{
+    border-radius: 0 0 4px 4px !important;
+}
+body[inis-theme=dark] .navbar-dark .dropdown-menu{
+    background: rgba(var(--dark-color), var(--dark-opacity));
+    backdrop-filter: var(--dark-blur);
+    border-radius: 4px;
+}
+body[inis-theme=dark] footer{
+    background: rgba(var(--dark-color), var(--dark-opacity));
+}
+body[inis-theme=dark] .navbar-dark .dropdown-item:focus, body[inis-theme=dark] .dropdown-item:hover {
+    border-radius: 4px !important;
+    background-color: rgba(var(--dark-color), var(--dark-opacity));
+}
