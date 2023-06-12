@@ -1,12 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <el-tooltip placement="top">
-                <template #content>
-                    ● 用于发送验证码、通知等邮件相关的服务
-                </template>
-                <i-svg name="email" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
-            </el-tooltip>
+            <i-svg name="email" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -161,9 +156,9 @@ import { Modal } from 'bootstrap'
 import { defineEmits, getCurrentInstance, onMounted, reactive, watch } from 'vue'
 const { ctx, proxy } = getCurrentInstance()
 
+import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import utils from "{src}/utils/utils.js";
 
 const emit  = defineEmits(['refresh'])
 const state = reactive({

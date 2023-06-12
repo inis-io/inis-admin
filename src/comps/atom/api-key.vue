@@ -1,14 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <el-tooltip placement="top">
-                <template #content>
-                    <strong class="text-danger">风险操作！此功能不懂请勿开启！</strong><br>
-                    ● 开启之后，所有的API均需要在请求头中提交 <strong class="text-danger">i-api-key=密钥</strong> 方能使用！<br>
-                    ● 于此同时API安全性将提升90%，剩下10%取决于你的密钥复杂度和对手的能力强弱！
-                </template>
-                <i-svg name="security" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
-            </el-tooltip>
+            <i-svg name="security" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>

@@ -1,14 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <el-tooltip placement="top">
-                <template #content>
-                    <strong class="text-success">推荐开启，有利于减少数据库和服务器的负担！</strong><br>
-                    开启后会对API数据进行缓存，减少重复执行数据库操作以及对数据的运算，<br>
-                    从而提高API的响应速度，减少服务器的负担。
-                </template>
-                <i-svg name="redis" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
-            </el-tooltip>
+            <i-svg name="redis" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -27,9 +20,9 @@
                            active-text="开启" inactive-text="关闭" active-color="#13ce66" inactive-color="#ff4949">
                 </el-switch>
             </h2>
-            <span class="badge bg-success"> 优化 </span>
+            <span class="badge bg-success"> +30% </span>
             <span class="text-muted">
-                推荐开启，<span v-on:click="method.show()" class="text-white">点我配置</span>
+                综合提升，<span v-on:click="method.show()" class="text-white">点我配置</span>
             </span>
         </div>
     </div>

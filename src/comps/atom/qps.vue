@@ -1,14 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <el-tooltip placement="top">
-                <template #content>
-                    <strong class="text-success">开启后让DDOS和CC等异常流量无懈可击！</strong><br>
-                    ● QPS俗称限流器，是一种作用于网络层的中间件，主要用于拦截异常流量，如DDOS和CC等<br>
-                    ● QPS会将每个IP的请求次数限制在每秒的指定次数，超过则拒绝访问，从而保护服务器安全
-                </template>
-                <i-svg name="qps" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
-            </el-tooltip>
+            <i-svg name="qps" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>

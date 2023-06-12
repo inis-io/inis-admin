@@ -1,13 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <el-tooltip placement="top">
-                <template #content>
-                    JWT（JSON Web Token）是一种在网络应用中传递声明信息的轻量级、安全的方式。<br>
-                    JWT具有通用性和可扩展性，可以应用在很多场景，比如用户认证、单点登录、API访问授权等。
-                </template>
-                <i-svg name="crypt" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
-            </el-tooltip>
+            <i-svg name="crypt" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -38,7 +32,7 @@
                 <div class="modal-content modal-filled position-relative">
                     <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
                     <div class="modal-header d-flex justify-content-center">
-                        <strong>配置 JSON Web Token </strong>
+                        <strong> 配置 JSON Web Token </strong>
                     </div>
                     <div class="modal-body">
                         <div class="row">

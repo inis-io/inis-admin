@@ -1,28 +1,27 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="security-1" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="serve" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
-                        <strong class="text-success">限制分页查询单次最大数据量，开启让系统毫无瑕疵！</strong><br>
-                        分页限制可以限制坏人发起恶意请求，如恶意请求 999999 乃至无限大的数据，<br>
-                        导致服务器崩溃，分页限制可以限制每页最大请求数据量，超过则强制性=最大值
+                        ● 本地存储是指将图片等资源文件存储到服务器本地，然后通过访问服务器的方式获取资源文件<br>
+                        ● 本地存储的优点是不花钱，缺点是占用服务器空间和带宽
                     </template>
                     <span class="d-inline-flex align-items-center">
                         <i-svg name="hint" size="14px"></i-svg>
-                        <span class="ms-1">分页限制</span>
+                        <span class="ms-1">本地存储</span>
                     </span>
                 </el-tooltip>
             </h6>
             <h2 class="m-b-20">
                 <el-switch v-model="state.status.active" v-on:change="method.change" :disabled="!state.status.finish"
-                           active-text="我怂" inactive-text="无所畏惧" active-color="#13ce66" inactive-color="#ff4949">
+                           active-text="开始" inactive-text="关闭" active-color="#13ce66" inactive-color="#ff4949">
                 </el-switch>
             </h2>
-            <span class="badge bg-primary"> +5% </span>
+            <span class="badge bg-dark"> 传统 </span>
             <span class="text-muted ms-1">
-                安全性提升，<span v-on:click="method.show()" class="text-warning">点我配置</span>
+                这个不花钱，<span v-on:click="method.show()" class="text-warning">点我配置</span>
             </span>
         </div>
     </div>
@@ -33,21 +32,21 @@
                 <div class="modal-content modal-filled position-relative">
                     <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
                     <div class="modal-header d-flex justify-content-center">
-                        <strong>配置</strong>
+                        <strong> 配置本地存储 </strong>
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="限制分页查询单次最大数据量，推荐：30" placement="top">
+                                    <label class="form-label required">
+                                        <el-tooltip content="签发者，比如：萌卜兔" placement="top">
                                             <span>
                                                 <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">最大值：</span>
+                                                <span class="ms-1">域名：</span>
                                             </span>
                                         </el-tooltip>
                                     </label>
-                                    <el-input-number v-model="state.struct.text" :min="5" class="w-100 d-flex"></el-input-number>
+                                    <input v-model="state.struct.domain" type="text" class="form-control customize text-white">
                                 </div>
                             </div>
                         </div>
@@ -65,20 +64,22 @@
 <script setup>
 
 import { Modal } from 'bootstrap'
-import { getCurrentInstance, onMounted, reactive, watch } from 'vue'
+import { defineEmits, getCurrentInstance, onMounted, reactive, watch } from 'vue'
 const { ctx, proxy } = getCurrentInstance()
 
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 
+const emit  = defineEmits(['refresh'])
 const state = reactive({
     modal: Modal,
     struct: {
-        text: 10
+        default: null,
+        domain: null,
     },
     status: {
         finish: false,
-        active: false,
+        active: true,
         loading: true,
     }
 })
@@ -94,48 +95,48 @@ const method = {
         state.status.finish  = false
         state.status.loading = true
 
-        const { code, data } = await axios.get('/api/config/one', {
-            key: 'SYSTEM_PAGE_LIMIT'
+        const { code, data } = await axios.get('/api/toml/storage', {
+            name: 'local'
         })
+
+        state.status.loading = false
+
         if (code !== 200) return
         state.struct = data
 
         state.status.finish  = true
-        state.status.loading = false
     },
     show() {
-        if (!state.status.finish) return notyf.warn('分页限制配置获取失败，无法进行配置！')
+        if (!state.status.finish) return notyf.warn('存储配置获取失败，无法进行配置！')
         state.modal.show()
     },
     change: async value => {
 
-        const { code, msg } = await axios.post('/api/config/save', {
-            key: 'SYSTEM_PAGE_LIMIT',
-            value: value ? 1 : 0
+        if (!value) return state.status.active = true
+
+        const { code, msg } = await axios.put('/api/toml/storage-default', {
+            value: value ? 'local' : null
         })
 
-        if (code === 200) return
+        if (code === 200) return emit('refresh')
 
         state.status.active = !value
         notyf.error(msg)
     },
     save: async () => {
 
-        const { code, msg } = await axios.post('/api/config/save', {
-            key: 'SYSTEM_PAGE_LIMIT',
-            text: state.struct.text
-        })
+        const { code, msg } = await axios.put('/api/toml/storage-local', state.struct)
 
         if (code !== 200) return notyf.error('保存失败：' + msg)
 
         state.modal.hide()
-    }
+    },
 }
 
 watch(() => state.struct, () => {
-    state.status.active = parseInt(state.struct.value) === 1
-    // 限制 state.struct.text 最小值为 5
-    if (state.struct.text < 5)  state.struct.text = 5
+
+    state.status.active = state.struct.default === 'local'
+
 }, { deep: true })
 
 // 将子组件方法暴露给父组件

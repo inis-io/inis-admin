@@ -38,9 +38,9 @@
                         </div>
                     </el-tab-pane>
 
-                    <el-tab-pane name="cache">
+                    <el-tab-pane name="optimize">
                         <template #label>
-                            <span class="fw-bolder font-12">缓存</span>
+                            <span class="fw-bolder font-12">优化</span>
                         </template>
                         <div class="row">
                             <div class="col-md-4">
@@ -53,6 +53,20 @@
                         <template #label>
                             <span class="fw-bolder font-12">存储</span>
                         </template>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <atom-storage-local ref="storage-local" v-on:refresh="method.refresh"></atom-storage-local>
+                            </div>
+                            <div class="col-md-4">
+                                <atom-storage-oss ref="storage-oss" v-on:refresh="method.refresh"></atom-storage-oss>
+                            </div>
+                            <div class="col-md-4">
+                                <atom-storage-cos ref="storage-cos" v-on:refresh="method.refresh"></atom-storage-cos>
+                            </div>
+                            <div class="col-md-4">
+                                <atom-storage-kodo ref="storage-kodo" v-on:refresh="method.refresh"></atom-storage-kodo>
+                            </div>
+                        </div>
                     </el-tab-pane>
 
                     <el-tab-pane name="sms">
@@ -91,6 +105,10 @@ import AtomQps from '{src}/comps/atom/qps.vue'
 import AtomPageLimit from '{src}/comps/atom/page-limit.vue'
 import AtomJwt from '{src}/comps/atom/jwt.vue'
 import AtomRedis from '{src}/comps/atom/redis.vue'
+import AtomStorageLocal from '{src}/comps/atom/storage-local.vue'
+import AtomStorageOss from '{src}/comps/atom/storage-oss.vue'
+import AtomStorageCos from '{src}/comps/atom/storage-cos.vue'
+import AtomStorageKodo from '{src}/comps/atom/storage-kodo.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
@@ -111,7 +129,8 @@ const state  = reactive({
     },
     refresh: {
         sms: ['sms-email','sms-aliyun','sms-tencent'],
-        cache: ['redis'],
+        storage: ['storage-local','storage-oss','storage-cos','storage-kodo'],
+        optimize: ['redis'],
         security: ['api-key','qps','page-limit','jwt'],
     },
 })
