@@ -19,35 +19,16 @@
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import { Tooltip } from 'bootstrap'
 import { useRouter } from 'vue-router'
-import {onMounted, getCurrentInstance, reactive, nextTick} from 'vue'
-import IVditor from "{src}/comps/custom/i-vditor.vue"
-import ITinymce from "{src}/comps/custom/i-tinymce.vue";
-import ITable from "{src}/comps/custom/i-table.vue";
+import { onMounted, getCurrentInstance, reactive } from 'vue'
 
 const { ctx, proxy } = getCurrentInstance()
 
 const router = useRouter()
 const state  = reactive({
     item: {
-        tabs: 'all'
-    }
+        tabs: 'all',
+    },
 })
 
-const handleClick = (tab, event) => {
-    console.log(tab.props.name);
-}
-
-setTimeout(() => {
-    state.struct.content = '### 这是一个奇迹'
-}, 1000)
-
-onMounted(() => {
-
-})
 </script>
-
-<style scoped>
-
-</style>
