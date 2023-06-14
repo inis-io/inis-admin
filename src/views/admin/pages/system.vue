@@ -30,10 +30,16 @@
                                 <atom-qps ref="qps"></atom-qps>
                             </div>
                             <div class="col-md-4">
+                                <atom-qps-black ref="qps-black"></atom-qps-black>
+                            </div>
+                            <div class="col-md-4">
                                 <atom-page-limit ref="page-limit"></atom-page-limit>
                             </div>
                             <div class="col-md-4">
                                 <atom-jwt ref="jwt"></atom-jwt>
+                            </div>
+                            <div class="col-md-4">
+                                <atom-allow-register ref="allow-register"></atom-allow-register>
                             </div>
                         </div>
                     </el-tab-pane>
@@ -101,7 +107,9 @@ import AtomSmsEmail from '{src}/comps/atom/sms-email.vue'
 import AtomSmsAliyun from '{src}/comps/atom/sms-aliyun.vue'
 import AtomSmsTencent from '{src}/comps/atom/sms-tencent.vue'
 import AtomApiKey from '{src}/comps/atom/api-key.vue'
+import AtomAllowRegister from '{src}/comps/atom/allow-register.vue'
 import AtomQps from '{src}/comps/atom/qps.vue'
+import AtomQpsBlack from '{src}/comps/atom/qps-black.vue'
 import AtomPageLimit from '{src}/comps/atom/page-limit.vue'
 import AtomJwt from '{src}/comps/atom/jwt.vue'
 import AtomRedis from '{src}/comps/atom/redis.vue'
@@ -128,10 +136,10 @@ const state  = reactive({
         },
     },
     refresh: {
-        sms: ['sms-email','sms-aliyun','sms-tencent'],
-        storage: ['storage-local','storage-oss','storage-cos','storage-kodo'],
         optimize: ['redis'],
-        security: ['api-key','qps','page-limit','jwt'],
+        sms     : ['sms-email','sms-aliyun','sms-tencent'],
+        storage : ['storage-local','storage-oss','storage-cos','storage-kodo'],
+        security: ['api-key','qps','page-limit','jwt','allow-register','qps-black'],
     },
 })
 

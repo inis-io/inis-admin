@@ -1,17 +1,17 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="qps" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="black" size="58px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
-                        <strong class="text-success">开启后让DDOS和CC等异常流量无懈可击！</strong><br>
-                        ● QPS俗称限流器，是一种作用于网络层的中间件，主要用于拦截异常流量，如DDOS和CC等<br>
-                        ● QPS会将每个IP的请求次数限制在每秒的指定次数，超过则拒绝访问，从而保护服务器安全
+                        <strong class="text-success">开启后满足条件的客户端IP会被自动拉黑！</strong><br>
+                        ● 此功能需要搭配 QPS 使用，在 时间频率 内，达到 触发 QPS 次数上限，自动拉黑对应的客户端IP<br>
+                        ● 如：在1小时内，某客户端IP触发了3次 QPS 警告，则自动拉黑此客户端IP，并且后续无法访问任何API<br>
                     </template>
                     <span class="d-inline-flex align-items-center">
                         <i-svg name="hint" size="14px"></i-svg>
-                        <span class="ms-1">QPS</span>
+                        <span class="ms-1">自动 IP 黑名单</span>
                     </span>
                 </el-tooltip>
             </h6>
@@ -20,7 +20,7 @@
                            active-text="我怂" inactive-text="无所畏惧" active-color="#13ce66" inactive-color="#ff4949">
                 </el-switch>
             </h2>
-            <span class="badge bg-primary"> +90% </span>
+            <span class="badge bg-primary"> +30% </span>
             <span class="text-muted ms-1">
                 安全性提升，<span v-on:click="method.show()" class="text-warning">点我配置</span>
             </span>
@@ -40,27 +40,27 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label class="form-label">
-                                        <el-tooltip content="根据 IP 全局每秒限制的访问频率，推荐：50" placement="top">
+                                        <el-tooltip content="触发QPS的次数，推荐：3" placement="top">
                                             <span>
                                                 <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">全局限制：</span>
+                                                <span class="ms-1">触发次数：</span>
                                             </span>
                                         </el-tooltip>
                                     </label>
-                                    <el-input-number v-model="state.struct.json.global" :min="10" class="w-100 d-flex"></el-input-number>
+                                    <el-input-number v-model="state.struct.json.count" :min="1" class="w-100 d-flex"></el-input-number>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label class="form-label">
-                                        <el-tooltip content="根据 IP + API 每秒限制的访问频率，推荐：15" placement="top">
+                                        <el-tooltip content="可以用乘法，如：60 * 60 表示1小时" placement="top">
                                             <span>
                                                 <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">单接口限制：</span>
+                                                <span class="ms-1">时间频率（秒）：</span>
                                             </span>
                                         </el-tooltip>
                                     </label>
-                                    <el-input-number v-model="state.struct.json.point" :min="5" class="w-100 d-flex"></el-input-number>
+                                    <input v-model="state.struct.json.second" type="text" class="form-control customize text-white">
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@ const state = reactive({
     modal: Modal,
     struct: {
         value: 0,
-        json: { global: 30, point: 15 },
+        json: { count: null, second: '' },
     },
     status: {
         finish: false,
@@ -109,7 +109,7 @@ const method = {
         state.status.loading = true
 
         const { code, data } = await axios.get('/api/config/one', {
-            key: 'SYSTEM_QPS'
+            key: 'SYSTEM_QPS_BLOCK'
         })
 
         state.status.loading = false
@@ -120,13 +120,13 @@ const method = {
         state.status.finish  = true
     },
     show() {
-        if (!state.status.finish) return notyf.warn('QPS配置获取失败，无法进行配置！')
+        if (!state.status.finish) return notyf.warn('配置获取失败，无法进行配置！')
         state.modal.show()
     },
     change: async value => {
 
         const { code, msg } = await axios.post('/api/config/save', {
-            key: 'SYSTEM_QPS',
+            key: 'SYSTEM_QPS_BLOCK',
             value: value ? 1 : 0
         })
 
@@ -138,7 +138,7 @@ const method = {
     save: async () => {
 
         const { code, msg } = await axios.post('/api/config/save', {
-            key: 'SYSTEM_QPS',
+            key: 'SYSTEM_QPS_BLOCK',
             json: JSON.stringify(state.struct.json)
         })
 
@@ -150,10 +150,8 @@ const method = {
 
 watch(() => state.struct, () => {
     state.status.active = parseInt(state.struct.value) === 1
-    // 限制 state.struct.json.global 最小值为 10
-    if (state.struct.json.global < 10) state.struct.json.global = 10
-    // 限制 state.struct.json.point 最小值为 5
-    if (state.struct.json.point < 5)  state.struct.json.point = 5
+    // 只能是 数字、空格和运算符
+    state.struct.expire = state.struct.json.second.replace(/[^\d\s*+\-\/]/g, '')
 }, { deep: true })
 
 // 将子组件方法暴露给父组件

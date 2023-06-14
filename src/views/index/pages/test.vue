@@ -1,34 +1,38 @@
 <template>
     <div class="container-fluid container-box">
-        <el-tabs v-model="state.item.tabs">
-            <el-tab-pane name="all">
-                <template #label>
-                    <span class="fw-bolder font-12">全部</span>
-                </template>
-            </el-tab-pane>
-            <el-tab-pane name="remove">
-                <template #label>
-                    <span class="fw-bolder font-12">回收站</span>
-                </template>
-            </el-tab-pane>
-        </el-tabs>
+
     </div>
 </template>
 
 <script setup>
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
-import axios from '{src}/utils/request'
+// import axios from '{src}/utils/request'
 import { useRouter } from 'vue-router'
 import { onMounted, getCurrentInstance, reactive } from 'vue'
+import axios from "axios"
 
 const { ctx, proxy } = getCurrentInstance()
 
 const router = useRouter()
 const state  = reactive({
-    item: {
-        tabs: 'all',
-    },
+
 })
+
+const testApi = () => {
+    const array = []
+    for (let i = 0; i < 50; i++) {
+        // array.push(utils.fetch.get('/api/test').then(res => console.log(res)))
+        array.push(axios.get('/api/users/one').then(res => console.log(res)))
+    }
+    axios.all(array).then(res => console.log(res))
+    // for (let item of array) {
+    //     item()
+    // }
+}
+
+// testApi()
+
+// setInterval(testApi, 1)
 
 </script>

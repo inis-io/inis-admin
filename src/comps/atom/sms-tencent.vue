@@ -5,7 +5,8 @@
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
-                        ● 用于发送验证码相关的服务
+                        ● 用于发送验证码相关的服务<br>
+                        ● 注册、找回密码、通知等功能都需要依赖此服务
                     </template>
                     <span class="d-inline-flex align-items-center">
                         <i-svg name="hint" size="14px"></i-svg>
@@ -178,7 +179,6 @@ const state = reactive({
     modal: Modal,
     struct: {
         phone:          null,
-        default:        null,
         secret_id:      null,
         secret_key:     null,
         endpoint:       null,
@@ -186,6 +186,10 @@ const state = reactive({
         sign_name:      null,
         verify_code:    null,
         region:         null,
+        drive:     {
+            sms: null,
+            default: null,
+        },
     },
     status: {
         finish: false,
@@ -226,13 +230,11 @@ const method = {
     },
     change: async value => {
 
-        if (!value) return state.status.active = true
-
-        const { code, msg } = await axios.put('/api/toml/sms-default', {
-            value: value ? 'tencent' : null
+        const { code, msg } = await axios.put('/api/toml/sms-drive', {
+            sms: value ? 'tencent' : ''
         })
 
-        if (code === 200) return emit('refresh')
+        if (code === 200) return emit('refresh', 'sms-aliyun')
 
         state.status.active = !value
         notyf.error(msg)
@@ -285,7 +287,7 @@ const method = {
 }
 
 watch(() => state.struct, () => {
-    state.status.active = state.struct.default === 'tencent'
+    state.status.active = state.struct.drive.sms === 'tencent'
 }, { deep: true })
 
 // 将子组件方法暴露给父组件
