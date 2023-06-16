@@ -60,7 +60,6 @@
 import notyf from "{src}/utils/notyf"
 import utils from '{src}/utils/utils'
 import axios from '{src}/utils/request'
-import { getCurrentInstance, onMounted, reactive } from 'vue'
 import { CustomMouseMenu } from '@howdyjs/mouse-menu'
 
 const { ctx, proxy } = getCurrentInstance()

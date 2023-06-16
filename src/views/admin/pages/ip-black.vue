@@ -14,7 +14,7 @@
                 </el-dropdown>
                 <div class="input-group custom-search me-1">
                     <i-svg name="search" size="18px"></i-svg>
-                    <input v-model="state.item.search" class="form-control custom search mimic" autocomplete="new-password" type="text" placeholder="标题 | 内容 | 备注">
+                    <input v-model="state.item.search" class="form-control custom search mimic" autocomplete="new-password" type="text" placeholder="IP | 备注">
                 </div>
                 <button v-on:click="method.refresh()" class="btn btn-auto mx-1 mimic" type="button">刷新</button>
                 <button v-on:click="method.add()" v-if="state.item.tabs.includes('all')" class="btn btn-auto ms-1 mimic" type="button">添加</button>
@@ -33,14 +33,14 @@
                         <template #label>
                             <span class="fw-bolder font-12">全部</span>
                         </template>
-                        <table-pages :params="state.params.all" v-on:refresh="method.refresh" ref="all"></table-pages>
+                        <table-ip-black :params="state.params.all" v-on:refresh="method.refresh" ref="all"></table-ip-black>
                     </el-tab-pane>
 
                     <el-tab-pane name="remove">
                         <template #label>
                             <span class="fw-bolder font-12">回收站</span>
                         </template>
-                        <table-pages :params="state.params.remove" v-on:refresh="method.refresh" ref="remove" type="remove"></table-pages>
+                        <table-ip-black :params="state.params.remove" v-on:refresh="method.refresh" ref="remove" type="remove"></table-ip-black>
                     </el-tab-pane>
 
                 </el-tabs>
@@ -54,16 +54,16 @@
 <script setup>
 
 import utils from '{src}/utils/utils'
-import { push } from '{src}/utils/route'
 import MouseMenu from '@howdyjs/mouse-menu'
-import TablePages from '{src}/comps/table/pages.vue'
+import TableIpBlack from '{src}/comps/table/ip-black.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()
+
 const state  = reactive({
     item: {
         timer : null,
-        title : '页面管理',
+        title : 'IP 黑名单',
         search: null,
         sort  : '排序',
         tabs  : 'all',
@@ -115,12 +115,12 @@ const method = {
     },
     // 添加
     add() {
-        push('/admin/pages/write')
+        proxy.$refs['all']['show']()
     },
     // 刷新
     refresh(...args) {
         // 允许刷新的参数
-        let allow = ['all','remove']
+        let allow = ['all','remove','api-key']
         // 如果没有传参则刷新所有
         if (args.length === 0) args = allow
         // 如果传参则过滤不允许的参数
@@ -136,9 +136,8 @@ watch(() => state.item.search, (val) => {
 
     for (let item of allow) {
         if (!utils.is.empty(val)) state.params[item].like = [
-            ['title'  , `%${val}%`],
-            ['remark' , `%${val}%`],
-            ['content', `%${val}%`],
+            ['ip', `%${val}%`],
+            ['remark', `%${val}%`],
         ]
         else delete state.params[item].like
     }

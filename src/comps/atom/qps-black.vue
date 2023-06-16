@@ -8,6 +8,8 @@
                         <strong class="text-success">开启后满足条件的客户端IP会被自动拉黑！</strong><br>
                         ● 此功能需要搭配 QPS 使用，在 时间频率 内，达到 触发 QPS 次数上限，自动拉黑对应的客户端IP<br>
                         ● 如：在1小时内，某客户端IP触发了3次 QPS 警告，则自动拉黑此客户端IP，并且后续无法访问任何API<br>
+                        ● 此功能可以有效防止恶意攻击，如：CC攻击、DDOS攻击等<br>
+                        ● 需要注意的是，随机图片接口也会受到影响<br>
                     </template>
                     <span class="d-inline-flex align-items-center">
                         <i-svg name="hint" size="14px"></i-svg>
@@ -78,12 +80,10 @@
 <script setup>
 
 import { Modal } from 'bootstrap'
-import { getCurrentInstance, onMounted, reactive, watch } from 'vue'
-const { ctx, proxy } = getCurrentInstance()
-
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 
+const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
     modal: Modal,
     struct: {

@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
 import lang from 'element-plus/lib/locale/lang/zh-cn'
 const state = reactive({
     // 将默认语言设置为中文

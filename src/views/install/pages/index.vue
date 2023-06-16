@@ -1,5 +1,4 @@
 <template>
-    <!-- container-box text-muted -->
     <div class="container-fluid mt-5">
         <el-steps :active="state.item.active" simple>
             <el-step title="配置数据库"></el-step>
@@ -277,7 +276,6 @@
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import { onMounted, getCurrentInstance, reactive, watch } from 'vue'
 
 const { ctx, proxy } = getCurrentInstance()
 

@@ -57,7 +57,6 @@ import utils from '{src}/utils/utils'
 import { push } from '{src}/utils/route'
 import MouseMenu from '@howdyjs/mouse-menu'
 import TableArticle from '{src}/comps/table/article.vue'
-import { getCurrentInstance, onMounted, reactive, watch } from 'vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()
@@ -144,9 +143,9 @@ watch(() => state.item.search, (val) => {
         else delete state.params[item].like
     }
 
-    // 懒加载 - 没变化的 300ms 后再刷新
+    // 懒加载 - 没变化的 500ms 后再刷新
     clearTimeout(state.item.timer)
-    state.item.timer = setTimeout(() => method.refresh(...allow), 300)
+    state.item.timer = setTimeout(() => method.refresh(...allow), globalThis.inis?.SearchLazyTime ?? 500)
 })
 
 // 监听 html 下的鼠标右键事件

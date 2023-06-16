@@ -47,43 +47,84 @@
             </el-table-column>
         </template>
 
-        <template #i-title="{ scope = {} }">
-            <span v-on:dblclick="method.edit(scope)" class="d-flex align-items-center">
-                <el-tooltip v-if="scope.top === 1" content="置顶" placement="top">
-                    <i-svg name="top" size="18px" class="me-1"></i-svg>
-                </el-tooltip>
-                <el-tooltip :content="scope.title" :disabled="utils.is.empty(scope.title)" placement="top">
-                    <span>{{ method.omit(scope.title, 10, ' ...', 'end') }}</span>
-                </el-tooltip>
-            </span>
-        </template>
-
-        <template #i-abstract="{ scope = {} }">
-            <el-tooltip :disabled="utils.is.empty(scope.abstract)" placement="top">
-                <template #content>
-                    <span v-html="method.autoWrap(scope.abstract)"></span>
-                </template>
-                <span>{{ method.omit(scope?.abstract) }}</span>
+        <template #i-ip="{ scope = {} }">
+            <el-tooltip v-if="!utils.is.empty(scope?.cause)" :content="'原因：' + scope?.cause" placement="top">
+                <i-svg v-on:dblclick="method.copy(scope?.cause)" name="remark" size="16px" class="me-1"></i-svg>
+            </el-tooltip>
+            <el-tooltip v-if="!utils.is.empty(scope?.agent)" :content="'双击复制 User-Agent：' + scope?.agent" placement="top">
+                <i-svg v-on:dblclick="method.copy(scope?.agent)" name="user-agent" size="16px" class="me-1"></i-svg>
+            </el-tooltip>
+            <el-tooltip :content="'双击复制：' + scope.ip" :disabled="utils.is.empty(scope?.ip)" placement="top">
+                <span v-on:dblclick="method.copy(scope?.ip)">{{ method.omit(scope?.ip, 15) }}</span>
             </el-tooltip>
         </template>
 
-        <template #i-remark="{ scope }">
-            <el-tooltip :disabled="utils.is.empty(scope?.remark)" placement="top">
+        <template #i-remark="{ scope = {} }">
+            <el-tooltip :disabled="utils.is.empty(scope.remark)" placement="top">
                 <template #content>
-                    <span v-html="method.autoWrap(scope?.remark)"></span>
+                    <span v-html="method.autoWrap(scope.remark)"></span>
                 </template>
                 <span>{{ method.omit(scope?.remark) }}</span>
             </el-tooltip>
         </template>
 
     </i-table>
+
+    <teleport to="body">
+        <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg mt-5">
+                <div class="modal-content modal-filled position-relative">
+                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
+                    <div class="modal-header d-flex justify-content-center">
+                        <strong>{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label class="form-label required">
+                                        <el-tooltip content="（必须）需要被拉黑的 IP" placement="top">
+                                            <span>
+                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <span class="ms-1">IP：</span>
+                                            </span>
+                                        </el-tooltip>
+                                    </label>
+                                    <input v-model="state.struct.ip" type="text" class="form-control customize text-white" placeholder="客户端 IP">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">
+                                        <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
+                                            <span>
+                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <span class="ms-1">备注：</span>
+                                            </span>
+                                        </el-tooltip>
+                                    </label>
+                                    <textarea v-model="state.struct.remark" class="form-control customize text-white" rows="3" placeholder="备注一下，避免忘记！"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button v-on:click="state.struct = {}" type="button" class="btn btn-outline-light" data-bs-dismiss="modal">取 消</button>
+                        <button v-on:click="method.save()" type="button" class="btn btn-info">保 存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </teleport>
 </template>
 
 <script setup>
+import { Modal } from 'bootstrap'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import { useRouter } from 'vue-router'
 import ITable from '{src}/comps/custom/i-table.vue'
 import { config as MenuConfig } from '{src}/utils/menu'
 
@@ -116,18 +157,19 @@ const right = computed(() => {
 })
 
 const { ctx, proxy } = getCurrentInstance()
-const router = useRouter()
 const state  = reactive({
     item: {
-        table: 'article',
+        table: 'ip-black',
     },
-    struct: {},
+    modal: Modal,
+    struct: {
+        ip: null
+    },
     opts: {
-        url: '/api/article/all',
+        url: '/api/ip-black/all',
         params: props.params,
         columns: [
-            { prop: 'title'  , label: '标题', width: 150, slot: true, fixed: left },
-            { prop: 'abstract', label: '摘要', width: 200, slot: true },
+            { prop: 'ip', label: 'IP', width: 150, slot: true, fixed: left },
             { prop: 'remark' , label: '备注', width: 200, slot: true },
             { prop: 'update_time', label: '更新时间', width: 120, sortable: true },
             { prop: 'create_time', label: '创建时间', width: 120, sortable: true },
@@ -162,7 +204,7 @@ const state  = reactive({
 })
 
 onMounted(() => {
-
+    state.modal = new Modal(proxy.$refs['item-modal'])
 })
 
 const method = {
@@ -171,10 +213,29 @@ const method = {
         // 重新加载数据
         await proxy.$refs['i-table']['init']()
     },
+    // 保存数据
+    save: async (params = state.struct || {}) => {
+
+        if (utils.is.empty(params))    return notyf.warn('你在想什么？什么都不填！')
+        if (utils.is.empty(params.ip)) return notyf.warn('IP地址不能为空！')
+
+        const { code, msg } = await axios.post(`/api/${state.item.table}/save`, params)
+
+        if (code !== 200) return notyf.error(msg)
+
+        notyf.info(msg)
+        // 关闭模态框
+        state.modal.hide()
+        // 重新加载数据
+        await method.init()
+    },
     // 编辑数据
     edit: struct => {
-        router.push({path: '/admin/article/write/' + parseInt(struct.id)})
+        state.struct = struct
+        state.modal.show()
     },
+    // 显示盒子
+    show: () => state.modal.show(),
      // 真删 和 软删
     async delete(ids = [], isSoft = true) {
 
@@ -272,5 +333,6 @@ if (props.type === 'remove') {
 // 将子组件方法暴露给父组件
 defineExpose({
     init: method.init,
+    show: method.show,
 })
 </script>

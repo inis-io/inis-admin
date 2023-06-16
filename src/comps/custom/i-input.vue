@@ -8,8 +8,6 @@
 </template>
 
 <script setup>
-import { onMounted, getCurrentInstance } from 'vue'
-
 const { ctx, proxy } = getCurrentInstance()
 
 onMounted(() => {

@@ -14,10 +14,9 @@
                 </el-dropdown>
                 <div class="input-group custom-search me-1">
                     <i-svg name="search" size="18px"></i-svg>
-                    <input v-model="state.item.search" class="form-control custom search mimic" autocomplete="new-password" type="text" placeholder="标题 | 内容 | 备注">
+                    <input v-model="state.item.search" class="form-control custom search mimic" autocomplete="new-password" type="text" placeholder="IP | 路由 | User-Agent">
                 </div>
                 <button v-on:click="method.refresh()" class="btn btn-auto mx-1 mimic" type="button">刷新</button>
-                <button v-on:click="method.add()" v-if="state.item.tabs.includes('all')" class="btn btn-auto ms-1 mimic" type="button">添加</button>
             </div>
             <div class="col-lg-6 d-flex justify-content-end" style="z-index: -1">
                 <button class="btn btn-auto h-35px mimic" disabled type="button">
@@ -33,14 +32,25 @@
                         <template #label>
                             <span class="fw-bolder font-12">全部</span>
                         </template>
-                        <table-pages :params="state.params.all" v-on:refresh="method.refresh" ref="all"></table-pages>
+                        <table-qps-warn :params="state.params.all" v-on:refresh="method.refresh" ref="all"></table-qps-warn>
                     </el-tab-pane>
 
                     <el-tab-pane name="remove">
                         <template #label>
                             <span class="fw-bolder font-12">回收站</span>
                         </template>
-                        <table-pages :params="state.params.remove" v-on:refresh="method.refresh" ref="remove" type="remove"></table-pages>
+                        <table-qps-warn :params="state.params.remove" v-on:refresh="method.refresh" ref="remove" type="remove"></table-qps-warn>
+                    </el-tab-pane>
+
+                    <el-tab-pane name="setting">
+                        <template #label>
+                            <span class="fw-bolder font-12">设置</span>
+                        </template>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <atom-qps-black ref="api-key"></atom-qps-black>
+                            </div>
+                        </div>
                     </el-tab-pane>
 
                 </el-tabs>
@@ -54,16 +64,17 @@
 <script setup>
 
 import utils from '{src}/utils/utils'
-import { push } from '{src}/utils/route'
 import MouseMenu from '@howdyjs/mouse-menu'
-import TablePages from '{src}/comps/table/pages.vue'
+import AtomQpsBlack from '{src}/comps/atom/qps-black.vue'
+import TableQpsWarn from '{src}/comps/table/qps-warn.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()
+
 const state  = reactive({
     item: {
         timer : null,
-        title : '页面管理',
+        title : 'QPS 预警',
         search: null,
         sort  : '排序',
         tabs  : 'all',
@@ -76,13 +87,6 @@ const state  = reactive({
                     <path fill="#ffffff" d="M1023.872 512H1024c0-282.784-229.216-512-512-512C230.016 0 1.408 227.968 0.128 509.632 1.408 280.96 187.072 96 416 96c229.76 0 416 186.24 416 416h0.128c0 0.416-0.128 0.768-0.128 1.184a96 96 0 0 0 96 96 95.872 95.872 0 0 0 95.872-94.816c0-0.416 0.128-0.768 0.128-1.184l-0.032-0.384c0-0.288-0.096-0.544-0.096-0.8z"></path>
                 </svg>`,
                 fn: () => method.refresh()
-            },{
-                label: '添加',
-                icon: `<svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="14" height="14">
-                    <path d="M512 1024C229.229714 1024 0 794.770286 0 512S229.229714 0 512 0s512 229.229714 512 512-229.229714 512-512 512z m0-928C282.258286 96 96 282.258286 96 512S282.258286 928 512 928 928 741.741714 928 512 741.741714 96 512 96z m208.018286 463.981714h-160v160.036572a48.018286 48.018286 0 0 1-96.036572 0v-160.036572H303.981714a47.981714 47.981714 0 0 1 0-95.963428h160V304.018286a48.018286 48.018286 0 0 1 96.036572 0v160h160a47.981714 47.981714 0 0 1 0 95.963428z" fill="#ffffff"></path>
-                </svg>`,
-                fn: () => method.add(),
-                hidden: () => !state.item.tabs.includes('all')
             }],
         },
     },
@@ -113,14 +117,10 @@ const method = {
         // 指定刷新
         method.refresh('all','remove')
     },
-    // 添加
-    add() {
-        push('/admin/pages/write')
-    },
     // 刷新
     refresh(...args) {
         // 允许刷新的参数
-        let allow = ['all','remove']
+        let allow = ['all','remove','api-key']
         // 如果没有传参则刷新所有
         if (args.length === 0) args = allow
         // 如果传参则过滤不允许的参数
@@ -136,9 +136,11 @@ watch(() => state.item.search, (val) => {
 
     for (let item of allow) {
         if (!utils.is.empty(val)) state.params[item].like = [
-            ['title'  , `%${val}%`],
-            ['remark' , `%${val}%`],
-            ['content', `%${val}%`],
+            ['ip', `%${val}%`],
+            ['path', `%${val}%`],
+            ['agent', `%${val}%`],
+            ['remark', `%${val}%`],
+            ['method', `${val.toUpperCase()}`],
         ]
         else delete state.params[item].like
     }

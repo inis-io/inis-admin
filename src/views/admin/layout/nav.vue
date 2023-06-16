@@ -120,14 +120,11 @@ import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
-import { useRouter } from 'vue-router'
-import { onMounted, getCurrentInstance, reactive, nextTick } from 'vue'
 import { list as MenuList } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()
-
-const router= useRouter()
-const state = reactive({
+const router = useRouter()
+const state  = reactive({
     theme: 'dark',
     login: {
         finish : false,         // 登录完成

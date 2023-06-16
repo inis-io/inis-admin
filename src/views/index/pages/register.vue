@@ -147,14 +147,12 @@
 
 import '{src}/assets/css/app.min.css'
 import '{src}/assets/css/media.min.css'
-import iBeautify from '{src}/views/index/layout/beautify.vue'
-import iFooter   from '{src}/views/index/layout/footer.vue'
 
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-
-import { nextTick, reactive, getCurrentInstance, onMounted } from 'vue'
+import iBeautify from '{src}/views/index/layout/beautify.vue'
+import iFooter   from '{src}/views/index/layout/footer.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 

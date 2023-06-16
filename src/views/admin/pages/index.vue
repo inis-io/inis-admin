@@ -10,9 +10,6 @@
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import { useRouter } from 'vue-router'
-import { onMounted, getCurrentInstance, reactive } from 'vue'
-
 import MouseMenu from '@howdyjs/mouse-menu'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 

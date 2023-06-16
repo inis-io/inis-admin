@@ -81,8 +81,6 @@
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import { useRoute, useRouter } from 'vue-router'
-import { getCurrentInstance, onMounted, reactive } from 'vue'
 import ITinymce from "{src}/comps/custom/i-tinymce.vue"
 
 import MouseMenu from '@howdyjs/mouse-menu'

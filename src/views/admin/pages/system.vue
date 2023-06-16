@@ -101,7 +101,6 @@
 </template>
 <script setup>
 import MouseMenu from '@howdyjs/mouse-menu'
-import { getCurrentInstance, onMounted, reactive } from 'vue'
 import { config as MenuConfig } from '{src}/utils/menu'
 import AtomSmsEmail from '{src}/comps/atom/sms-email.vue'
 import AtomSmsAliyun from '{src}/comps/atom/sms-aliyun.vue'

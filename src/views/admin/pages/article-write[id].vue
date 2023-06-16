@@ -159,8 +159,6 @@ import MarkdownIt from 'markdown-it';
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import { useRoute, useRouter } from 'vue-router'
-import {getCurrentInstance, onMounted, reactive, watch, computed} from 'vue'
 import IVditor from "{src}/comps/custom/i-vditor.vue"
 import ITinymce from "{src}/comps/custom/i-tinymce.vue"
 

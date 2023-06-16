@@ -14,7 +14,6 @@
 <script setup>
 import utils from '{src}/utils/utils.js'
 import notyf from '{src}/utils/notyf.js'
-import { getCurrentInstance, reactive } from 'vue'
 const { ctx, proxy } = getCurrentInstance()
 
 const state = reactive({

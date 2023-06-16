@@ -6,7 +6,6 @@
 import notyf from '{src}/utils/notyf.js'
 import utils from '{src}/utils/utils.js'
 import axios from '{src}/utils/request.js'
-import { onMounted, reactive, getCurrentInstance } from 'vue'
 
 import tinymce from 'tinymce/tinymce'
 import Editor from '@tinymce/tinymce-vue'

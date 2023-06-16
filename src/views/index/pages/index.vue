@@ -15,10 +15,6 @@
 
 <script setup>
 
-import { useRouter } from 'vue-router'
-import { onMounted, getCurrentInstance, reactive } from 'vue'
-import axios from '{src}/utils/request'
-
 const { ctx, proxy } = getCurrentInstance()
 
 const router = useRouter()

@@ -15,8 +15,6 @@
 
 <script setup>
 
-import { nextTick } from 'vue'
-
 import '{src}/assets/css/app.min.css'
 import '{src}/assets/css/media.min.css'
 import iNav from '{src}/views/index/layout/nav.vue'

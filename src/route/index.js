@@ -4,7 +4,22 @@ import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { list as MenuList } from '{src}/utils/menu'
 
-const routes = [{
+// 安装引导
+const install = {
+    name: 'install',
+    path: '/install',
+    component: ()    => import('{src}/views/install/layout/base.vue'),
+    meta: { title: '安装引导' },
+    children: [{
+        // path 匹配 / 或 /index 或 /home
+        path: '/',  // 正则匹配：空 或 / 或 index 或 home
+        name: 'install-index',
+        meta: { title: '安装引导' },
+    }],
+}
+
+// 前台路由
+const index = {
     path: '/',
     component: ()    => import('{src}/views/index/layout/base.vue'),
     children: [{
@@ -23,18 +38,10 @@ const routes = [{
         meta: { title: '图标' },
         component: () => import('{src}/views/index/pages/icons.vue'),
     }],
-},{
-    name: 'install',
-    path: '/install',
-    component: ()    => import('{src}/views/install/layout/base.vue'),
-    meta: { title: '安装引导' },
-    children: [{
-        // path 匹配 / 或 /index 或 /home
-        path: '/',  // 正则匹配：空 或 / 或 index 或 home
-        name: 'install-index',
-        meta: { title: '安装引导' },
-    }],
-},{
+}
+
+// 后台路由
+const admin = {
     name: 'admin',
     path: '/admin',
     component: ()    => import('{src}/views/admin/layout/base.vue'),
@@ -129,12 +136,24 @@ const routes = [{
         meta: { title: '系统配置' },
         component: () => import('{src}/views/admin/pages/system.vue'),
     },{
+        path: '/admin/ip/black',
+        name: 'admin-ip-black',
+        meta: { title: 'IP黑名单' },
+        component: () => import('{src}/views/admin/pages/ip-black.vue'),
+    },{
+        path: '/admin/qps/warn',
+        name: 'admin-qps-warn',
+        meta: { title: 'QPS预警' },
+        component: () => import('{src}/views/admin/pages/qps-warn.vue'),
+    },{
         path: '/admin/test',
         name: 'admin-test',
         meta: { title: '测试' },
         component: () => import('{src}/views/admin/pages/test.vue'),
     }],
-},{
+}
+
+const routes = [ index, install, admin, {
     path: '/register',
     name: 'register',
     meta: { title: '注册' },

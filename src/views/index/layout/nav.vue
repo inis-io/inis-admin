@@ -219,8 +219,6 @@ import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
-import { onMounted, getCurrentInstance, reactive, watch, nextTick } from 'vue'
-import { useRouter } from "vue-router"
 
 const { ctx, proxy } = getCurrentInstance()
 

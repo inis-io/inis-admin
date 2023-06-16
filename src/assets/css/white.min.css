@@ -208,6 +208,10 @@ body[inis-theme=white] .el-tabs__header{
 body[inis-theme=white] .el-tabs__nav-wrap::after{
     background-color: unset;
 }
+body[inis-theme=white] .el-tabs__item:focus-visible {
+    outline: none;
+    box-shadow: unset;
+}
 /* ==================== 自定义 el-tabs - 结束 ==================== */
 
 /* ================== 自定义 el-pagination - 结束 ================== */

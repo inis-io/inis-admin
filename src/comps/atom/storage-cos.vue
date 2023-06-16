@@ -138,13 +138,11 @@
 <script setup>
 
 import { Modal } from 'bootstrap'
-import { defineEmits, getCurrentInstance, onMounted, reactive, watch } from 'vue'
-const { ctx, proxy } = getCurrentInstance()
-
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 
+const { ctx, proxy } = getCurrentInstance()
 const emit  = defineEmits(['refresh'])
 const state = reactive({
     modal: Modal,

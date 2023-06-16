@@ -90,6 +90,10 @@ export default ({ mode }) => {
             customDomId: '__svg__icons__dom__',
         }),
         AutoImport({
+            // 自动导入 - 全局
+            imports: ['vue', 'vue-router'],
+            // 生成全局变量名
+            dts: 'src/auto-imports.d.ts',
             // element-plus - 自动按需引入 - 注册中文
             resolvers: [ElementPlusResolver()],
         }),

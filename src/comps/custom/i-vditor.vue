@@ -7,8 +7,6 @@
 import Vditor from 'vditor'
 import 'vditor/dist/index.css'
 
-import { onMounted, reactive, getCurrentInstance, defineProps, watch } from 'vue'
-
 const { ctx, proxy } = getCurrentInstance()
 
 const state = reactive({

@@ -20,11 +20,9 @@
 <script setup>
 
 import utils from '{src}/utils/utils'
-import { onMounted, nextTick, getCurrentInstance, reactive } from 'vue'
-
 const { ctx, proxy } = getCurrentInstance()
-const unix = Math.round(new Date().getTime() / 1000)
 
+const unix  = Math.round(new Date().getTime() / 1000)
 const state = reactive({
     cover: `https://api.inis.cc/api/file/random?name=cure&unix=${unix}`
 })

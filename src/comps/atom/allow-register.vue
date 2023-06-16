@@ -51,12 +51,10 @@
 <script setup>
 
 import { Modal } from 'bootstrap'
-import { getCurrentInstance, onMounted, reactive, watch } from 'vue'
-const { ctx, proxy } = getCurrentInstance()
-
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 
+const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
     modal: Modal,
     struct: {},
