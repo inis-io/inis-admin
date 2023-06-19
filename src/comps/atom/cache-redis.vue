@@ -7,11 +7,12 @@
                     <template #content>
                         <strong class="text-success">推荐开启，有利于减少数据库和服务器的负担！</strong><br>
                         开启后会对API数据进行缓存，减少重复执行数据库操作以及对数据的运算，<br>
-                        从而提高API的响应速度，减少服务器的负担。
+                        从而提高API的响应速度，减少服务器的负担。<br>
+                        PS：缓存数据会存储在专门的缓存数据库Redis中。
                     </template>
                     <span class="d-inline-flex align-items-center">
                         <i-svg name="hint" size="14px"></i-svg>
-                        <span class="ms-1">Redis</span>
+                        <span class="ms-1">Redis 缓存</span>
                     </span>
                 </el-tooltip>
             </h6>
@@ -93,7 +94,7 @@
                                             </span>
                                         </el-tooltip>
                                     </label>
-                                    <input v-model="state.struct.password" type="text" class="form-control customize text-white">
+                                    <input v-model="state.struct.password" placeholder="无密码为空即可" type="text" class="form-control customize text-white">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -193,7 +194,7 @@ const method = {
         state.status.finish  = true
     },
     show() {
-        if (!state.status.finish) return notyf.warn('SMS服务配置获取失败，无法进行配置！')
+        if (!state.status.finish) return notyf.warn('配置获取失败，无法进行配置！')
         state.modal.show()
     },
     change: async value => {
@@ -202,7 +203,7 @@ const method = {
             value: 'redis', open: value
         })
 
-        if (code === 200) return emit('refresh')
+        if (code === 200) return emit('refresh', 'cache-file', 'cache-ram')
 
         state.status.active = !value
         notyf.error(msg)

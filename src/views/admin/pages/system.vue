@@ -50,7 +50,13 @@
                         </template>
                         <div class="row">
                             <div class="col-md-4">
-                                <atom-redis ref="redis"></atom-redis>
+                                <atom-cache-redis ref="cache-redis" v-on:refresh="method.refresh"></atom-cache-redis>
+                            </div>
+                            <div class="col-md-4">
+                                <atom-cache-file ref="cache-file" v-on:refresh="method.refresh"></atom-cache-file>
+                            </div>
+                            <div class="col-md-4">
+                                <atom-cache-ram ref="cache-ram" v-on:refresh="method.refresh"></atom-cache-ram>
                             </div>
                         </div>
                     </el-tab-pane>
@@ -111,7 +117,9 @@ import AtomQps from '{src}/comps/atom/qps.vue'
 import AtomQpsBlack from '{src}/comps/atom/qps-black.vue'
 import AtomPageLimit from '{src}/comps/atom/page-limit.vue'
 import AtomJwt from '{src}/comps/atom/jwt.vue'
-import AtomRedis from '{src}/comps/atom/redis.vue'
+import AtomCacheRedis from '{src}/comps/atom/cache-redis.vue'
+import AtomCacheFile from '{src}/comps/atom/cache-file.vue'
+import AtomCacheRam from '{src}/comps/atom/cache-ram.vue'
 import AtomStorageLocal from '{src}/comps/atom/storage-local.vue'
 import AtomStorageOss from '{src}/comps/atom/storage-oss.vue'
 import AtomStorageCos from '{src}/comps/atom/storage-cos.vue'
@@ -135,7 +143,7 @@ const state  = reactive({
         },
     },
     refresh: {
-        optimize: ['redis'],
+        optimize: ['cache-redis','cache-file','cache-ram'],
         sms     : ['sms-email','sms-aliyun','sms-tencent'],
         storage : ['storage-local','storage-oss','storage-cos','storage-kodo'],
         security: ['api-key','qps','page-limit','jwt','allow-register','qps-black'],
