@@ -298,7 +298,7 @@ const method = {
             if (code === 200) {
                 notyf.success(msg)
                 utils.set.session('USERINFO' , data.user)
-                utils.set.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60   )
+                utils.set.cookie(globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
                 state.user = data.user
                 state.login.finish = true
                 state.modal.hide()
@@ -324,13 +324,14 @@ const method = {
     // 退出登录
     async logout() {
         
-        const { data, code, msg } = await axios.del('/api/comm/logout')
+        const { code, msg } = await axios.del('/api/comm/logout')
         
         if (code !== 200) return notyf.error(msg)
         
         notyf.success(msg)
         state.login.finish = false
         utils.clear.session('USERINFO')
+        utils.clear.cookie(globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN')
     },
     // 校验登录
     async checkToken() {
@@ -340,6 +341,7 @@ const method = {
         const { data, code, msg } = await axios.post('/api/comm/check-token')
         
         if (code === 412) return
+        if (code === 401) return method.logout()
         if (code !== 200) return notyf.error(msg)
         
         state.user = data.user

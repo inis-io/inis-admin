@@ -754,4 +754,7 @@ body[inis-theme=white] .vditor-preview__action button:hover, body[inis-theme=whi
 body[inis-theme=white] .vditor-input::placeholder {
     color: rgb(var(--theme-font-color));
 }
+body[inis-theme=white] .vditor-resize > div{
+    background-color: #f6f8fa38;
+}
 /* ==================== 自定义 Vditor 编辑器 - 结束 ==================== */

@@ -18,8 +18,13 @@
                 </div>
 
                 <div class="card mb-2">
-                    <div class="card-body custom">
-                        <i-tinymce v-model="state.struct.content" id="tinymce"></i-tinymce>
+                    <div v-load="utils.is.empty(state.struct.editor)" class="card-body custom" style="min-height: 485px">
+                        <span v-show="state.struct.editor === 'tinymce'">
+                            <i-tinymce v-model="state.struct.content" id="tinymce"></i-tinymce>
+                        </span>
+                        <span v-show="state.struct.editor === 'vditor'">
+                            <i-vditor ref="vditor" v-model="state.struct.content" :opts="{ height: 600 }"></i-vditor>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -81,8 +86,8 @@
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import ITinymce from "{src}/comps/custom/i-tinymce.vue"
-
+import IVditor from '{src}/comps/custom/i-vditor.vue'
+import ITinymce from '{src}/comps/custom/i-tinymce.vue'
 import MouseMenu from '@howdyjs/mouse-menu'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
@@ -105,7 +110,7 @@ const state  = reactive({
             }],
         },
     },
-    struct: {},
+    struct: { content: '', editor: null },
 })
 
 onMounted(async () => {
@@ -124,6 +129,18 @@ const method = {
         if (!utils.is.empty(id)) state.item.id = parseInt(id)
         if (!utils.is.empty(state.item.id)) {
             await method.getPage(state.item.id)
+        } else {
+            await method.getConfig()
+        }
+    },
+    // Editor 切换
+    getConfig: async () => {
+        const { code, data } = await axios.get('/api/config/one', { key: 'ARTICLE' })
+        if (code !== 200) return
+        if (utils.in.array(data?.json?.editor, ['tinymce', 'vditor'])) {
+            state.struct.editor = data.json.editor
+        } else {
+            state.struct.editor = 'tinymce'
         }
     },
     // 获取页面信息
@@ -180,11 +197,24 @@ const method = {
     },
 }
 
+watch(() => route.params?.id, (value) => {
+    if (utils.is.empty(value)) return
+    method.init()
+})
+
 // 监听 html 下的鼠标右键事件
 document.addEventListener('contextmenu', (event) => {
     // 阻止默认事件
     event.preventDefault()
     // 判断点击在不在 #tabs-area 区域内，在不显示右键菜单
     if (!event?.target?.closest('#tinymce')) proxy.$refs['global-menu']?.show(event.x, event.y)
+})
+
+// 组件注销前 - 重置 container-xxl
+onBeforeUnmount(() => {
+    document.querySelectorAll('.container-xxl').forEach(el => {
+        el.classList.remove('container-xxl')
+        el.classList.add('container-fluid')
+    })
 })
 </script>

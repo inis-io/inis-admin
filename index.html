@@ -10,8 +10,19 @@
     <% if (MODE === 'production') { %>
     <%- VITE_LIBS %>
     <script async>
-        // inis配置
-        globalThis.inis = JSON.parse('{{.INIS}}')
+        try {
+            // inis配置
+            globalThis.inis = JSON.parse('{{.INIS}}')
+        } catch(e) {
+            // 加载 /config.js 文件
+            !function(url){
+                var item    = document.createElement('script');
+                item.src    = url;
+                item.async  = !0;
+                item.onload = function(){this.remove()};
+                document.head.appendChild(item)
+            }('/config.js')
+        }
     </script>
     <% } %>
     <% if (MODE === 'development') { %>

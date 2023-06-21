@@ -142,7 +142,7 @@ watch(() => state.item.search, (val) => {
         else delete state.params[item].like
     }
 
-    // 懒加载 - 没变化的 500ms 后再刷新
+    // 防抖 - 没变化的 500ms 后再刷新
     clearTimeout(state.item.timer)
     state.item.timer = setTimeout(() => method.refresh(...allow), globalThis.inis?.SearchLazyTime ?? 500)
 })

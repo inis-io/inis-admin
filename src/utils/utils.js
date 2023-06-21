@@ -740,7 +740,7 @@ class helper{
 
                     let arr = item.split(":")
 
-                    if (item.indexOf('!important') != -1) {
+                    if (item.indexOf('!important') !== -1) {
                         let suffix = arr[1].split("!")
                         DOM.style.setProperty(this.trimString(arr[0], 2), this.trimString(suffix[0], 2), this.trimString(suffix[1], 2))
                     } else DOM.style.setProperty(this.trimString(arr[0], 2), this.trimString(arr[1], 2))
@@ -764,9 +764,9 @@ class helper{
         let result = Math.round(new Date() / 1000)
         timestamp = timestamp || result
 
-        if (type == 1) {
+        if (type === 1) {
 
-            let zeroize = num => (String(num).length == 1 ? '0': '') + num
+            let zeroize = num => (String(num).length === 1 ? '0': '') + num
             let curTimestamp = parseInt(Date.now() / 1000)
             let timestampDiff = curTimestamp - timestamp
             let curDate = new Date(curTimestamp * 1000)
@@ -784,21 +784,21 @@ class helper{
                 result = s + "秒前";
             } else if (timestampDiff < 3600) {
                 result = Math.floor(timestampDiff / 60) + "分钟前";
-            } else if (curDate.getFullYear() == Y && curDate.getMonth() + 1 == m && curDate.getDate() == d) {
+            } else if (curDate.getFullYear() === Y && curDate.getMonth() + 1 === m && curDate.getDate() === d) {
                 result = '今天' + zeroize(H) + ':' + zeroize(i);
             } else {
                 let newDate = new Date((curTimestamp - 86400) * 1000);
 
-                if (newDate.getFullYear() == Y && newDate.getMonth() + 1 == m && newDate.getDate() == d) {
+                if (newDate.getFullYear() === Y && newDate.getMonth() + 1 === m && newDate.getDate() === d) {
                     result = '昨天' + zeroize(H) + ':' + zeroize(i);
-                } else if (curDate.getFullYear() == Y) {
+                } else if (curDate.getFullYear() === Y) {
                     result = zeroize(m) + '-' + zeroize(d) + ' ' + zeroize(H) + ':' + zeroize(i);
                 } else {
                     result = Y + '-' + zeroize(m) + '-' + zeroize(d) + ' ' + zeroize(H) + ':' + zeroize(i);
                 }
             }
 
-        } else if(type == 2){
+        } else if(type === 2){
 
             let mistiming = Math.round(new Date() / 1000) - timestamp;
             let postfix = mistiming > 0 ? "前" : "后";
@@ -808,14 +808,14 @@ class helper{
 
             for (let i = 0; i < 7; i++) {
                 let inm = Math.floor(mistiming / arrn[i]);
-                if (inm != 0) result = inm + arrr[i] + postfix;
+                if (inm !== 0) result = inm + arrr[i] + postfix;
             }
 
-        } else if (type == 4) {
+        } else if (type === 4) {
 
             result = new Date(parseInt(timestamp) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
 
-        } else if (type == 5) {
+        } else if (type === 5) {
 
             const now    = Math.round(new Date / 1000)
             const second = Math.floor(now - timestamp)
@@ -859,34 +859,34 @@ class helper{
      */
     timeToDate(unixTime, type = "Y-M-D H:i:s")
     {
-        let date = new Date(unixTime * 1000);
-        let datetime = "";
-        datetime += date.getFullYear() + type.substring(1, 2);
-        datetime += (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + type.substring(3, 4);
-        datetime += (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+        let date = new Date(unixTime * 1000)
+        let datetime = ""
+        datetime += date.getFullYear() + type.substring(1, 2)
+        datetime += (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + type.substring(3, 4)
+        datetime += (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate())
         if (type.substring(5, 6)) {
             if (type.substring(5, 6).charCodeAt() > 255) {
                 datetime += type.substring(5, 6);
                 if (type.substring(7, 8)) {
-                    datetime += " " + (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours());
+                    datetime += " " + (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours())
                     if (type.substring(9, 10)) {
-                        datetime += type.substring(8, 9) + (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes());
+                        datetime += type.substring(8, 9) + (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes())
                         if (type.substring(11, 12)) {
-                            datetime += type.substring(10, 11) + (date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds());
-                        };
-                    };
-                };
+                            datetime += type.substring(10, 11) + (date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds())
+                        }
+                    }
+                }
             } else {
-                datetime += " " + (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours());
+                datetime += " " + (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours())
                 if (type.substring(8, 9)) {
-                    datetime += type.substring(7, 8) + (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes());
+                    datetime += type.substring(7, 8) + (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes())
                     if (type.substring(10, 11)) {
-                        datetime += type.substring(9, 10) + (date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds());
-                    };
-                };
-            };
-        };
-        return datetime;
+                        datetime += type.substring(9, 10) + (date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds())
+                    }
+                }
+            }
+        }
+        return datetime
     }
 
     /**
@@ -913,7 +913,7 @@ class helper{
         // 剩余秒数
         const second   = parseInt(lefttime % 60)
         // 是否倒计时结束
-        const finish   = lefttime <= 0 ? true : false
+        const finish   = lefttime <= 0
 
         return {day,hour,minute,second,finish}
     }
@@ -1067,7 +1067,7 @@ class helper{
     {
         let result = false;
 
-        if (value == null || typeof(value) == 'undefined' || value === undefined || value.length === 0) result = true;
+        if (value == null || typeof (value) == 'undefined' || value.length === 0) result = true;
         else result = false;
 
         return result;
@@ -1165,16 +1165,16 @@ class helper{
     {
         let isMobile = {
             Android: function () {
-                return navigator.userAgent.match(/Android/i) ? true : false;
+                return !!navigator.userAgent.match(/Android/i);
             },
             BlackBerry: function () {
-                return navigator.userAgent.match(/BlackBerry/i) ? true : false;
+                return !!navigator.userAgent.match(/BlackBerry/i);
             },
             iOS: function () {
-                return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+                return !!navigator.userAgent.match(/iPhone|iPad|iPod/i);
             },
             Windows: function () {
-                return navigator.userAgent.match(/IEMobile/i) ? true : false;
+                return !!navigator.userAgent.match(/IEMobile/i);
             },
             any: function () {
                 return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
@@ -1210,7 +1210,7 @@ class helper{
             start  = string.length - target.length,
             end    = string.substr(start,target.length);
 
-        if (end == target) result = true;
+        if (end === target) result = true;
 
         return result;
     }
@@ -1238,8 +1238,8 @@ class helper{
     /**
      *
      * @name   判断是否为TRUE
-     * @param  {Any} value [数据]
      * @return {Boolean}
+     * @param data
      */
     isTrue(data = null) {
 
@@ -1259,8 +1259,8 @@ class helper{
     /**
      *
      * @name   判断是否为FALSE
-     * @param  {Any} value [数据]
      * @return {Boolean}
+     * @param data
      */
     isFalse(data = null) {
 
@@ -1282,6 +1282,8 @@ class helper{
      * @param {string} name
      * @param {string} value
      * @param {number} exdays 单位秒
+     * @param domain
+     * @param path
      */
     setCookie(name, value, exdays = 3600, domain = null, path = '/')
     {
@@ -1351,6 +1353,7 @@ class helper{
     /**
      * @name 清除cookie
      * @param {string} name
+     * @param domain
      */
     clearCookie(name, domain = null)
     {
@@ -2429,6 +2432,22 @@ class helper{
         }
     }
 
+    /**
+     * @name 防抖
+     * @param {function} func 需要防抖的函数
+     * @param {number} wait   等待时间 - 默认 1000ms
+     * @returns {(function(...[*]): void)|*} 返回一个防抖函数
+     */
+    debounce(func, wait = 1000)
+    {
+        let timer = null
+        return function (...args) {
+            if (timer !== null) clearTimeout(timer)
+            timer = setTimeout(() => {
+                func.apply(this, args)
+            }, wait)
+        }
+    }
     // END
 }
 

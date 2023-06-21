@@ -43,6 +43,17 @@
                         <table-article :params="state.params.remove" v-on:refresh="method.refresh" ref="remove" type="remove"></table-article>
                     </el-tab-pane>
 
+                    <el-tab-pane name="setting">
+                        <template #label>
+                            <span class="fw-bolder font-12">设置</span>
+                        </template>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <atom-editor ref="editor"></atom-editor>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+
                 </el-tabs>
             </div>
         </div>
@@ -56,6 +67,7 @@
 import utils from '{src}/utils/utils'
 import { push } from '{src}/utils/route'
 import MouseMenu from '@howdyjs/mouse-menu'
+import AtomEditor from '{src}/comps/atom/editor.vue'
 import TableArticle from '{src}/comps/table/article.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
@@ -98,6 +110,10 @@ const state  = reactive({
 })
 
 onMounted(async () => {
+    // document.querySelectorAll('.container-xxl').forEach(el => {
+    //     el.classList.remove('container-xxl')
+    //     el.classList.add('container-fluid')
+    // })
     // 追加鼠标右键菜单
     state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
 })
@@ -120,7 +136,7 @@ const method = {
     // 刷新
     refresh(...args) {
         // 允许刷新的参数
-        let allow = ['all','remove']
+        let allow = ['all','remove','editor']
         // 如果没有传参则刷新所有
         if (args.length === 0) args = allow
         // 如果传参则过滤不允许的参数
@@ -143,7 +159,7 @@ watch(() => state.item.search, (val) => {
         else delete state.params[item].like
     }
 
-    // 懒加载 - 没变化的 500ms 后再刷新
+    // 防抖 - 没变化的 500ms 后再刷新
     clearTimeout(state.item.timer)
     state.item.timer = setTimeout(() => method.refresh(...allow), globalThis.inis?.SearchLazyTime ?? 500)
 })

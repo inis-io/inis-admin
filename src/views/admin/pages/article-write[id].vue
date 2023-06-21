@@ -18,17 +18,7 @@
                 </div>
 
                 <div class="card mb-2">
-                    <div class="card-body custom">
-                        <div class="mb-0 d-flex justify-content-end">
-                            <el-tooltip content="地表最强富文本编辑器" placement="top">
-                                <el-radio :disabled="!method.empty(state.item.id) && state.struct.editor !== 'tinymce'"
-                                          v-model="state.struct.editor" label="tinymce">富文本编辑器</el-radio>
-                            </el-tooltip>
-                            <el-tooltip content="地表最强Markdown编辑器" placement="top">
-                                <el-radio :disabled="!method.empty(state.item.id) && state.struct.editor !== 'vditor'"
-                                          v-model="state.struct.editor" label="vditor">Markdown编辑器</el-radio>
-                            </el-tooltip>
-                        </div>
+                    <div v-load="utils.is.empty(state.struct.editor)" class="card-body custom" style="min-height: 485px">
                         <span v-show="state.struct.editor === 'tinymce'">
                             <i-tinymce v-model="state.struct.content" id="tinymce"></i-tinymce>
                         </span>
@@ -154,13 +144,12 @@
 </template>
 
 <script setup>
-import Turndown from 'turndown'
-import MarkdownIt from 'markdown-it';
+import MarkdownIt from 'markdown-it'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import IVditor from "{src}/comps/custom/i-vditor.vue"
-import ITinymce from "{src}/comps/custom/i-tinymce.vue"
+import IVditor from '{src}/comps/custom/i-vditor.vue'
+import ITinymce from '{src}/comps/custom/i-tinymce.vue'
 
 import MouseMenu from '@howdyjs/mouse-menu'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
@@ -195,7 +184,7 @@ const state  = reactive({
         },
         loading: false,
     },
-    struct: { content: '', editor: 'tinymce' },
+    struct: { content: '', editor: null },
     select: {
         top: [{ value: 0, label: '否' }, { value: 1, label: '是' }],
         tags: [],
@@ -227,6 +216,18 @@ const method = {
         await method.getTags()
         if (!utils.is.empty(state.item.id)) {
             await method.getArticle(state.item.id)
+        } else {
+            await method.getConfig()
+        }
+    },
+    // Editor 切换
+    getConfig: async () => {
+        const { code, data } = await axios.get('/api/config/one', { key: 'ARTICLE' })
+        if (code !== 200) return
+        if (utils.in.array(data?.json?.editor, ['tinymce', 'vditor'])) {
+            state.struct.editor = data.json.editor
+        } else {
+            state.struct.editor = 'tinymce'
         }
     },
     // 获取文章信息
@@ -462,11 +463,24 @@ watch(() => state.item.cover, (value) => {
 
 }, { deep: true })
 
+watch(() => route.params?.id, (value) => {
+    if (utils.is.empty(value)) return
+    method.init()
+})
+
 // 监听 html 下的鼠标右键事件
 document.addEventListener('contextmenu', (event) => {
     // 阻止默认事件
     event.preventDefault()
     // 判断点击在不在 #tabs-area 区域内，在不显示右键菜单
     if (!event?.target?.closest('#tinymce')) proxy.$refs['global-menu']?.show(event.x, event.y)
+})
+
+// 组件注销前 - 重置 container-xxl
+onBeforeUnmount(() => {
+    document.querySelectorAll('.container-xxl').forEach(el => {
+        el.classList.remove('container-xxl')
+        el.classList.add('container-fluid')
+    })
 })
 </script>

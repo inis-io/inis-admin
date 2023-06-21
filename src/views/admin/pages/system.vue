@@ -98,6 +98,17 @@
                         </div>
                     </el-tab-pane>
 
+                    <el-tab-pane name="other">
+                        <template #label>
+                            <span class="fw-bolder font-12">其他</span>
+                        </template>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <atom-editor ref="other-editor" v-on:refresh="method.refresh"></atom-editor>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+
                 </el-tabs>
             </div>
         </div>
@@ -124,6 +135,7 @@ import AtomStorageLocal from '{src}/comps/atom/storage-local.vue'
 import AtomStorageOss from '{src}/comps/atom/storage-oss.vue'
 import AtomStorageCos from '{src}/comps/atom/storage-cos.vue'
 import AtomStorageKodo from '{src}/comps/atom/storage-kodo.vue'
+import AtomEditor from '{src}/comps/atom/editor.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
@@ -143,6 +155,7 @@ const state  = reactive({
         },
     },
     refresh: {
+        other   : ['other-editor'],
         optimize: ['cache-redis','cache-file','cache-ram'],
         sms     : ['sms-email','sms-aliyun','sms-tencent'],
         storage : ['storage-local','storage-oss','storage-cos','storage-kodo'],

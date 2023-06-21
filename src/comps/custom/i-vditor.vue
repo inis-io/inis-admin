@@ -44,8 +44,34 @@ const props = defineProps({
     },
 })
 
+const base_url = (process.env.NODE_ENV === 'production' ? (import.meta.env.VITE_BASE || '/') : '/')
+
 onMounted( () => {
-    state.item = new Vditor(ctx.$refs['vditor'], {
+    state.item = new Vditor(proxy.$refs['vditor'], {
+        cdn: base_url + 'assets/libs/vditor',
+        // cdn: 'https://unpkg.com/vditor@3.9.3',
+        placeholder: '写点什么吧！',
+        toolbarConfig: {
+            pin: true,              // 固定工具栏
+        },
+        cache: {
+            enable: false,          // 关闭缓存
+        },
+        counter: {
+            enable: true,           // 启用计数器
+        },
+        resize: {
+            enable: true,           // 支持主窗口大小拖拽
+        },
+        preview: {
+            hljs: {
+                enable: true,       // 启用代码高亮
+                lineNumber: true,   // 启用行号
+            },
+            math: {
+                engine: 'MathJax',
+            }
+        },
         after: () => {
             state.item.setValue(props.modelValue)
         },
