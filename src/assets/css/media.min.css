@@ -30,6 +30,9 @@
     body[data-layout=topnav] .container-sm, body[data-layout=topnav] .container-xl {
         max-width: 85%;
     }
+    .el-dialog.custom{
+        --el-dialog-width: 70%;
+    }
 }
 
 /* 当屏幕宽度小于768px时，应用以下样式 */
@@ -53,5 +56,8 @@
     }
     footer{
         position: unset;
+    }
+    .el-dialog.custom{
+        --el-dialog-width: 90%;
     }
 }

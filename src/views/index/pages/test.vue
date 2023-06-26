@@ -1,22 +1,38 @@
 <template>
     <div class="container-fluid container-box">
-        <h1>Test Vditor - {{ state.struct.title }}</h1>
-        <div class="card">
-            <div class="card-body custom">
-                <i-vditor v-model="state.struct.content" :opts="{ height: 600 }"></i-vditor>
-            </div>
-        </div>
+<!--        <el-button text @click="dialogVisible = true">-->
+<!--            Click to open Dialog-->
+<!--        </el-button>-->
+
+        <el-dialog v-model="state.show" class="custom" draggable :close-on-click-modal="false">
+            <template #title>
+                <strong>新 增</strong>
+            </template>
+            <template #default>
+                这是内容
+            </template>
+            <template #footer>
+                <button type="button" class="btn btn-outline-light mx-1">取 消</button>
+                <button type="button" class="btn btn-info mx-1">保 存</button>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <script setup>
-import IVditor from "{src}/comps/custom/i-vditor.vue"
+
+import utils from "{src}/utils/utils.js";
 
 const state  = reactive({
-    struct: {
-        title: '测试标题',
-        content: '这是一段测试文本，可以直接编辑。'
-    }
+    show: true,
+    value: '',
+    options: [
+        { value: 'Option1', label: 'Option1' },
+        { value: 'Option2', label: 'Option2', disabled: true },
+        { value: 'Option3', label: 'Option3' },
+        { value: 'Option4', label: 'Option4' },
+        { value: 'Option5', label: 'Option5' }
+    ]
 })
 
 console.log(`/**

@@ -69,7 +69,7 @@ body{
     border-radius: 50%;
     z-index: 9999999;
 }
-footer {
+#footer {
     text-align: center;
     height: 46px;
     backdrop-filter: blur(10px);

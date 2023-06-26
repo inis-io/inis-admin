@@ -70,68 +70,64 @@
 
     </i-table>
 
-    <teleport to="body">
-        <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-5">
-                <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
-                    <div class="modal-header d-flex justify-content-center">
-                        <strong>{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
+    <el-dialog v-model="state.dialog" class="custom" draggable :close-on-click-modal="false">
+        <template #title>
+            <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
+        </template>
+        <template #default>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="（必须）这个权限分组的名称叫什么？" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">名称：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.name" type="text" class="form-control customize text-white">
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="（必须）这个权限分组的名称叫什么？" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">名称：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.name" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip placement="top">
-                                            <template #content>
-                                                <span>（可选）为该分组的用户分配更高级的权限</span><br>
-                                                <span>● 默认：即便用户拥有了对应的权限，也只能操作自己的数据，适用于普通用户或会员</span><br>
-                                                <span>● 管理权限：该权限适用于有管理权限的用户，比如管理员和编辑员等，对别人的数据有操作权限</span><br>
-                                            </template>
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">权限：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <el-select v-model="state.struct.root" placeholder="请选择权限" class="d-block custom font-13">
-                                        <el-option v-for="item in state.select.root" :key="item.value" :label="item.label" :value="item.value">
-                                            <span class="font-13">{{ item.label }}</span>
-                                        </el-option>
-                                    </el-select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">备注：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <textarea v-model="state.struct.remark" class="form-control customize text-white" rows="3" placeholder="备注一下，避免忘记！"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip placement="top">
+                                <template #content>
+                                    <span>（可选）为该分组的用户分配更高级的权限</span><br>
+                                    <span>● 默认：即便用户拥有了对应的权限，也只能操作自己的数据，适用于普通用户或会员</span><br>
+                                    <span>● 管理权限：该权限适用于有管理权限的用户，比如管理员和编辑员等，对别人的数据有操作权限</span><br>
+                                </template>
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">权限：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-select v-model="state.struct.root" placeholder="请选择权限" class="d-block custom font-13">
+                            <el-option v-for="item in state.select.root" :key="item.value" :label="item.label" :value="item.value">
+                                <span class="font-13">{{ item.label }}</span>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">备注：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <textarea v-model="state.struct.remark" class="form-control customize text-white" rows="3" placeholder="备注一下，避免忘记！"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group mb-3">
                                     <label class="form-label">
@@ -154,19 +150,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button v-on:click="state.struct = {}" type="button" class="btn btn-outline-light" data-bs-dismiss="modal">取 消</button>
-                        <button v-on:click="method.save()" type="button" class="btn btn-info">保 存</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </teleport>
+        </template>
+        <template #footer>
+            <button v-on:click="state.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
+            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+        </template>
+    </el-dialog>
 </template>
 
 <script setup>
-import { Modal } from 'bootstrap'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
@@ -206,8 +198,8 @@ const state  = reactive({
     item: {
         table: 'auth-group',
     },
-    modal: Modal,
-    struct: {},
+    dialog: false,
+    struct: { root: 0 },
     opts: {
         url: '/api/auth-group/all',
         params: props.params,
@@ -260,7 +252,6 @@ const state  = reactive({
 
 onMounted(async () => {
     await method.getRules()
-    state.modal = new Modal(proxy.$refs['item-modal'])
 })
 
 const method = {
@@ -298,7 +289,7 @@ const method = {
 
         notyf.info(msg)
         // 关闭模态框
-        state.modal.hide()
+        state.dialog = false
         // 重新加载数据
         await method.init()
     },
@@ -316,7 +307,7 @@ const method = {
                 }
             }
             state.rules.select = rules
-            return state.modal.show()
+            return state.dialog = true
         }
 
         // 部分权限
@@ -342,13 +333,13 @@ const method = {
             state.rules.select = rules
         }
 
-        state.modal.show()
+        state.dialog = true
     },
     // 显示盒子
     show: () => {
         state.struct = {}
         state.rules.select = []
-        state.modal.show()
+        state.dialog = true
     },
      // 真删 和 软删
     async delete(ids = [], isSoft = true) {

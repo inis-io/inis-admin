@@ -43,7 +43,7 @@ body[inis-theme=white] .navbar-dark .dropdown-menu{
     backdrop-filter: var(--theme-blur);
     border-radius: 4px;
 }
-body[inis-theme=white] footer{
+body[inis-theme=white] #footer{
     backdrop-filter: var(--theme-blur);
     background: rgba(var(--theme-color), var(--theme-opacity));
     transform: translate(0);
@@ -488,7 +488,13 @@ body[inis-theme=white] .el-input-number .el-input__wrapper.is-focus{
     box-shadow: 0 0 0 1px var(--el-input-border-color,var(--el-border-color)) inset;
 }
 /* ==================== 自定义 el-input-number - 结束 ==================== */
-
+/* ==================== 自定义 el-dialog - 开始 ==================== */
+body[inis-theme=white] .el-dialog{
+    --el-dialog-bg-color: unset;
+    background: rgba(var(--theme-color), calc(var(--theme-opacity) / 2)) !important;
+    backdrop-filter: var(--theme-blur);
+}
+/* ==================== 自定义 el-dialog - 结束 ==================== */
 
 
 

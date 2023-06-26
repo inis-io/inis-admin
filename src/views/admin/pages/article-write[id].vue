@@ -280,6 +280,11 @@ const method = {
     // 保存
     save: async () => {
 
+        // Vditor 编辑器
+        if (state.struct.editor === 'vditor') {
+            state.struct.content = proxy.$refs['vditor'].getValue()
+        }
+
         // 正则匹配 html 纯文本内容 - 去除换行符
         const reg = /<[^>]+>/g
         // 文章字数
@@ -389,57 +394,6 @@ const method = {
             }
         }
         return result
-    },
-    // ============================================== 未完成 ==============================================
-    parseContent: (value = 'vditor') => {
-        // 编辑器内容
-        let content = state.struct.content
-        if (value === 'vditor') {
-            content = proxy.$refs['vditor'].html2md(content)
-            // \` 转换成 `
-            content = content.replace(/\\`/g, '`')
-            // 两个以上的空格转换成换行
-            content = content.replace(/ {2,}/g, '\n\n')
-            // HTML 转 Markdown
-            // content = (new Turndown()).turndown(content)
-            // // 去除开头的\
-            // content = content.replace(/^\\/, '')
-            // // \n 转换成 \n\n
-            // content = content.replace(/\n/g, '\n\n')
-            console.log('html to markdown：\n\n', content)
-        } else if (value === 'tinymce') {
-            const md = ' ### 这是标题\n' +
-                '\n' +
-                '> 这是引用\n' +
-                '\n' +
-                '```js\n' +
-                'console.log(res) \n' +
-                '```'
-            // content = (new MarkdownIt({
-            //     highlight: function (str) { return str; }
-            // })).render(content)
-            content = (new MarkdownIt({
-                highlight: function (str) { return str; }
-            })).render(md)
-            console.log('markdown to html：\n\n', (new MarkdownIt({
-                highlight: function (str) { return str; }
-            })).render(md))
-        }
-
-        state.struct.content = content
-
-        // const html = `<h3>这是标题</h3>
-        //     <blockquote>
-        //     <p>这是引用</p>
-        //     </blockquote>
-        //     <pre><code class="language-js">console.log(res)
-        // </code></pre>`
-        // const turndownService = new Turndown()
-        // const markdown = turndownService.turndown(html)
-        // state.struct.content = markdown
-        //
-        // const md = new MarkdownIt()
-        // console.log(md.render(markdown))
     },
     empty: value => utils.is.empty(value),
 }
