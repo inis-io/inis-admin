@@ -11,12 +11,12 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -29,17 +29,17 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
                         <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
-                            <i-svg name="restore" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -56,7 +56,7 @@
                     <el-avatar shape="square" :src="method.imageSize(scope?.avatar)" size="small" class="me-2"></el-avatar>
                 </el-tooltip>
                 <el-tooltip v-if="!utils.is.empty(scope.url)" :content="`链接：${scope.url}`" placement="top">
-                    <i-svg v-on:click="method.window(scope.url)" name="link" size="12px" color="#fff" class="me-1"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" v-on:click="method.window(scope.url)" name="link" size="12px" class="me-1"></i-svg>
                 </el-tooltip>
                 <el-tooltip :content="scope.nickname" :disabled="utils.is.empty(scope.nickname)" placement="top">
                     <span>{{ method.omit(scope?.nickname, 4, ' ...', 'end') }}</span>
@@ -105,7 +105,7 @@
         <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg mt-5">
                 <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" name="close" size="20px" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
                     <div class="modal-header d-flex justify-content-center">
                         <strong>{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
                     </div>
@@ -116,7 +116,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="这位兄dei叫什么？" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">昵称：</span>
                                             </span>
                                         </el-tooltip>
@@ -129,7 +129,7 @@
                                     <label class="form-label required">
                                         <el-tooltip content="（必须）可用于账密登录" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">账号：</span>
                                             </span>
                                         </el-tooltip>
@@ -142,7 +142,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="建议设置一个头像，效果更佳" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">头像：</span>
                                             </span>
                                         </el-tooltip>
@@ -164,7 +164,7 @@
                                     <label class="form-label required">
                                         <el-tooltip content="（必须）可用于邮箱验证码登录" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">邮箱：</span>
                                             </span>
                                         </el-tooltip>
@@ -177,7 +177,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="可用于手机验证码登录" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">手机：</span>
                                             </span>
                                         </el-tooltip>
@@ -190,7 +190,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="为空不修改，反之修改密码" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">密码：</span>
                                             </span>
                                         </el-tooltip>
@@ -205,7 +205,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="为该用户分配权限，默认只有公共权限" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">权限：</span>
                                             </span>
                                         </el-tooltip>
@@ -222,7 +222,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="为用户分配后台的页面访问权限" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">页面权限：</span>
                                             </span>
                                         </el-tooltip>
@@ -231,7 +231,7 @@
                                         <el-option v-for="item in state.select.auth_pages" :key="item.path" :label="item.name" :value="item.path">
                                             <span class="font-13">
                                                 <span v-if="!utils.is.empty(item.svg)" v-html="item.svg"></span>
-                                                <i-svg v-else-if="!utils.is.empty(item.icon)" :name="item.icon" :size="item.size"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" v-else-if="!utils.is.empty(item.icon)" :name="item.icon" :size="item.size"></i-svg>
                                                 {{ item.name }}
                                             </span>
                                             <small class="text-muted float-end">{{ item.path }}</small>
@@ -244,7 +244,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="为这个用户设置一个专属的头衔，彰显与众不同" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">专属头衔：</span>
                                             </span>
                                         </el-tooltip>
@@ -259,7 +259,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="简单的介绍一下" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">个人简介：</span>
                                             </span>
                                         </el-tooltip>
@@ -274,7 +274,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">备注：</span>
                                             </span>
                                         </el-tooltip>

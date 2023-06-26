@@ -11,12 +11,12 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip v-if="false" content="回收站" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -29,17 +29,17 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
                         <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
-                            <i-svg name="restore" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -50,7 +50,7 @@
         <template #i-name="{ scope = {} }">
             <span v-on:dblclick="method.edit(scope)" class="d-flex align-items-center">
                 <span v-if="!utils.is.empty(scope.svg)" v-html="scope.svg"></span>
-                <i-svg v-else-if="!utils.is.empty(scope.icon)" :name="scope.icon" :size="scope.size"></i-svg>
+                <i-svg color="rgb(var(--icon-color))" v-else-if="!utils.is.empty(scope.icon)" :name="scope.icon" :size="scope.size"></i-svg>
                 <el-tooltip :content="scope.name" :disabled="utils.is.empty(scope.name)" placement="top">
                     <span class="ms-1">{{ method.omit(scope?.name, 16, ' ...', 'end') }}</span>
                 </el-tooltip>
@@ -72,7 +72,7 @@
         <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg mt-5">
                 <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" name="close" size="20px" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
                     <div class="modal-header d-flex justify-content-center">
                         <strong>{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
                     </div>
@@ -83,7 +83,7 @@
                                     <label class="form-label required">
                                         <el-tooltip content="（必须）页面名称" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">名称：</span>
                                             </span>
                                         </el-tooltip>
@@ -96,7 +96,7 @@
                                     <label class="form-label required">
                                         <el-tooltip content="（必须）页面路径，也可以理解为页面的路由" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">路径：</span>
                                             </span>
                                         </el-tooltip>
@@ -109,7 +109,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="内置的SVG图标" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">内置图标：</span>
                                             </span>
                                         </el-tooltip>
@@ -117,7 +117,7 @@
                                     <el-select v-model="state.struct.icon" placeholder="可选内置图标" class="d-block custom font-13">
                                         <el-option v-for="item in state.select.icons" :key="item.value" :label="item.value" :value="item.label">
                                             <span class="font-13">
-                                                <i-svg :name="item.value" size="16px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" :name="item.value" size="16px"></i-svg>
                                             </span>
                                             <small class="text-muted float-end">{{ item.label }}</small>
                                         </el-option>
@@ -129,7 +129,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="内置图标的大小，如：16px" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">大小：</span>
                                             </span>
                                         </el-tooltip>
@@ -144,7 +144,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="自定义选项" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">自定义图标 - SVG代码：</span>
                                             </span>
                                         </el-tooltip>
@@ -159,7 +159,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="备注一下" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">备注：</span>
                                             </span>
                                         </el-tooltip>

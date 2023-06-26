@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="serve" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="serve" color="rgb(var(--svg-color))" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -9,7 +9,7 @@
                         ● 本地存储的优点是不花钱，缺点是占用服务器空间和带宽
                     </template>
                     <span class="d-inline-flex align-items-center">
-                        <i-svg name="hint" size="14px"></i-svg>
+                        <i-svg name="hint" color="rgb(var(--icon-color))" size="14px"></i-svg>
                         <span class="ms-1">本地存储</span>
                     </span>
                 </el-tooltip>
@@ -19,9 +19,9 @@
                            active-text="开始" inactive-text="关闭" active-color="#13ce66" inactive-color="#ff4949">
                 </el-switch>
             </h2>
-            <span class="badge bg-dark"> 传统 </span>
+            <span class="badge bg-dark font-white"> 传统 </span>
             <span class="text-muted ms-1">
-                这个不花钱，<span v-on:click="method.show()" class="text-warning">点我配置</span>
+                这个不花钱，<span v-on:click="method.show()" class="text-warning pointer">点我配置</span>
             </span>
         </div>
     </div>

@@ -11,12 +11,12 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -29,17 +29,17 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
                         <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
-                            <i-svg name="restore" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -49,10 +49,10 @@
 
         <template #i-ip="{ scope = {} }">
             <el-tooltip v-if="!utils.is.empty(scope?.cause)" :content="'原因：' + scope?.cause" placement="top">
-                <i-svg v-on:dblclick="method.copy(scope?.cause)" name="remark" size="16px" class="me-1"></i-svg>
+                <i-svg color="rgb(var(--icon-color))" v-on:dblclick="method.copy(scope?.cause)" name="remark" size="16px" class="me-1"></i-svg>
             </el-tooltip>
             <el-tooltip v-if="!utils.is.empty(scope?.agent)" :content="'双击复制 User-Agent：' + scope?.agent" placement="top">
-                <i-svg v-on:dblclick="method.copy(scope?.agent)" name="user-agent" size="16px" class="me-1"></i-svg>
+                <i-svg color="rgb(var(--icon-color))" v-on:dblclick="method.copy(scope?.agent)" name="user-agent" size="16px" class="me-1"></i-svg>
             </el-tooltip>
             <el-tooltip :content="'双击复制：' + scope.ip" :disabled="utils.is.empty(scope?.ip)" placement="top">
                 <span v-on:dblclick="method.copy(scope?.ip)">{{ method.omit(scope?.ip, 15) }}</span>
@@ -74,7 +74,7 @@
         <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg mt-5">
                 <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" name="close" size="20px" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
                     <div class="modal-header d-flex justify-content-center">
                         <strong>{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
                     </div>
@@ -85,7 +85,7 @@
                                     <label class="form-label required">
                                         <el-tooltip content="（必须）需要被拉黑的 IP" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">IP：</span>
                                             </span>
                                         </el-tooltip>
@@ -100,7 +100,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">备注：</span>
                                             </span>
                                         </el-tooltip>

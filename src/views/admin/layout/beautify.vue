@@ -60,10 +60,6 @@ nextTick(() => {
 
     cover.style.setProperty('opacity', 0)
     cover.style.setProperty('transition', 'all 1.5s ease 0s')
-    // image.style.setProperty('transform', 'scale(1)')
-    // image.style.setProperty('filter', 'blur(0px)')
-    // image.style.setProperty('transition', 'all 1.5s ease 0s')
-    // image.style.setProperty('opacity', 1)
 
     // 移动端去除鼠标样式
     if (Boolean(window.navigator.userAgent.match(/AppWebKit.*Mobile.*/))) {

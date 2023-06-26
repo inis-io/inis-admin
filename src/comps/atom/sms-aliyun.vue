@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="aliyun" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="aliyun" color="rgb(var(--svg-color))" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -9,7 +9,7 @@
                         ● 注册、找回密码、通知等功能都需要依赖此服务
                     </template>
                     <span class="d-inline-flex align-items-center">
-                        <i-svg name="hint" size="14px"></i-svg>
+                        <i-svg name="hint" color="rgb(var(--icon-color))" size="14px"></i-svg>
                         <span class="ms-1">阿里云短信</span>
                     </span>
                 </el-tooltip>
@@ -19,9 +19,9 @@
                            active-text="开启" inactive-text="关闭" active-color="#13ce66" inactive-color="#ff4949">
                 </el-switch>
             </h2>
-            <span class="badge bg-warning"> 企业 </span>
+            <span class="badge bg-warning font-white"> 企业 </span>
             <span class="text-muted">
-                企业推荐这个，<span v-on:click="method.show()" class="text-white">点我配置</span>
+                企业推荐这个，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
             </span>
         </div>
     </div>

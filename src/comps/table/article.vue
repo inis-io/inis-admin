@@ -11,12 +11,12 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg name="edit" color="rgb(var(--icon-color))" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg name="delete" color="rgb(var(--icon-color))" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -29,17 +29,17 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
                         <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
-                            <i-svg name="restore" size="16px"></i-svg>
+                            <i-svg name="restore" color="rgb(var(--icon-color))" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg name="edit" color="rgb(var(--icon-color))" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg name="delete" color="rgb(var(--icon-color))" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -50,7 +50,7 @@
         <template #i-title="{ scope = {} }">
             <span v-on:dblclick="method.edit(scope)" class="d-flex align-items-center">
                 <el-tooltip v-if="scope.top === 1" content="置顶" placement="top">
-                    <i-svg name="top" size="18px" class="me-1"></i-svg>
+                    <i-svg name="top" color="rgb(var(--icon-color))" size="18px" class="me-1"></i-svg>
                 </el-tooltip>
                 <el-tooltip :content="scope.title" :disabled="utils.is.empty(scope.title)" placement="top">
                     <span>{{ method.omit(scope.title, 10, ' ...', 'end') }}</span>

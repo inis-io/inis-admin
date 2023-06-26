@@ -22,7 +22,7 @@ nextTick(()=>{
     const body = document.querySelector('body')
     body.setAttribute('data-layout', 'topnav')
     // body.setAttribute('inis-theme', 'dark')
-    body.setAttribute('inis-theme', 'white')
+    body.setAttribute('inis-theme', 'white-lighten')
     body.classList.add('user-select-none')
 })
 </script>

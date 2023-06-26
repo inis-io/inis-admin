@@ -5,12 +5,12 @@
                 <div class="collapse navbar-collapse justify-content-between">
                     <el-menu class="navbar-nav w-100" :unique-opened="true" menu-trigger="hover" mode="horizontal" background-color="transparent">
                         <el-menu-item index="/">
-                            <el-image v-on:click="push('/')" src="/assets/images/logo.png" style="width: 100px;" class="d-flex flex-center"></el-image>
+                            <el-image v-on:click="push('/')" :src="`/assets/images/logo-${state.theme}.png`" style="width: 100px;" class="d-flex flex-center"></el-image>
                         </el-menu-item>
                         <el-sub-menu v-for="(item, index) in state.menu" :key="index" :index="index" show-timeout="50" hide-timeout="50">
                             <template #title>{{ item.label }}</template>
                             <el-menu-item v-for="(val, key) in item.children" :key="key" v-on:click="val.fn">
-                                <i-svg :name="val.icon" :size="val.size" class="me-1"></i-svg>
+                                <i-svg :name="val.icon" :size="val.size" color="rgb(var(--svg-color))" class="me-1"></i-svg>
                                 {{ val.label }}
                             </el-menu-item>
                         </el-sub-menu>
@@ -20,7 +20,7 @@
                             <template #title>
                                 <div class="d-flex flex-column align-items-end user-select-text me-2">
                                     <span v-if="!method.empty(state.user?.title)" class="font-14">
-                                        <strong class="badge item left bg-dark px-2 py-1">
+                                        <strong class="badge item left bg-dark px-2 py-1" style="color: #fff">
                                             {{ state.user?.nickname }}
                                         </strong>
                                         <span class="badge item right bg-warning px-2 py-1">
@@ -35,15 +35,15 @@
                                 <el-avatar :src="state.user?.avatar" class="me-1" shape="square" size="medium"></el-avatar>
                             </template>
                             <el-menu-item route="/admin">
-                                <i-svg name="console" size="16px" class="me-1"></i-svg>
+                                <i-svg color="rgb(var(--svg-color))" name="console" size="16px" class="me-1"></i-svg>
                                 控制台
                             </el-menu-item>
                             <el-menu-item route="/admin/personal">
-                                <i-svg name="personal" size="16px" class="me-1"></i-svg>
+                                <i-svg color="rgb(var(--svg-color))" name="personal" size="16px" class="me-1"></i-svg>
                                 个人中心
                             </el-menu-item>
                             <el-menu-item>
-                                <i-svg name="logout" size="16px" class="me-1"></i-svg>
+                                <i-svg color="rgb(var(--svg-color))" name="logout" size="16px" class="me-1"></i-svg>
                                 <span v-on:click="method.logout()" class="w-100">退出登录</span>
                             </el-menu-item>
                         </el-sub-menu>
@@ -54,12 +54,12 @@
                 <div class="d-flex justify-content-between">
                     <span>
                         <span v-on:click="state.drawer = true" class="mx-2">
-                            <i-svg name="menu" size="24px"></i-svg>
+                            <i-svg color="rgb(var(--svg-color))" name="menu" size="24px"></i-svg>
                         </span>
                     </span>
                     <span>
                         <a v-if="!state.login.finish" data-bs-toggle="modal" data-bs-target="#fill-item-modal" href="javascript:;" class="mx-2">
-                            <i-svg name="user-white" size="26px"></i-svg>
+                            <i-svg color="rgb(var(--svg-color))" name="user-white" size="26px"></i-svg>
                         </a>
                         <a v-else href="/admin">
                             <el-avatar :src="state.user?.avatar" :size="26" class="mx-2"></el-avatar>
@@ -139,8 +139,8 @@ onMounted(async () => {
     state.menu = await MenuList()
 })
 
-nextTick(() => {
-    state.theme = document.querySelector('body').getAttribute('inis-theme')
+nextTick( async () => {
+    await method.getTheme()
 })
 
 const method = {
@@ -173,8 +173,13 @@ const method = {
         state.login.finish = true
         utils.set.session('USERINFO', data.user)
     },
+    async getTheme() {
+        let theme = document.querySelector('body').getAttribute('inis-theme')
+        if (theme.indexOf('white') !== -1) state.theme = 'white'
+        else state.theme = 'dark'
+    },
     // 是否为空
     empty: value => utils.is.empty(value),
-        router: (params = {}) => router.push(params),
+    router: (params = {}) => router.push(params),
 }
 </script>

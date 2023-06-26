@@ -11,12 +11,12 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -29,17 +29,17 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
                         <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
-                            <i-svg name="restore" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>

@@ -11,12 +11,12 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -29,17 +29,17 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
                         <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
-                            <i-svg name="restore" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -81,7 +81,7 @@
                         <label class="form-label required">
                             <el-tooltip content="（必须）这个权限分组的名称叫什么？" placement="top">
                                 <span>
-                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                     <span class="ms-1">名称：</span>
                                 </span>
                             </el-tooltip>
@@ -99,7 +99,7 @@
                                     <span>● 管理权限：该权限适用于有管理权限的用户，比如管理员和编辑员等，对别人的数据有操作权限</span><br>
                                 </template>
                                 <span>
-                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                     <span class="ms-1">权限：</span>
                                 </span>
                             </el-tooltip>
@@ -118,7 +118,7 @@
                         <label class="form-label">
                             <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
                                 <span>
-                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                     <span class="ms-1">备注：</span>
                                 </span>
                             </el-tooltip>
@@ -128,28 +128,28 @@
                 </div>
             </div>
             <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">规则：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <div>
-                                        <el-cascader placeholder="试试搜索：文章" :options="state.select.rules" :props="{ multiple: true }" filterable
-                                        class="d-block custom multiple" v-model="state.rules.select" @change="method.change()">
-                                            <template #default="{ node, data }">
-                                                <span>{{ data.label }} </span>
-                                                <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
-                                            </template>
-                                        </el-cascader>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-lg-12">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">规则：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <div>
+                            <el-cascader placeholder="试试搜索：文章" :options="state.select.rules" :props="{ multiple: true }" filterable
+                            class="d-block custom multiple" v-model="state.rules.select" @change="method.change()">
+                                <template #default="{ node, data }">
+                                    <span>{{ data.label }} </span>
+                                    <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
+                                </template>
+                            </el-cascader>
                         </div>
+                    </div>
+                </div>
+            </div>
         </template>
         <template #footer>
             <button v-on:click="state.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>

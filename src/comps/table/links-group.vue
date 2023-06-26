@@ -11,12 +11,12 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -29,17 +29,17 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
                         <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
-                            <i-svg name="restore" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -71,7 +71,7 @@
         <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg mt-5">
                 <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" name="close" size="20px" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
                     <div class="modal-header d-flex justify-content-center">
                         <strong>{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
                     </div>
@@ -82,7 +82,7 @@
                                     <label class="form-label required">
                                         <el-tooltip content="（必须）这个友链分组的名称" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">名称：</span>
                                             </span>
                                         </el-tooltip>
@@ -95,7 +95,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="要不要给这个分组设置一个头像" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">头像：</span>
                                             </span>
                                         </el-tooltip>
@@ -117,7 +117,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="这个分组的描述信息" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">描述：</span>
                                             </span>
                                         </el-tooltip>

@@ -9,7 +9,7 @@
                         ● 开启后，后续上传的文件将会自动上传到KODO，不会占用服务器的空间和带宽
                     </template>
                     <span class="d-inline-flex align-items-center">
-                        <i-svg name="hint" size="14px"></i-svg>
+                        <i-svg name="hint" color="rgb(var(--icon-color))" size="14px"></i-svg>
                         <span class="ms-1">KODO</span>
                     </span>
                 </el-tooltip>
@@ -19,9 +19,9 @@
                            active-text="开始" inactive-text="关闭" active-color="#13ce66" inactive-color="#ff4949">
                 </el-switch>
             </h2>
-            <span class="badge bg-info"> 一般 </span>
+            <span class="badge bg-info font-white"> 一般 </span>
             <span class="text-muted ms-1">
-                不是很好用，<span v-on:click="method.show()" class="text-warning">点我配置</span>
+                不是很好用，<span v-on:click="method.show()" class="text-warning pointer">点我配置</span>
             </span>
         </div>
     </div>

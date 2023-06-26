@@ -11,12 +11,12 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -29,17 +29,17 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
                         <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
-                            <i-svg name="restore" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -50,7 +50,7 @@
         <template #i-name="{ scope = {} }">
             <span v-on:dblclick="method.edit(scope)" class="d-flex align-items-center">
                 <el-tooltip v-if="parseInt(scope.common) === 1" content="公共权限，不需要登录即可使用的接口" placement="top">
-                    <i-svg name="!" size="14px"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" name="!" size="14px"></i-svg>
                 </el-tooltip>
                 <el-tooltip :content="scope.name" :disabled="utils.is.empty(scope.name)" placement="top">
                     <span>{{ method.omit(scope?.name, 16, ' ...', 'end') }}</span>
@@ -66,9 +66,9 @@
                     <span v-else>公共类型</span>
                 </template>
                 <span :class="scope.type === 'login' ? 'me-1' : 'me-2'">
-                    <i-svg v-if="scope.type === 'login'" name="user" size="18px"></i-svg>
-                    <i-svg v-else-if="scope.type === 'common'" name="common" size="18px"></i-svg>
-                    <i-svg v-else name="!" size="16px"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" v-if="scope.type === 'login'" name="user" size="18px"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" v-else-if="scope.type === 'common'" name="common" size="18px"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" v-else name="!" size="16px"></i-svg>
                 </span>
             </el-tooltip>
             <el-tooltip :content="'双击复制：' + scope.route" :disabled="utils.is.empty(scope.route)" placement="top">
@@ -94,7 +94,7 @@
         <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg mt-5">
                 <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" name="close" size="20px" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
                     <div class="modal-header d-flex justify-content-center">
                         <strong>{{utils.is.empty(state.struct.id) ? '新 增' : '编 辑'}}</strong>
                     </div>
@@ -105,7 +105,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="该接口名称，请遵循以下规则，如：【分组名】API名" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">名称：</span>
                                             </span>
                                         </el-tooltip>
@@ -118,7 +118,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="可用于接口计费模式" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">费用：</span>
                                             </span>
                                         </el-tooltip>
@@ -133,7 +133,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="该接口的请求类型" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">请求类型：</span>
                                             </span>
                                         </el-tooltip>
@@ -151,7 +151,7 @@
                                     <label class="form-label required">
                                         <el-tooltip content="（必须）接口请求地址" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">API：</span>
                                             </span>
                                         </el-tooltip>
@@ -169,7 +169,7 @@
                                                 <strong>● 登录：此种接口只有在登录后，才能使用，否则直接拦截掉</strong>
                                             </template>
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">接口类型：</span>
                                             </span>
                                         </el-tooltip>
@@ -189,7 +189,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">备注：</span>
                                             </span>
                                         </el-tooltip>

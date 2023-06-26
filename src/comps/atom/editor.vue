@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="editor" size="43px" class="position-absolute opacity-25" style="right: 2rem"></i-svg>
+            <i-svg name="editor" color="rgb(var(--svg-color))" size="43px" class="position-absolute opacity-25" style="right: 2rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -9,7 +9,7 @@
                         ● 富文本编辑器：TinyMCE是一个基于浏览器的所见即所得富文本编辑器，用于编辑HTML文档。<br>
                     </template>
                     <span class="d-inline-flex align-items-center">
-                        <i-svg name="hint" size="14px"></i-svg>
+                        <i-svg name="hint" color="rgb(var(--icon-color))" size="14px"></i-svg>
                         <span class="ms-1">编辑器</span>
                     </span>
                 </el-tooltip>

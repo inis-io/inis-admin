@@ -11,12 +11,12 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -29,17 +29,17 @@
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
                         <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
-                            <i-svg name="restore" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
                         <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
-                            <i-svg name="edit" size="16px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
                         <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
-                            <i-svg name="delete" size="21px"></i-svg>
+                            <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     </span>
@@ -60,7 +60,7 @@
                     <el-avatar shape="square" :src="method.imageSize(scope?.image)" size="small" class="me-2"></el-avatar>
                 </el-tooltip>
                 <el-tooltip v-if="!utils.is.empty(scope.url)" :content="`链接：${scope.url}`" placement="top">
-                    <i-svg v-on:click="method.window(scope.url)" name="link" size="12px" color="#fff" class="me-1"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" v-on:click="method.window(scope.url)" name="link" size="12px" class="me-1"></i-svg>
                 </el-tooltip>
                 <el-tooltip :content="scope.title" :disabled="utils.is.empty(scope.title)" placement="top">
                     <span>{{ method.omit(scope?.title, 4, ' ...', 'end') }}</span>
@@ -92,7 +92,7 @@
         <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg mt-5">
                 <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
+                    <i-svg color="rgb(var(--icon-color))" name="close" size="20px" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
                     <div class="modal-header d-flex justify-content-center">
                         <strong>{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
                     </div>
@@ -103,7 +103,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="这个轮播要不要显示标题" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">标题：</span>
                                             </span>
                                         </el-tooltip>
@@ -116,7 +116,7 @@
                                     <label class="form-label required">
                                         <el-tooltip content="（必须）轮播图图片，无图不可为轮播" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">图片地址：</span>
                                             </span>
                                         </el-tooltip>
@@ -138,7 +138,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="点击该轮播图是否需要打开一个网址" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">跳转链接：</span>
                                             </span>
                                         </el-tooltip>
@@ -151,7 +151,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="点击轮播后，跳转链接的执行方式" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">跳转方式：</span>
                                             </span>
                                         </el-tooltip>
@@ -171,7 +171,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="轮播图上面的文案，可以不设置" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">内容：</span>
                                             </span>
                                         </el-tooltip>
@@ -186,7 +186,7 @@
                                     <label class="form-label">
                                         <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
                                             <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                                 <span class="ms-1">备注：</span>
                                             </span>
                                         </el-tooltip>

@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="security-1" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="security-1" size="60px" color="rgb(var(--svg-color))" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -10,7 +10,7 @@
                         导致服务器崩溃，分页限制可以限制每页最大请求数据量，超过则强制性=最大值
                     </template>
                     <span class="d-inline-flex align-items-center">
-                        <i-svg name="hint" size="14px"></i-svg>
+                        <i-svg name="hint" color="rgb(var(--icon-color))" size="14px"></i-svg>
                         <span class="ms-1">分页限制</span>
                     </span>
                 </el-tooltip>
@@ -20,9 +20,9 @@
                            active-text="我怂" inactive-text="无所畏惧" active-color="#13ce66" inactive-color="#ff4949">
                 </el-switch>
             </h2>
-            <span class="badge bg-primary"> +5% </span>
+            <span class="badge bg-primary font-white"> +5% </span>
             <span class="text-muted ms-1">
-                安全性提升，<span v-on:click="method.show()" class="text-warning">点我配置</span>
+                安全性提升，<span v-on:click="method.show()" class="text-warning pointer">点我配置</span>
             </span>
         </div>
     </div>

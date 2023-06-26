@@ -25,7 +25,7 @@ nextTick(()=>{
     const body = document.querySelector('body')
     body.setAttribute('data-layout', 'topnav')
     // body.setAttribute('inis-theme', 'dark')
-    body.setAttribute('inis-theme', 'white')
+    body.setAttribute('inis-theme', 'white-lighten')
     body.classList.add('user-select-none')
     // 给 app 添加一个 class
     const app = document.querySelector('#app')
