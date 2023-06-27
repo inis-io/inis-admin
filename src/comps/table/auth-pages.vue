@@ -68,119 +68,111 @@
 
     </i-table>
 
-    <teleport to="body">
-        <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-5">
-                <div class="modal-content modal-filled position-relative">
-                    <i-svg color="rgb(var(--icon-color))" name="close" size="20px" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
-                    <div class="modal-header d-flex justify-content-center">
-                        <strong>{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
+    <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
+        <template #title>
+            <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
+        </template>
+        <template #default>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="（必须）页面名称" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">名称：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.name" type="text" class="form-control customize text-white">
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="（必须）页面名称" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">名称：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.name" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="（必须）页面路径，也可以理解为页面的路由" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">路径：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.path" disabled type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="内置的SVG图标" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">内置图标：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <el-select v-model="state.struct.icon" placeholder="可选内置图标" class="d-block custom font-13">
-                                        <el-option v-for="item in state.select.icons" :key="item.value" :label="item.value" :value="item.label">
-                                            <span class="font-13">
-                                                <i-svg color="rgb(var(--icon-color))" :name="item.value" size="16px"></i-svg>
-                                            </span>
-                                            <small class="text-muted float-end">{{ item.label }}</small>
-                                        </el-option>
-                                    </el-select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="内置图标的大小，如：16px" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">大小：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.size" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="自定义选项" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">自定义图标 - SVG代码：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <textarea v-model="state.struct.svg" class="form-control customize custom-scroll text-white" rows="4"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="备注一下" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">备注：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <textarea v-model="state.struct.remark" class="form-control customize custom-scroll text-white" rows="4"></textarea>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="（必须）页面路径，也可以理解为页面的路由" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">路径：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.path" disabled type="text" class="form-control customize text-white">
                     </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button v-on:click="state.struct = {}" type="button" class="btn btn-outline-light" data-bs-dismiss="modal">取 消</button>
-                        <button v-on:click="method.save()" type="button" class="btn btn-info">保 存</button>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="内置的SVG图标" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">内置图标：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-select v-model="state.struct.icon" placeholder="可选内置图标" class="d-block custom font-13">
+                            <el-option v-for="item in state.select.icons" :key="item.value" :label="item.value" :value="item.label">
+                                <span class="font-13">
+                                    <i-svg color="rgb(var(--icon-color))" :name="item.value" size="16px"></i-svg>
+                                </span>
+                                <small class="text-muted float-end">{{ item.label }}</small>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="内置图标的大小，如：16px" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">大小：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.size" type="text" class="form-control customize text-white">
                     </div>
                 </div>
             </div>
-        </div>
-    </teleport>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="自定义选项" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">自定义图标 - SVG代码：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <textarea v-model="state.struct.svg" class="form-control customize custom-scroll text-white" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="备注一下" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">备注：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <textarea v-model="state.struct.remark" class="form-control customize custom-scroll text-white" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template #footer>
+            <button v-on:click="state.item.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
+            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+        </template>
+    </el-dialog>
 </template>
 
 <script setup>
-import { Modal } from 'bootstrap'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
@@ -220,8 +212,8 @@ const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
     item: {
         table: 'auth-pages',
+        dialog: false,
     },
-    modal: Modal,
     struct: {},
     opts: {
         url: '/api/auth-pages/all',
@@ -253,7 +245,6 @@ const state  = reactive({
 
 onMounted(async () => {
     await method.icons()
-    state.modal = new Modal(proxy.$refs['item-modal'])
 })
 
 const method = {
@@ -274,8 +265,8 @@ const method = {
         if (code !== 200) return notyf.error(msg)
 
         notyf.info(msg)
-        // 关闭模态框
-        state.modal.hide()
+        // 关闭对话框
+        state.item.dialog = false
         // 重新加载数据
         await method.init()
         await session.del.AuthPagesColumn()
@@ -283,10 +274,10 @@ const method = {
     // 编辑数据
     edit: struct => {
         state.struct = struct
-        state.modal.show()
+        state.item.dialog = true
     },
     // 显示盒子
-    show: () => state.modal.show(),
+    show: () => (state.item.dialog = true),
      // 真删 和 软删
     async delete(ids = [], isSoft = true) {
 
@@ -351,11 +342,10 @@ const method = {
     },
 }
 
-watch(() => state.struct?.value, (val) => {
-    // 强制转大写
-    state.struct.value = val.toUpperCase()
-    // 长度限制32位
-    if (val.length > 32) state.struct.value = val.slice(0, 32)
+// 监听对话框状态
+watch(() => state.item.dialog, (value) => {
+    // 关闭对话框时清空数据
+    if (!value) state.struct = {}
 })
 
 // 回收站数据

@@ -19,9 +19,9 @@ import '{src}/assets/css/media.min.css'
 import iNav from '{src}/views/admin/layout/nav.vue'
 import iBeautify from '{src}/views/admin/layout/beautify.vue'
 import iFooter from '{src}/views/admin/layout/footer.vue'
-import utils from '{src}/utils/utils.js'
+import utils from '{src}/utils/utils'
 
-nextTick(()=>{
+nextTick(() => {
     // white-lighten
     const theme = 'white'
     const body  = document.querySelector('body')

@@ -125,7 +125,7 @@ import { list as MenuList } from '{src}/utils/menu'
 const { ctx, proxy } = getCurrentInstance()
 const router = useRouter()
 const state  = reactive({
-    theme: 'dark',
+    theme: 'white',
     login: {
         finish : false,         // 登录完成
     },
@@ -139,7 +139,7 @@ onMounted(async () => {
     state.menu = await MenuList()
 })
 
-nextTick( async () => {
+nextTick(async () => {
     await method.getTheme()
 })
 
@@ -175,8 +175,10 @@ const method = {
     },
     async getTheme() {
         let theme = document.querySelector('body').getAttribute('inis-theme')
-        if (theme.indexOf('white') !== -1) state.theme = 'white'
-        else state.theme = 'dark'
+        if (!utils.is.empty(theme)) {
+            if (theme.indexOf('white') !== -1) state.theme = 'white'
+            else state.theme = 'dark'
+        }
     },
     // 是否为空
     empty: value => utils.is.empty(value),

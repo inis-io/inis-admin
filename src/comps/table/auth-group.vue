@@ -70,7 +70,7 @@
 
     </i-table>
 
-    <el-dialog v-model="state.dialog" class="custom" draggable :close-on-click-modal="false">
+    <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
         <template #title>
             <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
         </template>
@@ -152,7 +152,7 @@
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
+            <button v-on:click="state.item.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
             <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
         </template>
     </el-dialog>
@@ -197,8 +197,8 @@ const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
     item: {
         table: 'auth-group',
+        dialog: false,
     },
-    dialog: false,
     struct: { root: 0 },
     opts: {
         url: '/api/auth-group/all',
@@ -289,7 +289,7 @@ const method = {
 
         notyf.info(msg)
         // 关闭模态框
-        state.dialog = false
+        state.item.dialog = false
         // 重新加载数据
         await method.init()
     },
@@ -307,7 +307,7 @@ const method = {
                 }
             }
             state.rules.select = rules
-            return state.dialog = true
+            return state.item.dialog = true
         }
 
         // 部分权限
@@ -333,13 +333,13 @@ const method = {
             state.rules.select = rules
         }
 
-        state.dialog = true
+        state.item.dialog = true
     },
     // 显示盒子
     show: () => {
         state.struct = {}
         state.rules.select = []
-        state.dialog = true
+        state.item.dialog = true
     },
      // 真删 和 软删
     async delete(ids = [], isSoft = true) {
@@ -450,11 +450,10 @@ const method = {
     },
 }
 
-watch(() => state.struct?.value, (val) => {
-    // 强制转大写
-    state.struct.value = val.toUpperCase()
-    // 长度限制32位
-    if (val.length > 32) state.struct.value = val.slice(0, 32)
+// 监听对话框状态
+watch(() => state.item.dialog, (value) => {
+    // 关闭对话框时清空数据
+    if (!value) state.struct = {}
 })
 
 // 回收站数据

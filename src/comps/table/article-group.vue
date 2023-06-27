@@ -67,97 +67,90 @@
 
     </i-table>
 
-    <teleport to="body">
-        <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-5">
-                <div class="modal-content modal-filled position-relative">
-                    <i-svg color="rgb(var(--icon-color))" name="close" size="20px" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
-                    <div class="modal-header d-flex justify-content-center">
-                        <strong>{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
+    <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
+        <template #title>
+            <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
+        </template>
+        <template #default>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="（必须）这个友链分组的名称" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">名称：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.name" type="text" class="form-control customize text-white">
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="（必须）这个友链分组的名称" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">名称：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.name" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="分组的上一级是谁" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">父级分组：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <el-select v-model="state.struct.pid" filterable placeholder="请选择方式" class="d-block custom font-13">
-                                        <el-option v-for="item in state.select.list" :key="item.value" :label="item.label"
-                                                   :disabled="parseInt(state.struct.id) === parseInt(item.value)" :value="item.value">
-                                            <span class="font-13">{{ item.label }}</span>
-                                            <small class="text-muted float-end">{{ item.value }}</small>
-                                        </el-option>
-                                    </el-select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="要不要给这个分组设置一个头像" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">头像：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <div class="input-group">
-                                        <input v-model="state.struct.avatar" type="text" class="form-control customize text-white" placeholder="填写图片地址或点击上传图片">
-                                        <div class="input-group-append ms-2">
-                                            <button v-on:click="method.upload('avatar')" class="btn btn-outline-light d-flex align-items-center text-white" type="button" style="height: 28px;">
-                                                上传
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="分组的上一级是谁" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">父级分组：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-select v-model="state.struct.pid" filterable placeholder="请选择方式" class="d-block custom font-13">
+                            <el-option v-for="item in state.select.list" :key="item.value" :label="item.label"
+                                       :disabled="parseInt(state.struct.id) === parseInt(item.value)" :value="item.value">
+                                <span class="font-13">{{ item.label }}</span>
+                                <small class="text-muted float-end">{{ item.value }}</small>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="要不要给这个分组设置一个头像" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">头像：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <div class="input-group">
+                            <input v-model="state.struct.avatar" type="text" class="form-control customize text-white" placeholder="填写图片地址或点击上传图片">
+                            <div class="input-group-append ms-2">
+                                <button v-on:click="method.upload('avatar')" style="height: 28px" type="button" class="btn btn-outline-success flex-center">
+                                    <i-svg name="upload" color="rgb(var(--icon-color))" size="14px"></i-svg>
+                                    <span class="ms-1">上传</span>
+                                </button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="这个分组的描述信息" placement="top">
-                                            <span>
-                                                <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">描述：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <textarea v-model="state.struct.description" class="form-control customize text-white" rows="3"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button v-on:click="state.struct = {}" type="button" class="btn btn-outline-light" data-bs-dismiss="modal">取 消</button>
-                        <button v-on:click="method.save()" type="button" class="btn btn-info">保 存</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </teleport>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="这个分组的描述信息" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">描述：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <textarea v-model="state.struct.description" class="form-control customize text-white" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template #footer>
+            <button v-on:click="state.item.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
+            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+        </template>
+    </el-dialog>
 </template>
 
 <script setup>
-import { Modal } from 'bootstrap'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
@@ -196,8 +189,8 @@ const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
     item: {
         table: 'article-group',
+        dialog: false,
     },
-    modal: Modal,
     struct: {},
     opts: {
         url: '/api/article-group/all',
@@ -243,7 +236,6 @@ const state  = reactive({
 
 onMounted(async () => {
     await method.getColumn()
-    state.modal = new Modal(proxy.$refs['item-modal'])
 })
 
 const method = {
@@ -271,18 +263,18 @@ const method = {
         if (code !== 200) return notyf.error(msg)
 
         notyf.info(msg)
-        // 关闭模态框
-        state.modal.hide()
+        // 关闭对话框
+        state.item.dialog = false
         // 重新加载数据
         await method.init()
     },
     // 编辑数据
     edit: struct => {
         state.struct = struct
-        state.modal.show()
+        state.item.dialog = true
     },
     // 显示盒子
-    show: () => state.modal.show(),
+    show: () => (state.item.dialog = true),
      // 真删 和 软删
     async delete(ids = [], isSoft = true) {
 
@@ -371,6 +363,12 @@ const method = {
         return utils.string.omit(text, length, omission, location)
     },
 }
+
+// 监听对话框状态
+watch(() => state.item.dialog, (value) => {
+    // 关闭对话框时清空数据
+    if (!value) state.struct = {}
+})
 
 // 回收站数据
 if (props.type === 'remove') {

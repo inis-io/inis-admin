@@ -161,10 +161,6 @@ const state  = reactive({
     },
 })
 
-onMounted(() => {
-
-})
-
 const method = {
     // 刷新数据
     init: async () => {

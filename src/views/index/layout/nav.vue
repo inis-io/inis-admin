@@ -5,7 +5,7 @@
                 <div class="collapse navbar-collapse justify-content-between">
                     <el-menu class="navbar-nav w-100" :router="false" :unique-opened="true" mode="horizontal" background-color="transparent">
                         <el-menu-item index="/">
-                            <el-image src="/assets/images/logo.png" style="width: 100px;" class="d-flex flex-center"></el-image>
+                            <el-image v-on:click="push('/')" :src="`/assets/images/logo-${state.theme || 'white'}.png`" style="width: 100px;" class="d-flex flex-center"></el-image>
                         </el-menu-item>
                         <el-sub-menu index="manage">
                             <template #title>
@@ -94,8 +94,7 @@
                     <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
                     <div class="modal-header d-flex justify-content-center box-shadow py-1">
                         <h4 class="modal-title">
-                            <img v-if="state.theme === 'dark'" src="/assets/images/logo.png" height="52">
-                            <img v-else src="/assets/images/logo.png" height="52">
+                            <el-image src="/assets/images/logo-white.png" style="height: 52px" class="my-1 py-1"></el-image>
                         </h4>
                     </div>
                     <div class="modal-body">
@@ -224,7 +223,7 @@ const { ctx, proxy } = getCurrentInstance()
 
 const router   = useRouter()
 const state = reactive({
-    theme: 'dark',
+    theme: 'white',
     login: {
         finish : false,         // 登录完成
         loading: false,         // 是否加载中
@@ -245,6 +244,9 @@ onMounted(() => {
     method.checkToken()
     state.modal = new Modal(proxy.$refs['login-modal'])
     state.theme = document.querySelector('body').getAttribute('inis-theme')
+})
+nextTick(async () => {
+    await method.getTheme()
 })
 
 const get = {
@@ -347,6 +349,13 @@ const method = {
         state.user = data.user
         state.login.finish = true
         utils.set.session('USERINFO', data.user)
+    },
+    async getTheme() {
+        let theme = document.querySelector('body').getAttribute('inis-theme')
+        if (!utils.is.empty(theme)) {
+            if (theme.indexOf('white') !== -1) state.theme = 'white'
+            else state.theme = 'dark'
+        }
     },
     router: (params = {}) => router.push(params),
 }

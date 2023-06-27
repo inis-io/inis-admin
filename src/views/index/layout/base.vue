@@ -20,15 +20,20 @@ import '{src}/assets/css/media.min.css'
 import iNav from '{src}/views/index/layout/nav.vue'
 import iBeautify from '{src}/views/index/layout/beautify.vue'
 import iFooter from '{src}/views/index/layout/footer.vue'
+import utils from '{src}/utils/utils'
 
-nextTick(()=>{
-    const body = document.querySelector('body')
+nextTick(() => {
+    // white-lighten
+    const theme = 'white'
+    const body  = document.querySelector('body')
     body.setAttribute('data-layout', 'topnav')
     // body.setAttribute('inis-theme', 'dark')
-    body.setAttribute('inis-theme', 'white-lighten')
+    body.setAttribute('inis-theme', theme)
     body.classList.add('user-select-none')
     // 给 app 添加一个 class
     const app = document.querySelector('#app')
-    app.classList.add('admin')
+    app.classList.add('index')
+    // 导入主题css
+    utils.set.links(`/assets/css/theme/${theme}.min.css`, 'link')
 })
 </script>

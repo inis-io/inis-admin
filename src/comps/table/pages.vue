@@ -218,13 +218,6 @@ const method = {
     },
 }
 
-watch(() => state.struct?.value, (val) => {
-    // 强制转大写
-    state.struct.value = val.toUpperCase()
-    // 长度限制32位
-    if (val.length > 32) state.struct.value = val.slice(0, 32)
-})
-
 // 回收站数据
 if (props.type === 'remove') {
     state.opts.menu.menuList = [{
