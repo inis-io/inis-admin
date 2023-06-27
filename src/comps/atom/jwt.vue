@@ -26,97 +26,87 @@
         </div>
     </div>
 
-    <teleport to="body">
-        <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-5">
-                <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
-                    <div class="modal-header d-flex justify-content-center">
-                        <strong> 配置 JSON Web Token </strong>
+    <el-dialog v-model="state.status.dialog" class="custom" draggable :close-on-click-modal="false">
+        <template #header>
+            <strong class="flex-center">配置 JSON Web Token</strong>
+        </template>
+        <template #default>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="签发者，比如：萌卜兔" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">签发者：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.issuer" type="text" class="form-control customize text-white">
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="签发者，比如：萌卜兔" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">签发者：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.issuer" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="主题，比如：萌卜兔" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">主题：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.subject" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="生成JWT的密钥，建议复杂度高一些" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">密钥：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <div class="input-group">
-                                        <input v-model="state.struct.key" style="height: 30px" type="text" class="form-control customize text-white">
-                                        <div class="input-group-append">
-                                            <button v-on:click="method.rand()" type="button" class="btn btn-outline-light flex-center ms-2">
-                                                <i-svg name="phone" size="14px"></i-svg>
-                                                <span class="ms-1">随机</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="签名有效期，可以用乘法，如：7 * 24 * 60 * 60 表示7天" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">过期时间(秒)：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.expire" style="height: 30px" type="text" class="form-control customize text-white">
-                                </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="主题，比如：萌卜兔" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">主题：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.subject" type="text" class="form-control customize text-white">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="生成JWT的密钥，建议复杂度高一些" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">密钥：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <div class="input-group">
+                            <input v-model="state.struct.key" style="height: 30px" type="text" class="form-control customize text-white">
+                            <div class="input-group-append">
+                                <button v-on:click="method.rand()" type="button" class="btn btn-outline-light flex-center ms-2">
+                                    <i-svg name="phone" size="14px"></i-svg>
+                                    <span class="ms-1">随机</span>
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">取 消</button>
-                        <button v-on:click="method.save()" type="button" class="btn btn-info">保 存</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="签名有效期，可以用乘法，如：7 * 24 * 60 * 60 表示7天" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">过期时间(秒)：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.expire" style="height: 30px" type="text" class="form-control customize text-white">
                     </div>
                 </div>
             </div>
-        </div>
-    </teleport>
+        </template>
+        <template #footer>
+            <button v-on:click="state.status.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
+            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+        </template>
+    </el-dialog>
 </template>
 
 <script setup>
-
-import { Modal } from 'bootstrap'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 
 const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
-    modal: Modal,
     struct: {
         key    : null,
         issuer : null,
@@ -124,15 +114,15 @@ const state = reactive({
         expire : null,
     },
     status: {
-        finish: false,
         active: true,
+        finish: false,
+        dialog: false,
         loading: true,
     }
 })
 
 onMounted(async () => {
     await method.init()
-    state.modal = new Modal(proxy.$refs['item-modal'])
 })
 
 const method = {
@@ -154,7 +144,7 @@ const method = {
     },
     show() {
         if (!state.status.finish) return notyf.warn('分页限制配置获取失败，无法进行配置！')
-        state.modal.show()
+        state.status.dialog = true
     },
     change: async value => {
         if (!value) {
@@ -168,7 +158,7 @@ const method = {
 
         if (code !== 200) return notyf.error('保存失败：' + msg)
 
-        state.modal.hide()
+        state.status.dialog = false
     },
     rand(field = 'key') {
         let result  = 'INIS-'

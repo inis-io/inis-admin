@@ -71,7 +71,7 @@
     </i-table>
 
     <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
-        <template #title>
+        <template #header>
             <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
         </template>
         <template #default>

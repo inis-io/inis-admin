@@ -7,7 +7,7 @@ import utils from "{src}/utils/utils.js";
 export const list = async () => {
 
     // 全部的权限
-    let all = await session.get.AuthPagesColumn()
+    let all = await session.auth.pages.column.get()
     // 用户权限
     let auth = utils.get.session('USERINFO', 'pages') || ''
     // 用户权限列表

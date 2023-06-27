@@ -1,41 +1,17 @@
 <template>
     <div class="container-fluid container-box">
-<!--        <el-button text @click="dialogVisible = true">-->
-<!--            Click to open Dialog-->
-<!--        </el-button>-->
-
-        <el-dialog v-model="state.show" class="custom" draggable :close-on-click-modal="false">
-            <template #title>
-                <strong>新 增</strong>
-            </template>
-            <template #default>
-                这是内容
-            </template>
-            <template #footer>
-                <button type="button" class="btn btn-outline-light mx-1">取 消</button>
-                <button type="button" class="btn btn-info mx-1">保 存</button>
-            </template>
-        </el-dialog>
+        <dialog-reset></dialog-reset>
     </div>
 </template>
 
 <script setup>
-
-import utils from "{src}/utils/utils.js";
+import DialogReset from '{src}/comps/dialog/reset-password.vue'
 
 const state  = reactive({
-    show: true,
-    value: '',
-    options: [
-        { value: 'Option1', label: 'Option1' },
-        { value: 'Option2', label: 'Option2', disabled: true },
-        { value: 'Option3', label: 'Option3' },
-        { value: 'Option4', label: 'Option4' },
-        { value: 'Option5', label: 'Option5' }
-    ]
+
 })
 
-console.log(`/**
+if (0) console.log(`/**
  *   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  *   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\`   \`4!!!!!!!!!!~4!!!!!!!!!!!!!!!!!
  *   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!   <~:   ~!!!~   ..  4!!!!!!!!!!!!!!!

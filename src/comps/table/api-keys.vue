@@ -65,7 +65,7 @@
     </i-table>
 
     <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
-        <template #title>
+        <template #header>
             <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
         </template>
         <template #default>
@@ -221,7 +221,7 @@ const method = {
         state.struct = struct
         state.item.dialog = true
     },
-    // 显示盒子
+    // 显示对话框
     show: () => (state.item.dialog = true),
      // 真删 和 软删
     async delete(ids = [], isSoft = true) {

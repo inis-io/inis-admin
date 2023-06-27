@@ -1,3 +1,7 @@
+.el-dialog.custom.sm{
+    --el-dialog-width: 600px;
+}
+
 /* 当屏幕宽度大于等于1920px时，应用以下样式 */
 @media screen and (min-width: 1920px) {
     body[data-layout=topnav] .container-xxl{
@@ -31,7 +35,7 @@
         max-width: 85%;
     }
     .el-dialog.custom{
-        --el-dialog-width: 70%;
+        --el-dialog-width: 70% !important;
     }
 }
 
@@ -58,6 +62,6 @@
         position: unset;
     }
     .el-dialog.custom{
-        --el-dialog-width: 90%;
+        --el-dialog-width: 90% !important;
     }
 }

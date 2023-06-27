@@ -25,38 +25,14 @@
             </span>
         </div>
     </div>
-
-    <teleport to="body">
-        <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-5">
-                <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
-                    <div class="modal-header d-flex justify-content-center">
-                        <strong>配置</strong>
-                    </div>
-                    <div class="modal-body font-15">
-                        <p class="my-1">● API KEY 不是什么很NB的技术，却能大大提高的接口安全</p>
-                        <p class="my-1">● 正常来说不开启也没关系，因为除此之外还有QPS限流器在帮你拦截异常流量</p>
-                        <p class="my-1">● 但是如果您开启了API KEY，在使用其它主题的时候，需要按照要求配置密钥到您的主题中，否则主题会拿不到任何数据</p>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">取 消</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </teleport>
 </template>
 
 <script setup>
-
-import { Modal } from 'bootstrap'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 
 const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
-    modal: Modal,
     struct: {},
     status: {
         finish: false,
@@ -67,7 +43,6 @@ const state = reactive({
 
 onMounted(async () => {
     await method.init()
-    state.modal = new Modal(proxy.$refs['item-modal'])
 })
 
 const method = {
@@ -86,10 +61,6 @@ const method = {
         state.struct = data
 
         state.status.finish  = true
-    },
-    show() {
-        if (!state.status.finish) return notyf.warn('配置获取失败，无法进行配置！')
-        state.modal.show()
     },
     change: async value => {
 

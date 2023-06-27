@@ -32,15 +32,25 @@
                             <el-menu-item v-on:click="method.router({name:'admin-icons'})" route="/admin/icons">图标</el-menu-item>
                         </el-sub-menu>
                     </el-menu>
-                    <el-menu class="navbar-nav d-flex align-items-center justify-content-end w-100" :router="true" :unique-opened="true" mode="horizontal" background-color="transparent">
+                    <el-menu class="navbar-nav d-flex align-items-center justify-content-end w-100" :unique-opened="true" mode="horizontal" background-color="transparent">
                         <template v-if="state.login.finish">
                             <el-sub-menu index="login-user" class="icon-none">
                                 <template #title>
                                     <div class="d-flex flex-column align-items-end user-select-text me-2">
-                                        <strong class="font-14">{{state.user?.nickname}}</strong>
-                                        <small>{{state.user?.email}}</small>
+                                        <span v-if="!utils.is.empty(state.login.user?.title)" class="font-14">
+                                            <strong class="badge item left bg-dark px-2 py-1" style="color: #fff">
+                                                {{ state.login.user?.nickname }}
+                                            </strong>
+                                            <span class="badge item right bg-warning px-2 py-1">
+                                                {{ state.login.user?.title }}
+                                            </span>
+                                        </span>
+                                        <strong v-else>
+                                            {{ state.login.user?.nickname }}
+                                        </strong>
+                                        <small>{{state.login.user?.email}}</small>
                                     </div>
-                                    <el-avatar :src="state.user?.avatar + (state.user?.avatar.includes('?') ? '&' : '?') + 'size=40x40'" class="me-1" shape="square" size="medium"></el-avatar>
+                                    <el-avatar :src="state.login.user?.avatar + (state.login.user?.avatar.includes('?') ? '&' : '?') + 'size=40x40'" class="me-1" shape="square" size="medium"></el-avatar>
                                 </template>
                                 <el-menu-item v-on:click="push('/admin')">
                                     <i-svg name="console" size="16px" class="me-1"></i-svg>
@@ -57,11 +67,11 @@
                             </el-sub-menu>
                         </template>
                         <template v-else>
-                            <el-menu-item>
-                                <strong class="font-12">注册</strong>
+                            <el-menu-item v-if="state.config.register" index="register">
+                                <strong v-on:click="method.register.show()" class="font-12">注册</strong>
                             </el-menu-item>
-                            <el-menu-item>
-                                <strong v-on:click="state.modal.show()" class="font-12">登录</strong>
+                            <el-menu-item index="login">
+                                <strong v-on:click="method.login.show()" class="font-12">登录</strong>
                             </el-menu-item>
                         </template>
                     </el-menu>
@@ -79,93 +89,13 @@
                             <i-svg name="user-white" size="26px"></i-svg>
                         </a>
                         <a v-else href="/admin">
-                            <el-avatar :src="state.user?.avatar" :size="26" class="mx-2"></el-avatar>
+                            <el-avatar :src="state.login.user?.avatar" :size="26" class="mx-2"></el-avatar>
                         </a>
                     </span>
                 </div>
             </nav>
         </div>
     </div>
-
-    <teleport to="body">
-        <div ref="login-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog mt-5">
-                <div class="modal-content modal-filled opacity-8 position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
-                    <div class="modal-header d-flex justify-content-center box-shadow py-1">
-                        <h4 class="modal-title">
-                            <el-image src="/assets/images/logo-white.png" style="height: 52px" class="my-1 py-1"></el-image>
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="nav nav-tabs nav-justified nav-bordered mb-3">
-                            <li class="nav-item">
-                                <a v-on:click="state.login.type = 'social-login'" href="#nav-login-social" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
-                                    <span class="text-white">验证码登录</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a v-on:click="state.login.type = 'login'" href="#nav-login" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
-                                    <span class="text-white">传统登录</span>
-                                </a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content w-80 mt-5 m-auto">
-                            <div class="tab-pane show active" id="nav-login-social">
-                                <div class="row mb-3">
-                                    <label class="col-3 col-form-label">账户：</label>
-                                    <div class="col-9">
-                                        <input v-model="state.login.account" type="text" class="form-control customize text-white" placeholder="邮箱">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-3 col-form-label">验证码：</label>
-                                    <div class="col-9">
-                                        <div class="input-group">
-                                            <input v-model="state.login.code" v-on:keyup.enter="method.login()" type="text" autocomplete="new-password" class="form-control customize text-white" placeholder="请输入验证码">
-                                            <div class="input-group-append ms-2">
-                                                <button v-on:click="get.code()" ref="get-code" class="btn btn-outline-light d-flex align-items-center text-white" type="button" style="height: 28px;">
-                                                    获取
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="nav-login">
-                                <div class="row mb-3">
-                                    <label class="col-3 col-form-label">帐号：</label>
-                                    <div class="col-9">
-                                        <input v-model="state.login.account" type="text" class="form-control customize text-white" placeholder="帐号 | 邮箱 | 手机号">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-3 col-form-label">密码：</label>
-                                    <div class="col-9 d-flex">
-                                        <input v-model="state.login.password" v-on:keyup.enter="method.login()" type="password" autocomplete="new-password" class="form-control customize text-white" placeholder="请输入密码">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <router-link to="reset" class="text-light">忘记密码</router-link>
-                                <span class="mx-2">|</span>
-                                <router-link to="register" class="text-light">注册帐号</router-link>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button ref="login-btn" type="button" class="btn btn-outline-light d-flex align-items-center px-3">
-                            <div v-if="state.login.loading" class="spinner-border text-light wh-15px me-2" role="status"></div>
-                            <span v-on:click="method.login()" class="text-white">
-                                {{state.login.loading ? '登录中 ...' : '登  录'}}
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </teleport>
 
     <el-drawer v-model="state.drawer" direction="ltr" size="70%" :show-close="false" class="card">
         <template #header>
@@ -209,127 +139,78 @@
             </span>
         </template>
   </el-drawer>
+
+    <dialog-login ref="login" v-on:finish="method.login.finish" v-on:register="method.register.show()" v-on:reset="method.reset.show()"></dialog-login>
+    <dialog-register ref="register" v-on:finish="method.register.finish" v-on:login="method.login.show()"></dialog-register>
+    <dialog-reset-password ref="reset-password" v-on:finish="method.login.show()" v-on:login="method.login.show()"></dialog-reset-password>
 </template>
 
 <script setup>
-
-import { Modal } from 'bootstrap'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
+import session from '{src}/utils/session'
+import DialogLogin from '{src}/comps/dialog/login.vue'
+import DialogRegister from '{src}/comps/dialog/register.vue'
+import DialogResetPassword from '{src}/comps/dialog/reset-password.vue'
 
 const { ctx, proxy } = getCurrentInstance()
-
-const router   = useRouter()
-const state = reactive({
+const router = useRouter()
+const state  = reactive({
     theme: 'white',
-    login: {
-        finish : false,         // 登录完成
-        loading: false,         // 是否加载中
-        type: 'social-login',    // 登录类型
-        account: null,          // 邮箱 | 账号
-        password: null,         // 密码
-        code: null,             // 验证码
-    },
-    user: utils.get.session('USERINFO'),
     drawer: false,
-    modal: null,
-    timer: {
-        code: null
+    login: {
+        finish: false,
+        user: utils.get.session('USERINFO'),
+    },
+    config: {
+        // 是否允许注册
+        register: false,
     }
 })
 
 onMounted(() => {
     method.checkToken()
-    state.modal = new Modal(proxy.$refs['login-modal'])
     state.theme = document.querySelector('body').getAttribute('inis-theme')
 })
 nextTick(async () => {
     await method.getTheme()
+    await method.ALLOW_REGISTER()
 })
-
-const get = {
-    // 获取验证码
-    async code() {
-        
-        if (utils.is.empty(state.login.account))  return notyf.warn('帐号不能为空哟？')
-        if (!utils.is.email(state.login.account) && !utils.is.phone(state.login.account)) return notyf.warn('格式不对哟！')
-        state.login.code = null
-        await method.login()
-
-        let time     = 60
-        state.timer.code = setInterval(() => {
-            
-            time--
-
-            if (time > 0) {
-                ctx.$refs['get-code'].innerText = `获取 ${time}s`
-                ctx.$refs['get-code'].disabled = true
-            } else {
-                // 当减到0时赋值为60
-                time = 60
-                ctx.$refs['get-code'].innerText = '获取'
-                // 清除定时器
-                clearInterval(state.timer.code)
-                ctx.$refs['get-code'].disabled = false
-            }
-            
-        }, 1000)
-    }
-}
 
 const method = {
     // 登录
-    async login() {
-
-        state.login.loading = true
-
-        const params = state.login.type === 'social-login' ? {
-            code  : state.login.code,
-            social: state.login.account
-        } : {
-            account : state.login.account,
-            password: state.login.password
+    login: {
+        // 显示登录框
+        show: () => proxy.$refs['login']['show'](),
+        // 登录完成
+        finish: (user) => {
+            state.login.finish = true
+            state.login.user   = user
         }
-
-        try {
-
-            const { data, code, msg } = await axios.post('/api/comm/' + state.login.type, params)
-            
-            if (code === 200) {
-                notyf.success(msg)
-                utils.set.session('USERINFO' , data.user)
-                utils.set.cookie(globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
-                state.user = data.user
-                state.login.finish = true
-                state.modal.hide()
-                return
-            }
-            if (code === 201) return notyf.success(msg)
-
-            setTimeout(() => {
-                notyf.warn(msg)
-                // 重置计时器
-                ctx.$refs['get-code'].innerText = '获取'
-                ctx.$refs['get-code'].disabled = false
-                clearInterval(state.timer.code)
-            }, 1000)
-
-        } catch (error) {
-
-            notyf.error(error)
+    },
+    // 注册
+    register: {
+        // 显示注册框
+        show: () => proxy.$refs['register']['show'](),
+        // 注册完成
+        finish: (user) => {
+            state.login.user = user
         }
-
-        state.login.loading = false
+    },
+    // 忘记密码
+    reset: {
+        // 显示忘记密码框
+        show: () => proxy.$refs['reset-password']['show'](),
     },
     // 退出登录
     async logout() {
-        
+
         const { code, msg } = await axios.del('/api/comm/logout')
-        
+
         if (code !== 200) return notyf.error(msg)
-        
+
         notyf.success(msg)
         state.login.finish = false
         utils.clear.session('USERINFO')
@@ -346,10 +227,11 @@ const method = {
         if (code === 401) return method.logout()
         if (code !== 200) return notyf.error(msg)
         
-        state.user = data.user
+        state.login.user = data.user
         state.login.finish = true
         utils.set.session('USERINFO', data.user)
     },
+    // 获取当前主题
     async getTheme() {
         let theme = document.querySelector('body').getAttribute('inis-theme')
         if (!utils.is.empty(theme)) {
@@ -357,14 +239,11 @@ const method = {
             else state.theme = 'dark'
         }
     },
+    // 是否允许注册
+    async ALLOW_REGISTER() {
+        let { value } = await session.config.get('ALLOW_REGISTER')
+        state.config.register = parseInt(value) === 1
+    },
     router: (params = {}) => router.push(params),
 }
-
-watch(() => state.login.loading, (val) => {
-    ctx.$refs['login-btn'].disabled = val;
-})
-watch(() => state.login.code, (val) => {
-    // 去除空字符串
-    state.login.code = val.replace(/\s+/g, '')
-})
 </script>

@@ -163,10 +163,6 @@ const state  = reactive({
     },
 })
 
-onMounted(async () => {
-
-})
-
 // 方法
 const method = {
     // 刷新

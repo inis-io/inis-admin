@@ -19,7 +19,7 @@
                         <el-sub-menu show-timeout="50" hide-timeout="50" index="login-user" class="icon-none">
                             <template #title>
                                 <div class="d-flex flex-column align-items-end user-select-text me-2">
-                                    <span v-if="!method.empty(state.user?.title)" class="font-14">
+                                    <span v-if="!utils.is.empty(state.user?.title)" class="font-14">
                                         <strong class="badge item left bg-dark px-2 py-1" style="color: #fff">
                                             {{ state.user?.nickname }}
                                         </strong>

@@ -69,7 +69,7 @@
     </i-table>
 
     <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
-        <template #title>
+        <template #header>
             <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
         </template>
         <template #default>
@@ -270,6 +270,7 @@ const method = {
         // 重新加载数据
         await method.init()
         await session.del.AuthPagesColumn()
+        await session.auth.pages.column.del()
     },
     // 编辑数据
     edit: struct => {

@@ -10,12 +10,12 @@
                 <template #default="scope">
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
-                        <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
+                        <el-button v-on:click="method.edit(scope.row)" class="custom" size="small">
                             <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
-                        <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
+                        <el-button v-on:click="method.delete(scope.row.id, true)" size="small" class="ms-0">
                             <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
@@ -28,17 +28,17 @@
                 <template #default="scope">
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
-                        <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
+                        <el-button v-on:click="method.restore(scope.row.id)" class="custom" size="small">
                             <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
-                        <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
+                        <el-button v-on:click="method.edit(scope.row)" size="small" class="ms-0">
                             <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
-                        <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
+                        <el-button v-on:click="method.delete(scope.row.id, false)" size="small" class="ms-0">
                             <i-svg color="rgb(var(--icon-color))" name="delete" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
@@ -102,7 +102,7 @@
     </i-table>
 
     <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
-        <template #title>
+        <template #header>
             <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
         </template>
         <template #default>
@@ -412,7 +412,7 @@ const method = {
     },
     // 获取页面权限
     async authPages() {
-        state.select.auth_pages = await session.get.AuthPagesColumn()
+        state.select.auth_pages = await session.auth.pages.column.get()
     },
     // 获取权限分组
     async authGroup() {

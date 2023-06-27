@@ -26,118 +26,109 @@
         </div>
     </div>
 
-    <teleport to="body">
-        <div ref="item-modal" id="fill-item-modal" class="modal fade dark" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg mt-5">
-                <div class="modal-content modal-filled position-relative">
-                    <i-svg name="close" size="20px" color="#ccc" class="modal-close customize" data-bs-dismiss="modal"></i-svg>
-                    <div class="modal-header d-flex justify-content-center">
-                        <strong> 配置 腾讯云COS 存储 </strong>
+    <el-dialog v-model="state.status.dialog" class="custom" draggable :close-on-click-modal="false">
+        <template #header>
+            <strong class="flex-center">配置 腾讯云COS 存储</strong>
+        </template>
+        <template #default>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="腾讯云COS SecretId" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">SecretId：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.secret_id" type="text" class="form-control customize text-white">
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="腾讯云COS SecretId" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">SecretId：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.secret_id" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="腾讯云COS SecretKey" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">SecretKey：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.secret_key" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="腾讯云COS AppId" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">AppId：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.app_id" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="存储桶名称" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">COS Bucket：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.bucket" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label required">
-                                        <el-tooltip content="所在地区，如这里的 ap-guangzhou（广州）" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">COS Region：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <el-select v-model="state.struct.region" placeholder="请选择所在地区" class="d-block custom font-13">
-                                        <el-option v-for="item in state.select.region" :key="item.value" :label="item.label" :value="item.value">
-                                            <span class="font-13">{{ item.label }}</span>
-                                            <small class="text-muted float-end">{{ item.value }} | {{ item.area }}</small>
-                                        </el-option>
-                                    </el-select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">
-                                        <el-tooltip content="用于访问 - 不填写则使用默认域名" placement="top">
-                                            <span>
-                                                <i-svg name="hint" size="14px"></i-svg>
-                                                <span class="ms-1">COS 外网域名：</span>
-                                            </span>
-                                        </el-tooltip>
-                                    </label>
-                                    <input v-model="state.struct.domain" type="text" class="form-control customize text-white">
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="腾讯云COS SecretKey" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">SecretKey：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.secret_key" type="text" class="form-control customize text-white">
                     </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">取 消</button>
-                        <button v-on:click="method.test()" type="button" class="btn btn-outline-light flex-center mx-2">
-                            <i-svg name="connect" size="14px"></i-svg>
-                            <span class="ms-1">COS 连接测试</span>
-                        </button>
-                        <button v-on:click="method.save()" type="button" class="btn btn-info">保 存</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="腾讯云COS AppId" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">AppId：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.app_id" type="text" class="form-control customize text-white">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="存储桶名称" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">COS Bucket：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.bucket" type="text" class="form-control customize text-white">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label required">
+                            <el-tooltip content="所在地区，如这里的 ap-guangzhou（广州）" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">COS Region：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-select v-model="state.struct.region" placeholder="请选择所在地区" class="d-block custom font-13">
+                            <el-option v-for="item in state.select.region" :key="item.value" :label="item.label" :value="item.value">
+                                <span class="font-13">{{ item.label }}</span>
+                                <small class="text-muted float-end">{{ item.value }} | {{ item.area }}</small>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="用于访问 - 不填写则使用默认域名" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">COS 外网域名：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <input v-model="state.struct.domain" type="text" class="form-control customize text-white">
                     </div>
                 </div>
             </div>
-        </div>
-    </teleport>
+        </template>
+        <template #footer>
+            <button v-on:click="state.status.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
+            <button v-on:click="method.test()" type="button" class="btn btn-outline-light mx-1">
+                <i-svg name="connect" size="14px"></i-svg>
+                <span class="ms-1">COS 连接测试</span>
+            </button>
+            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+        </template>
+    </el-dialog>
 </template>
 
 <script setup>
-
-import { Modal } from 'bootstrap'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
@@ -145,7 +136,6 @@ import axios from '{src}/utils/request'
 const { ctx, proxy } = getCurrentInstance()
 const emit  = defineEmits(['refresh'])
 const state = reactive({
-    modal: Modal,
     struct: {
         default:    null,
         domain:     null,
@@ -156,8 +146,9 @@ const state = reactive({
         secret_key: null,
     },
     status: {
-        finish: false,
         active: true,
+        finish: false,
+        dialog: false,
         loading: true,
     },
     backup: {},
@@ -191,7 +182,6 @@ const state = reactive({
 
 onMounted(async () => {
     await method.init()
-    state.modal = new Modal(proxy.$refs['item-modal'])
 })
 
 const method = {
@@ -215,8 +205,8 @@ const method = {
         state.status.finish  = true
     },
     show() {
-        if (!state.status.finish) return notyf.warn('存储配置获取失败，无法进行配置！')
-        state.modal.show()
+        if (!state.status.finish) return notyf.warn('配置获取失败，无法进行配置！')
+        state.status.dialog = true
     },
     change: async value => {
 
@@ -248,7 +238,7 @@ const method = {
 
         if (code !== 200) return notyf.error('保存失败：' + msg)
 
-        state.modal.hide()
+        state.status.dialog = false
     },
     test: async () => {
 
@@ -273,9 +263,7 @@ const method = {
 }
 
 watch(() => state.struct, () => {
-
     state.status.active = state.struct.default === 'cos'
-
 }, { deep: true })
 
 // 将子组件方法暴露给父组件

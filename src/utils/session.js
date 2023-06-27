@@ -1,4 +1,3 @@
-import notyf from '{src}/utils/notyf'
 import utils from '{src}/utils/utils'
 import axios from '{src}/utils/request'
 
@@ -18,13 +17,37 @@ const GetAuthPagesColumn = async () => {
     return data
 }
 
+// RegisterAllow
+const GetConfig = async (key = null) => {
+
+    if (utils.is.empty(key)) return null
+
+    // 如果缓存中有数据，直接返回
+    if (utils.has.session(key)) return utils.get.session(key)
+
+    // 请求数据
+    const { code, data } = await axios.get('/api/config/one', { key })
+
+    if (code !== 200) return null
+
+    // 设置缓存
+    utils.set.session(key, data)
+
+    return data
+}
+
 export default {
-    get: {
-        // 获取页面权限列表
-        AuthPagesColumn: GetAuthPagesColumn
+    auth: {
+        pages: {
+            column: {
+                // 获取页面权限列表
+                get: GetAuthPagesColumn,
+                // 删除页面权限列表缓存
+                del: () => utils.clear.session('AuthPagesColumn')
+            }
+        }
     },
-    del: {
-        // 删除页面权限列表缓存
-        AuthPagesColumn: () => utils.clear.session('AuthPagesColumn')
+    config: {
+        get: GetConfig,
     }
 }

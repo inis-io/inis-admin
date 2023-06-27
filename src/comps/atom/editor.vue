@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 
