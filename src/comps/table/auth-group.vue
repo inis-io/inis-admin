@@ -86,7 +86,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.name" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.name"></el-input>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -123,7 +123,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <textarea v-model="state.struct.remark" class="form-control customize text-white" rows="3" placeholder="备注一下，避免忘记！"></textarea>
+                        <el-input v-model="state.struct.remark" :autosize="{ minRows: 3, maxRows: 10 }" placeholder="备注一下，避免忘记！" type="textarea"></el-input>
                     </div>
                 </div>
             </div>
@@ -152,8 +152,8 @@
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.item.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            <el-button v-on:click="state.item.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.save()" :loading="state.item.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -198,6 +198,7 @@ const state  = reactive({
     item: {
         table: 'auth-group',
         dialog: false,
+        wait: false,
     },
     struct: { root: 0 },
     opts: {
@@ -283,7 +284,11 @@ const method = {
         else if (select) params.rules = select.join(',')
         else params.rules = null
 
+        state.item.wait     = true
+
         const { code, msg } = await axios.post(`/api/${state.item.table}/save`, params)
+
+        state.item.wait     = false
 
         if (code !== 200) return notyf.error(msg)
 

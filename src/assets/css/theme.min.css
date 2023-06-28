@@ -34,7 +34,7 @@
 /*    background: pink;*/
 /*}*/
 body[inis-theme] *, a, p {
-    transition: 0.3s;
+    /*transition: 0.3s;*/
     color: rgb(var(--vice-font-color));
     font-family: -apple-system,system-ui,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
 }
@@ -347,6 +347,9 @@ body[inis-theme] .el-pagination .el-select:hover:not(.el-select--disabled) .el-i
     transition: box-shadow .2s ease-out;
     /*border: unset;*/
 }
+body[inis-theme] .el-pagination .el-input .el-input__wrapper input{
+    border-bottom: unset !important;
+}
 body[inis-theme] .el-select-dropdown__item.is-disabled{
     text-decoration: line-through !important;
 }
@@ -489,6 +492,9 @@ body[inis-theme] .el-select .el-input .el-input__wrapper input:hover, body[inis-
 body[inis-theme] .el-select-dropdown__item.hover{
     background-color: transparent;
 }
+body[inis-theme] .el-select .el-input .el-input__wrapper input{
+    border-bottom: unset !important;
+}
 /* ==================== 自定义 el-select - 结束 ==================== */
 /* ==================== 自定义 el-cascader - 结束 ==================== */
 body[inis-theme] .el-cascader.custom.multiple .el-input__wrapper{
@@ -500,6 +506,9 @@ body[inis-theme] .el-cascader-panel .el-cascader-node > .el-checkbox{
 }
 body[inis-theme] .el-cascader-node:not(.is-disabled):focus, body[inis-theme] .el-cascader-node:not(.is-disabled):hover{
     background-color: rgba(var(--theme-color), var(--theme-opacity));
+}
+body[inis-theme] .el-cascader .el-input .el-input__wrapper{
+    height: auto !important;
 }
 /* ==================== 自定义 el-cascader - 结束 ==================== */
 /* ==================== 自定义 el-tooltip - 开始 ==================== */
@@ -611,6 +620,39 @@ body[inis-theme] .el-input .el-input__wrapper input:hover, body[inis-theme] .el-
     border-bottom: 2px solid rgb(var(--assist-color))!important;
 }
 /* ==================== 自定义 el-input - 结束 ==================== */
+/* ==================== 自定义 el-textarea - 开始 ==================== */
+body[inis-theme] .el-textarea textarea{
+    border: unset;
+    box-shadow: unset;
+    background: unset;
+    border-bottom: 1px solid rgb(var(--assist-color))!important;
+    border-radius: 0;
+    padding-left: 0!important;
+}
+body[inis-theme] .el-textarea textarea:hover, body[inis-theme] .el-textarea textarea:focus{
+    border-bottom: 2px solid rgb(var(--assist-color))!important;
+}
+body[inis-theme] .el-textarea textarea{
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,.2) transparent;
+}
+body[inis-theme] .el-textarea textarea::-webkit-scrollbar{
+    width:4px;height:10px;
+    background-color:rgba(0,0,0,0);
+}
+body[inis-theme] .el-textarea textarea::-webkit-scrollbar-thumb{
+    border-radius:6px;
+    background-color:rgba(0,0,0,.2);
+    transition:all .4s ease;
+    -moz-transition:all .4s ease;
+    -webkit-transition:all .4s ease;
+    -o-transition:all .4s ease
+}
+body[inis-theme] .el-textarea textarea::-webkit-scrollbar-track{
+    background-color:rgba(0,0,0,.1)
+}
+/* ==================== 自定义 el-textarea - 结束 ==================== */
+
 
 
 

@@ -23,9 +23,9 @@
                             <div class="col-9">
                                 <el-input v-model="state.struct.code" v-on:keyup.enter="method.login()" class="custom" placeholder="请输入验证码">
                                     <template #suffix>
-                                        <button v-on:click="method.code()" ref="verify-code" class="btn btn-outline-light text-white" type="button" style="height: 28px;">
-                                            获取
-                                        </button>
+                                        <el-button v-on:click="method.code()" :loading="state.item.loading">
+                                            获取 <span v-if="state.item.loading">{{ state.item.second }} s</span>
+                                        </el-button>
                                     </template>
                                 </el-input>
                             </div>
@@ -58,12 +58,9 @@
         </template>
         <template #footer>
             <div class="modal-footer d-flex justify-content-center">
-                <button ref="login-btn" type="button" class="btn btn-outline-light d-flex align-items-center px-3">
-                    <span v-if="state.item.loading" class="spinner-border text-light wh-15px me-2" role="status"></span>
-                    <span v-on:click="method.login()" class="text-white">
-                        {{state.item.loading ? '登录中 ...' : '登  录'}}
-                    </span>
-                </button>
+                <el-button v-on:click="method.login()" :loading="state.item.wait">
+                    {{state.item.wait ? '登录中 ...' : '登  录'}}
+                </el-button>
             </div>
         </template>
     </el-dialog>
@@ -81,10 +78,12 @@ const state = reactive({
     item: {
         tabs: 'code',
         type: 'social-login',   // 登录类型
+        wait: false,            // 是否等待
         loading:  false,        // 是否加载中
         finish :  false,        // 登录完成
         dialog :  false,
         register: false,        // 是否允许注册
+        second: 0,              // 倒计时
     },
     struct: {
         account : null,         // 邮箱 | 账号
@@ -102,7 +101,7 @@ const method = {
     // 登录
     async login() {
 
-        state.item.loading = true
+        state.item.wait = true
 
         const params = state.item.tabs === 'code' ? {
             code  : state.struct.code,
@@ -116,7 +115,7 @@ const method = {
 
             const { data, code, msg } = await axios.post('/api/comm/' + state.item.type, params)
 
-            state.item.loading = false
+            state.item.wait = false
 
             if (code === 200) {
                 notyf.success(msg)
@@ -132,8 +131,7 @@ const method = {
             setTimeout(() => {
                 notyf.warn(msg)
                 // 重置计时器
-                proxy.$refs['verify-code'].innerText = '获取'
-                proxy.$refs['verify-code'].disabled = false
+                state.item.second = 0
                 clearInterval(state.timer)
             }, 1000)
 
@@ -150,23 +148,10 @@ const method = {
 
         await method.login()
 
-        let time = 60
+        state.item.second = 60
         state.timer = setInterval(() => {
-
-            time--
-
-            if (time > 0) {
-                proxy.$refs['verify-code'].innerText = `获取 ${time}s`
-                proxy.$refs['verify-code'].disabled = true
-            } else {
-                // 当减到0时赋值为60
-                time = 60
-                proxy.$refs['verify-code'].innerText = '获取'
-                // 清除定时器
-                clearInterval(state.timer)
-                proxy.$refs['verify-code'].disabled = false
-            }
-
+            state.item.second--
+            if (state.item.second <= 0) clearInterval(state.timer)
         }, 1000)
     },
     // 显示对话框
@@ -191,12 +176,12 @@ const method = {
 watch(() => state.item.tabs, (val) => {
     state.item.type = val === 'code' ? 'social-login' : 'login'
 })
-watch(() => state.item.loading, (val) => {
-    proxy.$refs['login-btn'].disabled = val
-})
 watch(() => state.struct.code, (val) => {
     // 去除空字符串
     state.struct.code = val?.replace(/\s+/g, '')
+})
+watch(() => state.item.second, (val) => {
+    state.item.loading = val > 0
 })
 
 // 将子组件方法暴露给父组件

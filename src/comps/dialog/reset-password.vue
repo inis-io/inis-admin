@@ -86,15 +86,12 @@
         </template>
         <template #footer>
             <div class="modal-footer d-flex justify-content-center">
-                <button v-on:click="method.login()" class="btn btn-outline-primary">
+                <el-button v-on:click="method.login()">
                     记起来了？点我登录
-                </button>
-                <button ref="reset-btn" type="button" class="btn btn-outline-light d-flex align-items-center px-3">
-                    <span v-if="state.item.loading" class="spinner-border text-light wh-15px me-2" role="status"></span>
-                    <span v-on:click="method.reset()" class="text-white">
-                        {{state.item.loading ? '重置中 ...' : '重置密码'}}
-                    </span>
-                </button>
+                </el-button>
+                <el-button v-on:click="method.reset()" :loading="state.item.loading">
+                    {{state.item.wait ? '重置中 ...' : '重置密码'}}
+                </el-button>
             </div>
         </template>
     </el-dialog>

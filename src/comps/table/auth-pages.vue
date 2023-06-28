@@ -84,7 +84,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.name" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.name"></el-input>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -97,7 +97,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.path" disabled type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.path" disabled></el-input>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -130,7 +130,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.size" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.size"></el-input>
                     </div>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <textarea v-model="state.struct.svg" class="form-control customize custom-scroll text-white" rows="4"></textarea>
+                        <el-input v-model="state.struct.svg" :autosize="{ minRows: 3, maxRows: 10 }" type="textarea"></el-input>
                     </div>
                 </div>
             </div>
@@ -160,14 +160,14 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <textarea v-model="state.struct.remark" class="form-control customize custom-scroll text-white" rows="4"></textarea>
+                        <el-input v-model="state.struct.remark" :autosize="{ minRows: 3, maxRows: 10 }" type="textarea"></el-input>
                     </div>
                 </div>
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.item.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            <el-button v-on:click="state.item.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.save()" :loading="state.item.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -213,6 +213,7 @@ const state  = reactive({
     item: {
         table: 'auth-pages',
         dialog: false,
+        wait: false,
     },
     struct: {},
     opts: {
@@ -260,7 +261,11 @@ const method = {
         if (utils.is.empty(params?.name)) return notyf.warn('名称是必填项！')
         if (utils.is.empty(params?.path)) return notyf.warn('路径是必填项！')
 
+        state.item.wait     = true
+
         const { code, msg } = await axios.post(`/api/${state.item.table}/save`, params)
+
+        state.item.wait     = false
 
         if (code !== 200) return notyf.error(msg)
 

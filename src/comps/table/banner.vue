@@ -104,7 +104,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.title" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.title"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -117,14 +117,14 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <div class="input-group">
-                            <input v-model="state.struct.image" type="text" class="form-control customize text-white" placeholder="填写图片地址或点击上传图片">
-                            <div class="input-group-append ms-2">
-                                <button v-on:click="method.upload()" class="btn btn-outline-light d-flex align-items-center text-white" type="button" style="height: 28px;">
-                                    上传
-                                </button>
-                            </div>
-                        </div>
+                        <el-input v-model="state.struct.image" class="custom" placeholder="填写图片地址或点击上传图片">
+                            <template #suffix>
+                                <el-button v-on:click="method.upload()" :loading="state.item.upload">
+                                    <i-svg v-if="!state.item.upload" name="upload" color="rgb(var(--icon-color))" size="14px"></i-svg>
+                                    <span class="ms-1">上传</span>
+                                </el-button>
+                            </template>
+                        </el-input>
                     </div>
                 </div>
             </div>
@@ -139,7 +139,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.url" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.url"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -172,7 +172,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <textarea v-model="state.struct.content" class="form-control customize text-white" rows="3"></textarea>
+                        <el-input v-model="state.struct.content" :autosize="{ minRows: 3, maxRows: 10 }" type="textarea"></el-input>
                     </div>
                 </div>
             </div>
@@ -187,14 +187,14 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <textarea v-model="state.struct.remark" class="form-control customize text-white" rows="3" placeholder="备注一下，避免忘记！"></textarea>
+                        <el-input v-model="state.struct.remark" :autosize="{ minRows: 3, maxRows: 10 }" placeholder="备注一下，避免忘记！" type="textarea"></el-input>
                     </div>
                 </div>
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.item.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            <el-button v-on:click="state.item.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.save()" :loading="state.item.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -239,6 +239,8 @@ const state  = reactive({
     item: {
         table: 'banner',
         dialog: false,
+        upload: false,
+        wait: false,
     },
     struct: {},
     opts: {
@@ -296,7 +298,11 @@ const method = {
         if (utils.is.empty(params)) return notyf.warn('你在想什么？什么都不填！')
         if (utils.is.empty(params?.image)) return notyf.warn('兄dei，图片地址没有设置！')
 
+        state.item.wait     = true
+
         const { code, msg } = await axios.post(`/api/${state.item.table}/save`, params)
+
+        state.item.wait     = false
 
         if (code !== 200) return notyf.error(msg)
 
@@ -359,8 +365,13 @@ const method = {
             // 创建一个 formData
             const params = new FormData
             params.append('file', input.files[0])
+
+            state.item.upload         = true
             // 上传图片
             const { code, msg, data } = await axios.post('/api/file/upload', params)
+
+            state.item.upload         = false
+
             if (code !== 200) return notyf.error(msg)
             // 设置图片
             state.struct[field] = data.path

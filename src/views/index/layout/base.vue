@@ -14,9 +14,9 @@
 </template>
 
 <script setup>
-
 import '{src}/assets/css/app.min.css'
 import '{src}/assets/css/media.min.css'
+import '{src}/assets/css/theme.min.css'
 import iNav from '{src}/views/index/layout/nav.vue'
 import iBeautify from '{src}/views/index/layout/beautify.vue'
 import iFooter from '{src}/views/index/layout/footer.vue'
@@ -34,6 +34,6 @@ nextTick(() => {
     const app = document.querySelector('#app')
     app.classList.add('index')
     // 导入主题css
-    utils.set.links(`/assets/css/theme/${theme}.min.css`, 'link')
+    // utils.set.links(`/assets/css/theme/${theme}.min.css`, 'link')
 })
 </script>

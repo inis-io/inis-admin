@@ -52,7 +52,6 @@
 </template>
 
 <script setup>
-
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
 import TableBanner from '{src}/comps/table/banner.vue'

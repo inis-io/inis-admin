@@ -89,10 +89,9 @@
                             </label>
                             <el-input v-model="state.struct.code" class="custom" placeholder="请输入验证码">
                                 <template #suffix>
-<!--                                    <el-button v-on:click="method.code()" ref="verify-code">获取</el-button>-->
-                                    <button v-on:click="method.code()" ref="verify-code" class="btn btn-outline-light text-white" type="button" style="height: 28px;">
+                                    <el-button v-on:click="method.code()" ref="verify-code">
                                         获取
-                                    </button>
+                                    </el-button>
                                 </template>
                             </el-input>
                         </div>
@@ -102,15 +101,12 @@
         </template>
         <template #footer>
             <div class="modal-footer d-flex justify-content-center">
-                <button v-on:click="method.login()" class="btn btn-outline-primary">
+                <el-button v-on:click="method.login()">
                     已有账号？点我登录
-                </button>
-                <button ref="register-btn" type="button" class="btn btn-outline-light d-flex align-items-center px-3">
-                    <span v-if="state.item.loading" class="spinner-border text-light wh-15px me-2" role="status"></span>
-                    <span v-on:click="method.register()" class="text-white">
-                        {{state.item.loading ? '注册中 ...' : '注  册'}}
-                    </span>
-                </button>
+                </el-button>
+                <el-button v-on:click="method.register()" :loading="state.item.loading">
+                    {{state.item.loading ? '注册中 ...' : '注  册'}}
+                </el-button>
             </div>
         </template>
     </el-dialog>

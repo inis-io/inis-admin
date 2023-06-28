@@ -91,7 +91,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.title" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.title"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -104,7 +104,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.type" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.type"></el-input>
                     </div>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.url" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.url"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -152,14 +152,14 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <textarea v-model="state.struct.content" class="form-control customize text-white" rows="3"></textarea>
+                        <el-input v-model="state.struct.content" :autosize="{ minRows: 3, maxRows: 10 }" type="textarea"></el-input>
                     </div>
                 </div>
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.item.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            <el-button v-on:click="state.item.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.save()" :loading="state.item.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -204,6 +204,7 @@ const state  = reactive({
     item: {
         table: 'placard',
         dialog: false,
+        wait: false,
     },
     struct: {},
     opts: {
@@ -261,7 +262,11 @@ const method = {
         if (utils.is.empty(params)) return notyf.warn('你在想什么？什么都不填！')
         if (utils.is.empty(params?.title)) return notyf.warn('公告怎么能没有标题呢！')
 
+        state.item.wait     = true
+
         const { code, msg } = await axios.post(`/api/${state.item.table}/save`, params)
+
+        state.item.wait     = false
 
         if (code !== 200) return notyf.error(msg)
 

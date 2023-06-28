@@ -86,7 +86,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.ip" type="text" class="form-control customize text-white" placeholder="客户端 IP">
+                        <el-input v-model="state.struct.ip" placeholder="客户端 IP"></el-input>
                     </div>
                 </div>
             </div>
@@ -101,14 +101,14 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <textarea v-model="state.struct.remark" class="form-control customize text-white" rows="3" placeholder="备注一下，避免忘记！"></textarea>
+                        <el-input v-model="state.struct.remark" :autosize="{ minRows: 3, maxRows: 10 }" placeholder="备注一下，避免忘记！" type="textarea"></el-input>
                     </div>
                 </div>
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.item.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            <el-button v-on:click="state.item.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.save()" :loading="state.item.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -153,6 +153,7 @@ const state  = reactive({
     item: {
         table: 'ip-black',
         dialog: false,
+        wait: false,
     },
     struct: {
         ip: null
@@ -207,7 +208,11 @@ const method = {
         if (utils.is.empty(params))    return notyf.warn('你在想什么？什么都不填！')
         if (utils.is.empty(params.ip)) return notyf.warn('IP地址不能为空！')
 
+        state.item.wait     = true
+
         const { code, msg } = await axios.post(`/api/${state.item.table}/save`, params)
+
+        state.item.wait     = false
 
         if (code !== 200) return notyf.error(msg)
 
