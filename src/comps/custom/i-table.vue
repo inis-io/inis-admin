@@ -105,7 +105,6 @@ const props = defineProps({
             },
             style: {
                 background: `rgba(var(--theme-color), calc(var(--theme-opacity) * 0.15))`,
-                // backdropFilter: 'var(--theme-blur)',
                 backdropFilter: 'blur(10px)',
             },
         }
@@ -243,8 +242,6 @@ const handle = {
         })
         ctx.show(x, y)
         event.preventDefault()
-        // 切换选中
-        // proxy.$refs['selected'].toggleRowSelection(row, true)
     },
     // 选中
     selectionChange(selection) {

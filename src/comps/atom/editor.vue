@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="editor" color="rgb(var(--svg-color))" size="43px" class="position-absolute opacity-25" style="right: 2rem"></i-svg>
+            <i-svg name="editor" color="rgb(var(--assist-color))" size="43px" class="position-absolute opacity-25" style="right: 2rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>

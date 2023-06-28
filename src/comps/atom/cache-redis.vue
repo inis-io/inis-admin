@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="redis" color="rgb(var(--svg-color))" size="56px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="redis" color="rgb(var(--assist-color))" size="56px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -44,7 +44,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.host" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.host"></el-input>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -90,7 +90,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.password" placeholder="无密码为空即可" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.password" show-password placeholder="无密码为空即可"></el-input>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -103,7 +103,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.expire" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.expire"></el-input>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -116,18 +116,18 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.prefix" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.prefix"></el-input>
                     </div>
                 </div>
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.status.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.test()" type="button" class="btn btn-outline-light mx-1">
-                <i-svg name="connect" size="14px"></i-svg>
+            <el-button v-on:click="state.status.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.test()" :loading="state.status.test">
+                <i-svg v-if="!state.status.test" name="connect" size="14px"></i-svg>
                 <span class="ms-1">测试连接</span>
-            </button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            </el-button>
+            <el-button v-on:click="method.save()" :loading="state.status.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -155,6 +155,7 @@ const state = reactive({
         active: false,
         dialog: false,
         loading: true,
+        test: false,
     },
     backup: {}
 })
@@ -209,7 +210,11 @@ const method = {
         if (utils.is.empty(state.struct.port))      return notyf.warn('请填写 端口号！')
         if (utils.is.empty(state.struct.database))  return notyf.warn('请选择 数据库！')
 
+        state.status.wait   = true
+
         const { code, msg } = await axios.put('/api/toml/cache-redis', state.struct)
+
+        state.status.wait   = false
 
         if (code !== 200) return notyf.error('保存失败：' + msg)
 
@@ -221,7 +226,11 @@ const method = {
         if (utils.is.empty(state.struct.port))      return notyf.warn('请填写 端口号！')
         if (utils.is.empty(state.struct.database))  return notyf.warn('请选择 数据库！')
 
+        state.status.test = true
+
         const { code, msg, data } = await axios.post('/api/toml/test-redis', state.struct)
+
+        state.status.test = false
 
         if (code === 200) {
             // 拷贝一份备份

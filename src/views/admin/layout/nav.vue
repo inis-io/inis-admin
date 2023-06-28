@@ -3,19 +3,19 @@
         <div class="container-fluid user-select-none">
             <nav class="navbar navbar-dark navbar-expand-lg topnav-menu py-1">
                 <div class="collapse navbar-collapse justify-content-between">
-                    <el-menu class="navbar-nav w-100" :unique-opened="true" menu-trigger="hover" mode="horizontal" background-color="transparent">
+                    <el-menu class="navbar-nav w-100" :router="true" :unique-opened="true" menu-trigger="hover" mode="horizontal" background-color="transparent">
                         <el-menu-item index="/">
                             <el-image v-on:click="push('/')" :src="`/assets/images/logo-${state.theme}.png`" style="width: 100px;" class="d-flex flex-center"></el-image>
                         </el-menu-item>
-                        <el-sub-menu v-for="(item, index) in state.menu" :key="index" :index="index" show-timeout="50" hide-timeout="50">
+                        <el-sub-menu v-for="(item, index) in state.menu" :key="index" :index="index.toString()" show-timeout="50" hide-timeout="50">
                             <template #title>{{ item.label }}</template>
-                            <el-menu-item v-for="(val, key) in item.children" :key="key" v-on:click="val.fn">
-                                <i-svg :name="val.icon" :size="val.size" color="rgb(var(--svg-color))" class="me-1"></i-svg>
+                            <el-menu-item v-for="(val, key) in item.children" :key="key" v-on:click="val.fn()">
+                                <i-svg :name="val.icon" :size="val.size" color="rgb(var(--assist-color))" class="me-1"></i-svg>
                                 {{ val.label }}
                             </el-menu-item>
                         </el-sub-menu>
                     </el-menu>
-                    <el-menu class="navbar-nav d-flex align-items-center justify-content-end w-100" :router="true" :unique-opened="true" mode="horizontal" background-color="transparent">
+                    <el-menu class="navbar-nav d-flex align-items-center justify-content-end w-100" :unique-opened="true" mode="horizontal" background-color="transparent">
                         <el-sub-menu show-timeout="50" hide-timeout="50" index="login-user" class="icon-none">
                             <template #title>
                                 <div class="d-flex flex-column align-items-end user-select-text me-2">
@@ -35,15 +35,15 @@
                                 <el-avatar :src="state.user?.avatar" class="me-1" shape="square" size="medium"></el-avatar>
                             </template>
                             <el-menu-item route="/admin">
-                                <i-svg color="rgb(var(--svg-color))" name="console" size="16px" class="me-1"></i-svg>
+                                <i-svg color="rgb(var(--assist-color))" name="console" size="16px" class="me-1"></i-svg>
                                 控制台
                             </el-menu-item>
                             <el-menu-item route="/admin/personal">
-                                <i-svg color="rgb(var(--svg-color))" name="personal" size="16px" class="me-1"></i-svg>
+                                <i-svg color="rgb(var(--assist-color))" name="personal" size="16px" class="me-1"></i-svg>
                                 个人中心
                             </el-menu-item>
                             <el-menu-item>
-                                <i-svg color="rgb(var(--svg-color))" name="logout" size="16px" class="me-1"></i-svg>
+                                <i-svg color="rgb(var(--assist-color))" name="logout" size="16px" class="me-1"></i-svg>
                                 <span v-on:click="method.logout()" class="w-100">退出登录</span>
                             </el-menu-item>
                         </el-sub-menu>
@@ -54,12 +54,12 @@
                 <div class="d-flex justify-content-between">
                     <span>
                         <span v-on:click="state.drawer = true" class="mx-2">
-                            <i-svg color="rgb(var(--svg-color))" name="menu" size="24px"></i-svg>
+                            <i-svg color="rgb(var(--assist-color))" name="menu" size="24px"></i-svg>
                         </span>
                     </span>
                     <span>
                         <a v-if="!state.login.finish" data-bs-toggle="modal" data-bs-target="#fill-item-modal" href="javascript:;" class="mx-2">
-                            <i-svg color="rgb(var(--svg-color))" name="user-white" size="26px"></i-svg>
+                            <i-svg color="rgb(var(--assist-color))" name="user-white" size="26px"></i-svg>
                         </a>
                         <a v-else href="/admin">
                             <el-avatar :src="state.user?.avatar" :size="26" class="mx-2"></el-avatar>

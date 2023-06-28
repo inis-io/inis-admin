@@ -10,12 +10,12 @@
                 <template #default="scope">
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="编辑行" placement="top">
-                        <el-button v-on:click="method.edit(scope.row)" type="text" size="small">
+                        <el-button v-on:click="method.edit(scope.row)" size="small">
                             <i-svg name="edit" color="rgb(var(--icon-color))" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="回收站" placement="top">
-                        <el-button v-on:click="method.delete(scope.row.id, true)" type="text" size="small" class="ms-0">
+                        <el-button v-on:click="method.delete(scope.row.id, true)" size="small" class="ms-0">
                             <i-svg name="delete" color="rgb(var(--icon-color))" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>
@@ -28,17 +28,17 @@
                 <template #default="scope">
                     <span class="d-flex justify-content-end">
                     <el-tooltip content="恢复行" placement="top">
-                        <el-button v-on:click="method.restore(scope.row.id)" type="text" size="small">
+                        <el-button v-on:click="method.restore(scope.row.id)" size="small">
                             <i-svg name="restore" color="rgb(var(--icon-color))" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="编辑行" placement="top">
-                        <el-button v-on:click="method.edit(scope.row)" type="text" size="small" class="ms-0">
+                        <el-button v-on:click="method.edit(scope.row)" size="small" class="ms-0">
                             <i-svg name="edit" color="rgb(var(--icon-color))" size="16px"></i-svg>
                         </el-button>
                     </el-tooltip>
                     <el-tooltip content="删除行" placement="top">
-                        <el-button v-on:click="method.delete(scope.row.id, false)" type="text" size="small" class="ms-0">
+                        <el-button v-on:click="method.delete(scope.row.id, false)" size="small" class="ms-0">
                             <i-svg name="delete" color="rgb(var(--icon-color))" size="21px"></i-svg>
                         </el-button>
                     </el-tooltip>

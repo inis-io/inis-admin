@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="ram" color="rgb(var(--svg-color))" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="ram" color="rgb(var(--assist-color))" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -44,14 +44,14 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.expire" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.expire"></el-input>
                     </div>
                 </div>
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.status.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            <el-button v-on:click="state.status.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.save()" :loading="state.status.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -74,6 +74,7 @@ const state = reactive({
         active: false,
         dialog: false,
         loading: true,
+        wait: false,
     },
 })
 
@@ -117,7 +118,11 @@ const method = {
 
         if (utils.is.empty(state.struct.expire)) return notyf.warn('请填写 过期时间！')
 
+        state.status.wait   = true
+
         const { code, msg } = await axios.put('/api/toml/cache-ram', state.struct)
+
+        state.status.wait   = false
 
         if (code !== 200) return notyf.error('保存失败：' + msg)
 

@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="email" color="rgb(var(--svg-color))" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="email" color="rgb(var(--assist-color))" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -42,7 +42,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.host" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.host"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -70,7 +70,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.account" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.account"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -83,7 +83,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.password" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.password" show-password></el-input>
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.nickname" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.nickname"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -111,7 +111,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.sign_name" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.sign_name"></el-input>
                     </div>
                 </div>
                 <div class="col-12">
@@ -124,22 +124,21 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <div class="input-group">
-                            <input v-model="state.struct.email" type="text" style="height: 30px" class="form-control customize text-white">
-                            <div class="input-group-append">
-                                <button v-on:click="method.test()" type="button" class="btn btn-outline-light ms-2">
-                                    <i-svg name="email" size="14px"></i-svg>
-                                    邮件服务测试
-                                </button>
-                            </div>
-                        </div>
+                        <el-input v-model="state.struct.email" v-on:keydown.enter="method.test()" class="custom" placeholder="请输入邮箱">
+                            <template #suffix>
+                                <el-button v-on:click="method.test()" :loading="state.status.test">
+                                    <i-svg v-if="!state.status.test" name="email" size="14px"></i-svg>
+                                    <span class="ms-1">邮件服务测试</span>
+                                </el-button>
+                            </template>
+                        </el-input>
                     </div>
                 </div>
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.status.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            <el-button v-on:click="state.status.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.save()" :loading="state.status.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -170,6 +169,8 @@ const state = reactive({
         active: false,
         dialog: false,
         loading: true,
+        wait: false,
+        test: false,
     },
     backup: {}
 })
@@ -226,7 +227,11 @@ const method = {
         if (utils.is.empty(state.struct.password))  return notyf.warn('请填写服务密码！')
         if (utils.is.empty(state.struct.sign_name)) return notyf.warn('请填写邮件签名！')
 
+        state.status.wait   = true
+
         const { code, msg } = await axios.put('/api/toml/sms-email', state.struct)
+
+        state.status.wait   = false
 
         if (code !== 200) return notyf.error('保存失败：' + msg)
 
@@ -242,7 +247,11 @@ const method = {
         if (utils.is.empty(state.struct.sign_name)) return notyf.warn('请填写邮件签名！')
         if (!utils.is.email(state.struct.email))    return notyf.warn('接收者邮箱格式不正确！')
 
+        state.status.test         = true
+
         const { code, msg, data } = await axios.post('/api/toml/test-sms-email', state.struct)
+
+        state.status.test         = false
 
         if (code === 200) {
             // 拷贝一份备份

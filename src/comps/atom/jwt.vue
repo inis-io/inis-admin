@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="crypt" size="55px" color="rgb(var(--svg-color))" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="crypt" size="55px" color="rgb(var(--assist-color))" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -42,7 +42,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.issuer" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.issuer"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -55,7 +55,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.subject" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.subject"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -68,15 +68,14 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <div class="input-group">
-                            <input v-model="state.struct.key" style="height: 30px" type="text" class="form-control customize text-white">
-                            <div class="input-group-append">
-                                <button v-on:click="method.rand()" type="button" class="btn btn-outline-light flex-center ms-2">
-                                    <i-svg name="phone" size="14px"></i-svg>
+                        <el-input v-model="state.struct.key" class="custom" placeholder="请输入验证码">
+                            <template #suffix>
+                                <el-button v-on:click="method.rand()">
+                                    <i-svg name="restore" color="rgb(var(--vice-color))" size="14px"></i-svg>
                                     <span class="ms-1">随机</span>
-                                </button>
-                            </div>
-                        </div>
+                                </el-button>
+                            </template>
+                        </el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -89,14 +88,14 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.expire" style="height: 30px" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.expire"></el-input>
                     </div>
                 </div>
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.status.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            <el-button v-on:click="state.status.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.save()" :loading="state.status.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -118,6 +117,7 @@ const state = reactive({
         finish: false,
         dialog: false,
         loading: true,
+        wait: false,
     }
 })
 
@@ -154,7 +154,11 @@ const method = {
     },
     save: async () => {
 
+        state.status.wait   = true
+
         const { code, msg } = await axios.put('/api/toml/crypt-jwt', state.struct)
+
+        state.status.wait   = false
 
         if (code !== 200) return notyf.error('保存失败：' + msg)
 

@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="tencent" color="rgb(var(--svg-color))" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="tencent" color="rgb(var(--assist-color))" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -42,7 +42,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.secret_id" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.secret_id" show-password></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -55,7 +55,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.secret_key" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.secret_key" show-password></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -68,7 +68,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.app_id" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.app_id"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -81,7 +81,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.bucket" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.bucket"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -112,18 +112,18 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <input v-model="state.struct.domain" type="text" class="form-control customize text-white">
+                        <el-input v-model="state.struct.domain"></el-input>
                     </div>
                 </div>
             </div>
         </template>
         <template #footer>
-            <button v-on:click="state.status.dialog = false" type="button" class="btn btn-outline-light mx-1">取 消</button>
-            <button v-on:click="method.test()" type="button" class="btn btn-outline-light mx-1">
-                <i-svg name="connect" size="14px"></i-svg>
-                <span class="ms-1">COS 连接测试</span>
-            </button>
-            <button v-on:click="method.save()" type="button" class="btn btn-info mx-1">保 存</button>
+            <el-button v-on:click="state.status.dialog = false">取 消</el-button>
+            <el-button v-on:click="method.test()" :loading="state.status.test">
+                <i-svg v-if="!state.status.test" name="connect" size="14px"></i-svg>
+                <span class="ms-1">测试连接</span>
+            </el-button>
+            <el-button v-on:click="method.save()" :loading="state.status.wait">保 存</el-button>
         </template>
     </el-dialog>
 </template>
@@ -150,6 +150,8 @@ const state = reactive({
         finish: false,
         dialog: false,
         loading: true,
+        wait: false,
+        test: false,
     },
     backup: {},
     select: {
@@ -234,7 +236,11 @@ const method = {
         if (utils.is.empty(state.struct.region))     return notyf.warn('请填写 Bucket！')
         if (utils.is.empty(state.struct.bucket))     return notyf.warn('请填写 Region！')
 
+        state.status.wait   = true
+
         const { code, msg } = await axios.put('/api/toml/storage-cos', state.struct)
+
+        state.status.wait   = false
 
         if (code !== 200) return notyf.error('保存失败：' + msg)
 
@@ -248,7 +254,11 @@ const method = {
         if (utils.is.empty(state.struct.region))     return notyf.warn('请填写 Bucket！')
         if (utils.is.empty(state.struct.bucket))     return notyf.warn('请填写 Region！')
 
+        state.status.test         = true
+
         const { code, msg, data } = await axios.post('/api/toml/test-cos', state.struct)
+
+        state.status.test         = false
 
         if (code === 200) {
             // 拷贝一份备份

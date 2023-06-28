@@ -89,6 +89,7 @@
                             </label>
                             <el-input v-model="state.struct.code" class="custom" placeholder="请输入验证码">
                                 <template #suffix>
+<!--                                    <el-button v-on:click="method.code()" ref="verify-code">获取</el-button>-->
                                     <button v-on:click="method.code()" ref="verify-code" class="btn btn-outline-light text-white" type="button" style="height: 28px;">
                                         获取
                                     </button>

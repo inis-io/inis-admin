@@ -7,18 +7,17 @@
     /* 主题色 - 结束 */
 
     /* 辅助色 - 开始 */
-    --assist-color: 0, 0, 0;
-    --assist-font-color: 43,43,43;
+    --assist-color: 19, 206, 102;
+    --assist-font-color: 43, 43, 43;
     /* 辅助色 - 结束 */
 
     /* 相反色 - 开始 */
     --vice-opacity: 0.55;
     --vice-color: 48, 49, 51;
-    --vice-font-color: 43,43,43;
+    --vice-font-color: 43, 43, 43;
     /* 相反色 - 结束 */
 
     /* 图标 - 开始 */
-    --svg-color: 19, 206, 102;
     --icon-color: 80, 80, 80;
     /* 图标 - 结束 */
 
@@ -34,37 +33,37 @@
 /*body[inis-theme=white] .el-tabs__header.is-top{*/
 /*    background: pink;*/
 /*}*/
-
-* {
+body[inis-theme] *, a, p {
+    transition: 0.3s;
     color: rgb(var(--vice-font-color));
     font-family: -apple-system,system-ui,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
 }
-body{
+body[inis-theme] {
     background: #f2f3f5;
     background-image: linear-gradient(90deg,rgba(159,219,252,.15) 3%,transparent 0),linear-gradient(1turn,rgba(159,219,252,.15) 3%,transparent 0);
     background-size: 20px 20px;
     background-position: 50%;
 }
-#pointer{
+body[inis-theme] #pointer{
     display: none;
 }
-#background{
+body[inis-theme] #background{
     display: none;
 }
-.text-white{
+body[inis-theme] .text-white{
     color: rgb(var(--vice-font-color)) !important;
 }
-.card{
+body[inis-theme] .card{
     -webkit-box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
     box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
 }
-.card:hover{
+body[inis-theme] .card:hover{
     transition: 0.5s;
 }
-.card-header{
+body[inis-theme] .card-header{
     background: unset;
 }
-#app .topnav, #app .topnav{
+body[inis-theme] #app .topnav, body[inis-theme] #app .topnav{
     background: rgba(var(--theme-color), var(--theme-opacity)) !important;
     backdrop-filter: var(--theme-blur);
     transform: translate(0);
@@ -75,27 +74,27 @@ body{
     z-index: 99;
     width: 100%;
 }
-.navbar-dark .dropdown-menu{
+body[inis-theme] .navbar-dark .dropdown-menu{
     background: rgba(var(--theme-color), var(--theme-opacity));
     backdrop-filter: var(--theme-blur);
     border-radius: 4px;
 }
-#footer{
+body[inis-theme] #footer{
     backdrop-filter: var(--theme-blur);
     background: rgba(var(--theme-color), var(--theme-opacity));
     transform: translate(0);
     transition: transform .3s;
     box-shadow: 0px -5px 40px 0px rgba(17,58,93,.1);
 }
-.navbar-dark .dropdown-item:focus, .dropdown-item:hover {
+body[inis-theme] .navbar-dark .dropdown-item:focus, body[inis-theme] .dropdown-item:hover {
     border-radius: 4px !important;
     background-color: rgba(var(--theme-color), var(--theme-opacity));
 }
-.container-box {
+body[inis-theme] .container-box {
     margin-top: 80px;
     margin-bottom: 70px;
 }
-.inis-save button, .inis-save a{
+body[inis-theme] .inis-save button, body[inis-theme] .inis-save a{
     background: rgba(var(--theme-color), var(--theme-opacity));
     backdrop-filter: var(--theme-blur);
     transform: translate(0);
@@ -103,10 +102,10 @@ body{
     box-shadow: 0px 5px 40px 0px rgba(17,58,93,.1);
 }
 
-.input-group.custom-search{
+body[inis-theme] .input-group.custom-search{
     width: unset !important;
 }
-.input-group.custom-search input{
+body[inis-theme] .input-group.custom-search input{
     color: var(--theme-font-color);
     height: 35px;
     padding-left: 40px;
@@ -114,47 +113,47 @@ body{
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
     backdrop-filter: var(--theme-blur);
 }
-input::placeholder {
+body[inis-theme] input::placeholder {
     color: #DADDE2 !important
 }
-.input-group.custom-search input::placeholder {
+body[inis-theme] .input-group.custom-search input::placeholder {
     color: #DADDE2 !important
 }
-.input-group.custom-search svg{
+body[inis-theme] .input-group.custom-search svg{
     position: absolute;
     top: 8px;
     left: 10px;
     z-index: 9;
 }
-.form-control:disabled, .form-control[readonly]{
+body[inis-theme] .form-control:disabled, .form-control[readonly]{
     background-color: #ffffff00;
 }
-.btn-auto{
+body[inis-theme] .btn-auto{
     color: rgb(var(--theme-font-color));
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
     backdrop-filter: var(--theme-blur);
     -webkit-box-shadow: var(--box-shadow);
     box-shadow: var(--box-shadow);
 }
-.btn-auto:hover {
+body[inis-theme] .btn-auto:hover {
     color: rgb(var(--theme-font-color));
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
 }
-.btn-auto:focus {
+body[inis-theme] .btn-auto:focus {
     color: rgb(var(--theme-font-color));
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
     -webkit-box-shadow: var(--box-shadow);
     box-shadow: var(--box-shadow);
 }
-.nav-tabs.nav-bordered{
+body[inis-theme] .nav-tabs.nav-bordered{
     border-bottom: unset;
 }
-.nav-tabs.nav-bordered li a.active{
+body[inis-theme] .nav-tabs.nav-bordered li a.active{
     border-bottom: 2px solid rgba(var(--theme-color), var(--theme-opacity));
 }
-.__menu__wrapper.i-table-menu::before, .__menu__wrapper.i-table-menu .__menu__sub__wrapper::before{
+body[inis-theme] .__menu__wrapper.i-table-menu::before, body[inis-theme] .__menu__wrapper.i-table-menu .__menu__sub__wrapper::before{
     content: '';
     top: 0;
     width: 100%;
@@ -165,7 +164,7 @@ input::placeholder {
     -webkit-filter: blur(3px);
     backdrop-filter: var(--theme-blur);
 }
-.__menu__wrapper.i-table-menu, .__menu__wrapper.i-table-menu .__menu__sub__wrapper{
+body[inis-theme] .__menu__wrapper.i-table-menu, body[inis-theme] .__menu__wrapper.i-table-menu .__menu__sub__wrapper{
     border: unset;
     border-radius: 5px;
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
@@ -173,125 +172,144 @@ input::placeholder {
     transition: unset !important;
     --menu-item-labelColor: var(--vice-font-color) !important;
 }
-.__menu__wrapper.i-table-menu .__menu__item:hover, .__menu__wrapper.i-table-menu .__menu__sub__item:hover{
+body[inis-theme] .__menu__wrapper.i-table-menu .__menu__item:hover, body[inis-theme] .__menu__wrapper.i-table-menu .__menu__sub__item:hover{
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
 }
-.text-muted{
+body[inis-theme] .text-muted{
     color: #DADDE2 !important;
 }
-.__menu__wrapper .__menu__sub__item-label, .__menu__wrapper .__menu__item,
-.__menu__wrapper .__menu__sub__item-tips, .__menu__wrapper .__menu__sub__item{
+body[inis-theme] .__menu__wrapper .__menu__sub__item-label, body[inis-theme] .__menu__wrapper .__menu__item,
+body[inis-theme] .__menu__wrapper .__menu__sub__item-tips, body[inis-theme] .__menu__wrapper .__menu__sub__item{
     transition: 0s !important;
 }
-.__menu__item-arrow.show .__menu__item-arrow-after{
+body[inis-theme] .__menu__item-arrow.show .__menu__item-arrow-after{
     border-left: var(--menu-item-arrowRealSize) solid #ffffff;
 }
+body[inis-theme] input.customize:hover,
+body[inis-theme] input.customize:focus,
+body[inis-theme] textarea.customize:hover,
+body[inis-theme] textarea.customize:focus{
+    border-bottom: 1px solid rgb(var(--assist-color)) !important;
+}
+body[inis-theme] input.customize:hover,
+body[inis-theme] input.customize:focus,
+body[inis-theme] textarea.customize:hover,
+body[inis-theme] textarea.customize:focus{
+    border-bottom: 2px solid rgb(var(--assist-color)) !important;
+}
+
+
+
+
+
+
+
 
 /* ==================== 自定义 el-table - 开始 ==================== */
-.custom .el-table__inner-wrapper::before{
+body[inis-theme] .custom .el-table__inner-wrapper::before{
     height: 0;
 }
-.custom .el-table__header{
+body[inis-theme] .custom .el-table__header{
     width: 100% !important;
 }
-.custom .el-table__body{
+body[inis-theme] .custom .el-table__body{
     width: 100% !important;
 }
-.custom .is-scrolling-right .el-table-fixed-column--left, .custom .is-scrolling-middle .el-table-fixed-column--left,
-.custom .is-scrolling-right .el-table__body-wrapper td.el-table-fixed-column--left{
+body[inis-theme] .custom .is-scrolling-right .el-table-fixed-column--left, body[inis-theme] .custom .is-scrolling-middle .el-table-fixed-column--left,
+body[inis-theme] .custom .is-scrolling-right .el-table__body-wrapper td.el-table-fixed-column--left{
     backdrop-filter: var(--theme-blur) !important;
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8)) !important;
 }
-.custom .is-scrolling-left .el-table-fixed-column--right, .custom .is-scrolling-middle .el-table-fixed-column--right,
-.custom .is-scrolling-left .el-table__body-wrapper td.el-table-fixed-column--right{
+body[inis-theme] .custom .is-scrolling-left .el-table-fixed-column--right, body[inis-theme] .custom .is-scrolling-middle .el-table-fixed-column--right,
+body[inis-theme] .custom .is-scrolling-left .el-table__body-wrapper td.el-table-fixed-column--right{
     backdrop-filter: var(--theme-blur) !important;
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8)) !important;
 }
-.custom table tr.el-table__row:hover{
+body[inis-theme] .custom table tr.el-table__row:hover{
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 1.2)) !important;
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 1.2)) !important;
 }
-.el-table--border .el-table__inner-wrapper::after,
-.el-table--border::after,
-.el-table--border::before,
-.el-table__inner-wrapper::before {
+body[inis-theme] .el-table--border .el-table__inner-wrapper::after,
+body[inis-theme] .el-table--border::after,
+body[inis-theme] .el-table--border::before,
+body[inis-theme] .el-table__inner-wrapper::before {
     background-color: transparent !important;
 }
-.el-table .hidden-columns{
+body[inis-theme] .el-table .hidden-columns{
     display: none;
 }
-.el-loading-mask{
+body[inis-theme] .el-loading-mask{
     background-color: rgb(255 255 255 / 72%);
     backdrop-filter: var(--theme-blur);
 }
-.el-loading-mask .el-loading-spinner svg{
+body[inis-theme] .el-loading-mask .el-loading-spinner svg{
     width: 20px;
     height: 20px;
 }
 /* ==================== 自定义 el-table - 结束 ==================== */
 /* ==================== 自定义 el-tabs - 开始 ==================== */
-.el-tabs__header{
+body[inis-theme] .el-tabs__header{
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
     backdrop-filter: var(--theme-blur);
     border-radius: 6px;
     box-shadow: unset !important;
     padding: 6px 20px;
 }
-.sm .el-tabs__header{
+body[inis-theme] .sm .el-tabs__header{
     background: transparent;
     backdrop-filter: unset;
     border-radius: unset;
     box-shadow: unset !important;
     padding: unset;
 }
-.el-tabs__nav-wrap::after{
+body[inis-theme] .el-tabs__nav-wrap::after{
     background-color: unset;
 }
-.el-tabs__item:focus-visible {
+body[inis-theme] .el-tabs__item:focus-visible {
     outline: none;
     box-shadow: unset;
 }
 /* ==================== 自定义 el-tabs - 结束 ==================== */
 
 /* ================== 自定义 el-pagination - 结束 ================== */
-.custom .el-pagination.is-background .btn-next,
-.custom .el-pagination.is-background .btn-prev,
-.custom .el-pagination.is-background .el-pager li {
+body[inis-theme] .custom .el-pagination.is-background .btn-next,
+body[inis-theme] .custom .el-pagination.is-background .btn-prev,
+body[inis-theme] .custom .el-pagination.is-background .el-pager li {
     color: #DADDE2;
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
     backdrop-filter: var(--theme-blur);
     -webkit-box-shadow: var(--box-shadow);
     box-shadow: var(--box-shadow);
 }
-.custom .el-input__wrapper {
+body[inis-theme] .custom .el-input__wrapper {
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
     backdrop-filter: var(--theme-blur);
     box-shadow: unset;
 }
-.el-select__popper.el-popper{
+body[inis-theme] .el-select__popper.el-popper{
     border: unset;
     backdrop-filter: var(--theme-blur);
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
 }
-.el-popper.custom .el-popper__arrow::before{
+body[inis-theme] .el-popper.custom .el-popper__arrow::before{
     border: unset;
     backdrop-filter: var(--theme-blur);
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
 }
-.el-popper.custom .el-select-dropdown__item.hover,
-.el-select-dropdown__item:hover{
+body[inis-theme] .el-popper.custom .el-select-dropdown__item.hover,
+body[inis-theme] .el-select-dropdown__item:hover{
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8)) !important;
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8)) !important;
 }
-.el-popper.custom .el-select .el-input.is-focus .el-input__wrapper{
+body[inis-theme] .el-popper.custom .el-select .el-input.is-focus .el-input__wrapper{
     box-shadow: 0px 0px 0px rgb(0 0 0 / 10%), 0px 0px 0px rgb(255 255 255 / 80%), inset 18px 18px 30px rgb(0 0 0 / 6%), inset -18px -18px 30px rgb(255 255 255 / 30%) !important;
     transition: box-shadow .2s ease-out;
 }
-.el-select .el-input__wrapper.is-focus{
+body[inis-theme] .el-select .el-input__wrapper.is-focus{
     box-shadow: unset !important;
 }
-.el-pagination .el-select .el-input .el-input__wrapper{
+body[inis-theme] .el-pagination .el-select .el-input .el-input__wrapper{
     box-shadow: 18px 18px 30px rgb(0 0 0 / 5%), -8px -8px 30px rgb(255 255 255 / 10%) !important;
     transition: box-shadow .2s ease-out;
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
@@ -304,63 +322,62 @@ input::placeholder {
     padding: 0 10px;
     color: rgb(var(--theme-font-color));
 }
-.el-pagination .el-select .el-input .el-input__wrapper input:hover,
-.el-pagination .el-select .el-input .el-input__wrapper input:focus{
+body[inis-theme] .el-pagination .el-select .el-input .el-input__wrapper input:hover,
+body[inis-theme] .el-pagination .el-select .el-input .el-input__wrapper input:focus{
     border-bottom: unset !important;
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
 }
-.custom .el-pagination.is-background .el-pager li.is-active{
+body[inis-theme] .custom .el-pagination.is-background .el-pager li.is-active{
     color: var(--theme-font-color) !important;
     box-shadow: 0px 0px 0px rgb(0 0 0 / 10%), 0px 0px 0px rgb(255 255 255 / 80%), inset 18px 18px 30px rgb(0 0 0 / 6%), inset -18px -18px 30px rgb(255 255 255 / 30%) !important;
     transition: box-shadow .2s ease-out;
 }
-.custom .el-pagination.is-background .el-pager li:hover{
+body[inis-theme] .custom .el-pagination.is-background .el-pager li:hover{
     box-shadow: 0px 0px 0px rgb(0 0 0 / 10%), 0px 0px 0px rgb(255 255 255 / 80%), inset 18px 18px 30px rgb(0 0 0 / 6%), inset -18px -18px 30px rgb(255 255 255 / 30%) !important;
     transition: box-shadow .2s ease-out;
     border: 1px solid transparent;
 }
-.custom .el-select:hover:not(.el-select--disabled) .el-input__wrapper{
+body[inis-theme] .custom .el-select:hover:not(.el-select--disabled) .el-input__wrapper{
     border: 1px solid transparent;
 }
-.custom .el-select:hover:not(.el-select--disabled) .el-input__wrapper,
-.el-pagination .el-select:hover:not(.el-select--disabled) .el-input .el-input__wrapper input{
+body[inis-theme] .custom .el-select:hover:not(.el-select--disabled) .el-input__wrapper,
+body[inis-theme] .el-pagination .el-select:hover:not(.el-select--disabled) .el-input .el-input__wrapper input{
     box-shadow: 0px 0px 0px rgb(0 0 0 / 10%), 0px 0px 0px rgb(255 255 255 / 80%), inset 18px 18px 30px rgb(0 0 0 / 6%), inset -18px -18px 30px rgb(255 255 255 / 30%) !important;
     transition: box-shadow .2s ease-out;
     /*border: unset;*/
 }
-.el-select-dropdown__item.is-disabled{
+body[inis-theme] .el-select-dropdown__item.is-disabled{
     text-decoration: line-through !important;
 }
-.el-select-dropdown.is-multiple .el-select-dropdown__item.selected{
+body[inis-theme] .el-select-dropdown.is-multiple .el-select-dropdown__item.selected{
     background: unset !important;
 }
-.el-tag.el-tag--info{
-    /*background: rgba(240,242,245,0.3) !important;*/
-    background-color: rgba(var(--svg-color), .08) !important;
+body[inis-theme] .el-tag.el-tag--info{
+    background-color: rgba(var(--assist-color), .08) !important;
 }
-.el-tag.el-tag--info span *, .el-tag.el-tag--info svg *{
-    color: rgb(var(--svg-color)) !important;
+body[inis-theme] .el-tag.el-tag--info span *, body[inis-theme] .el-tag.el-tag--info svg *{
+    color: rgb(var(--assist-color)) !important;
 }
-.el-select-dropdown__item.is-disabled{
+body[inis-theme] .el-select-dropdown__item.is-disabled{
     color: red;
 }
 /* ================== 自定义 el-pagination - 结束 ================== */
 
 /* ==================== 自定义 el-button - 开始 ==================== */
-.el-button--custom{
+body[inis-theme] .el-button--custom{
     border-color: transparent;
     background: 0 0;
     padding-left: 0;
     padding-right: 0;
 }
-.el-button{
+body[inis-theme] .el-button{
     border: unset;
 }
 /* ==================== 自定义 el-button - 结束 ==================== */
 
 /* =================== 自定义 el-dropdown - 结束 =================== */
-.el-dropdown.custom {
+body[inis-theme] .el-dropdown.custom {
     font-weight: 400;
     line-height: 1.5;
     padding: .45rem .9rem;
@@ -373,64 +390,64 @@ input::placeholder {
     -webkit-box-shadow: var(--box-shadow);
     box-shadow: var(--box-shadow);
 }
-.el-dropdown__popper.el-popper {
+body[inis-theme] .el-dropdown__popper.el-popper {
     border: unset;
     backdrop-filter: var(--theme-blur);
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
 }
-.el-popper.is-light .el-popper__arrow::before {
+body[inis-theme] .el-popper.is-light .el-popper__arrow::before {
     border: unset;
     backdrop-filter: var(--theme-blur);
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 1.2)) !important;
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 1.2)) !important;
 }
-.el-dropdown-menu__item:not(.is-disabled):focus {
+body[inis-theme] .el-dropdown-menu__item:not(.is-disabled):focus {
     color: var(--theme-font-color) !important;
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
 }
 /* =================== 自定义 el-dropdown - 开始 =================== */
 /* =================== 自定义 el-menu - 开始 =================== */
-.el-menu{
+body[inis-theme] .el-menu{
 
 }
-.el-menu-item,  .el-sub-menu__title{
+body[inis-theme] .el-menu-item, body[inis-theme] .el-sub-menu__title{
     font-size: 13px;
     padding: 0 10px;
 }
-.el-menu--horizontal{
+body[inis-theme] .el-menu--horizontal{
     border-bottom: unset;
 }
-.el-menu--horizontal > .el-menu-item.is-active{
+body[inis-theme] .el-menu--horizontal > .el-menu-item.is-active{
     border-bottom: unset;
     color: unset !important;
 }
-.el-menu--horizontal > .el-menu-item{
+body[inis-theme] .el-menu--horizontal > .el-menu-item{
     border-bottom: unset;
 }
-.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
-.el-menu--horizontal .el-menu-item:not(.is-disabled):hover{
+body[inis-theme] .el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
+body[inis-theme] .el-menu--horizontal .el-menu-item:not(.is-disabled):hover{
     background-color: unset;
     color: unset;
 }
-.el-menu--horizontal .el-menu--popup .el-menu-item:not(.is-disabled):hover{
+body[inis-theme] .el-menu--horizontal .el-menu--popup .el-menu-item:not(.is-disabled):hover{
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 1.2)) !important;
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 1.2)) !important;
 }
-.el-menu--horizontal > .el-sub-menu .el-sub-menu__title,
-.el-menu--horizontal > .el-menu-item{
+body[inis-theme] .el-menu--horizontal > .el-sub-menu .el-sub-menu__title,
+body[inis-theme] .el-menu--horizontal > .el-menu-item{
     color: var(--theme-font-color);
     border-bottom: unset;
 }
-.el-menu--horizontal .el-menu .el-menu-item.is-active,
-.el-menu--horizontal .el-menu .el-sub-menu.is-active > .el-sub-menu__title{
+body[inis-theme] .el-menu--horizontal .el-menu .el-menu-item.is-active,
+body[inis-theme] .el-menu--horizontal .el-menu .el-sub-menu.is-active > .el-sub-menu__title{
     color: var(--theme-font-color);
 }
-.el-menu--horizontal .el-menu .el-menu-item,
-.el-menu--horizontal .el-menu .el-sub-menu__title{
+body[inis-theme] .el-menu--horizontal .el-menu .el-menu-item,
+body[inis-theme] .el-menu--horizontal .el-menu .el-sub-menu__title{
     color: var(--theme-font-color);
 }
-.el-popper.is-light{
+body[inis-theme] .el-popper.is-light{
     background: rgba(var(--theme-color), var(--theme-opacity)) !important;
     backdrop-filter: var(--theme-blur);
     -webkit-backdrop-filter: var(--theme-blur);
@@ -438,57 +455,61 @@ input::placeholder {
     box-shadow: 0px 5px 40px 0px rgb(17 58 93 / 10%);
     -webkit-box-shadow: 0px 5px 40px 0px rgb(17 58 93 / 10%);
 }
-.el-sub-menu__title{
+body[inis-theme] .el-sub-menu__title{
     line-height: unset;
 }
-.el-menu .icon-none i, .el-menu .icon-none svg{
+body[inis-theme] .el-menu .icon-none i, body[inis-theme] .el-menu .icon-none svg{
     display: none;
 }
-    /* =================== 自定义 el-menu - 开始 =================== */
+/* =================== 自定义 el-menu - 开始 =================== */
 /* ==================== 自定义 el-select - 开始 ==================== */
-.el-select.custom:hover{
+body[inis-theme] .el-select.custom:hover{
     border: unset !important;
 }
-.el-select.custom .el-input__wrapper {
+body[inis-theme] .el-select.custom .el-input__wrapper {
     height: 26px;
     padding: 0;
     background: unset;
     backdrop-filter: unset;
     border-radius: 0;
     font-size: 13px;
-    border-bottom: 1px solid #ccc!important;
+    border-bottom: 1px solid rgb(var(--assist-color));
 }
-.el-select.custom.multiple .el-input__wrapper {
+body[inis-theme] .el-select.custom.multiple .el-input__wrapper {
     height: unset !important;
 }
-.el-select.custom .el-input.is-focus .el-input__wrapper,
-.el-select.custom:hover:not(.el-select--disabled) .el-input__wrapper{
+body[inis-theme] .el-select.custom .el-input.is-focus .el-input__wrapper,
+body[inis-theme] .el-select.custom:hover:not(.el-select--disabled) .el-input__wrapper{
     box-shadow: unset !important;
-    border-bottom: 2px solid #ccc!important;
+    border-bottom: 2px solid rgb(var(--assist-color));
 }
-.el-select-dropdown__item.hover{
+body[inis-theme] .el-select .el-input .el-input__wrapper input:hover, body[inis-theme] .el-select .el-input .el-input__wrapper input:focus{
+    border-bottom: unset !important;
+}
+body[inis-theme] .el-select-dropdown__item.hover{
     background-color: transparent;
 }
 /* ==================== 自定义 el-select - 结束 ==================== */
 /* ==================== 自定义 el-cascader - 结束 ==================== */
-.el-cascader.custom.multiple .el-input__wrapper{
+body[inis-theme] .el-cascader.custom.multiple .el-input__wrapper{
     background: unset !important;
     backdrop-filter: unset !important;
 }
-.el-cascader-panel .el-cascader-node > .el-checkbox{
+body[inis-theme] .el-cascader-panel .el-cascader-node > .el-checkbox{
     margin: 0 !important;
 }
-.el-cascader-node:not(.is-disabled):focus, .el-cascader-node:not(.is-disabled):hover{
+body[inis-theme] .el-cascader-node:not(.is-disabled):focus, body[inis-theme] .el-cascader-node:not(.is-disabled):hover{
     background-color: rgba(var(--theme-color), var(--theme-opacity));
 }
 /* ==================== 自定义 el-cascader - 结束 ==================== */
 /* ==================== 自定义 el-tooltip - 开始 ==================== */
-.el-popper.is-dark{
+body[inis-theme] .el-popper.is-dark{
+
 }
-.el-popper.is-dark span{
+body[inis-theme] .el-popper.is-dark span{
     color: #fff !important;
 }
-.el-popper.is-dark .el-popper__arrow::before{
+body[inis-theme] .el-popper.is-dark .el-popper__arrow::before{
     border: unset;
     backdrop-filter: var(--vice-color);
     background: rgba(var(--vice-color), calc(var(--vice-opacity) * 1.5)) !important;
@@ -496,151 +517,165 @@ input::placeholder {
 }
 /* ==================== 自定义 el-tooltip - 结束 ==================== */
 /* ==================== 自定义 el-collapse - 开始 ==================== */
-.el-collapse{
+body[inis-theme] .el-collapse{
     border-top: unset;
     border-bottom: unset;
 }
-.el-collapse-item__header, .el-collapse-item__wrap{
+body[inis-theme] .el-collapse-item__header, body[inis-theme] .el-collapse-item__wrap{
     background: unset;
     border-bottom: unset;
 }
 /* ==================== 自定义 el-collapse - 结束 ==================== */
 /* ==================== 自定义 el-upload - 开始 ==================== */
-.el-upload-list--picture .el-upload-list__item{
+body[inis-theme] .el-upload-list--picture .el-upload-list__item{
     background-color: unset;
     border-radius: unset;
     padding: 6px;
 }
-.el-upload-list__item:hover{
+body[inis-theme] .el-upload-list__item:hover{
     background-color: rgba(var(--theme-color), var(--theme-opacity));
 }
-.el-upload-list--picture .el-upload-list__item-thumbnail{
+body[inis-theme] .el-upload-list--picture .el-upload-list__item-thumbnail{
     height: unset;
     background-color: unset;
 }
-.custom.upload > .el-upload{
+body[inis-theme] .custom.upload > .el-upload{
     width: 100%;
 }
 /* ==================== 自定义 el-upload - 结束 ==================== */
 /* ==================== 自定义 el-steps - 开始 ==================== */
-.el-steps--simple{
+body[inis-theme] .el-steps--simple{
     background: rgba(var(--theme-color), var(--theme-opacity)) !important;
     backdrop-filter: var(--theme-blur);
     -webkit-backdrop-filter: var(--theme-blur);
 }
-.el-step__title.is-finish{
+body[inis-theme] .el-step__title.is-finish{
     color: rgb(var(--theme-font-color));
 }
-.el-step.is-simple .el-step__title{
+.body[inis-theme] el-step.is-simple .el-step__title{
     font-size: 14px;
     font-weight: bolder;
 }
-.el-step__title.is-process, .el-step__title.is-wait{
+body[inis-theme] .el-step__title.is-process, body[inis-theme] .el-step__title.is-wait{
     /*color: var(--theme-font-color);*/
     color: #DADDE2 !important;
 }
-.el-step.is-simple .el-step__arrow::after, .el-step.is-simple .el-step__arrow::before{
+body[inis-theme] .el-step.is-simple .el-step__arrow::after, body[inis-theme] .el-step.is-simple .el-step__arrow::before{
     background-color: rgb(var(--theme-color));
 }
 /* ==================== 自定义 el-steps - 结束 ==================== */
 /* ==================== 自定义 el-input-number - 开始 ==================== */
-.el-input-number__decrease, .el-input-number__increase{
+body[inis-theme] .el-input-number__decrease, body[inis-theme] .el-input-number__increase{
     background: unset;
 }
-.el-input-number .el-input__wrapper{
+body[inis-theme] .el-input-number .el-input__wrapper{
     background: unset;
 }
-.el-input-number .el-input__wrapper.is-focus{
-    box-shadow: 0 0 0 1px var(--el-input-border-color,var(--el-border-color)) inset;
+body[inis-theme] .el-input-number__increase, body[inis-theme] .el-input-number__decrease{
+    border-left: unset;
+    border-right: unset;
+}
+body[inis-theme] .el-input-number.is-controls-right .el-input-number__decrease,
+body[inis-theme] .el-input-number.is-controls-right .el-input-number__increase{
+    border: unset;
+}
+body[inis-theme] .el-input-number .el-input__wrapper.is-focus,
+body[inis-theme] .el-input-number__decrease:hover~.el-input:not(.is-disabled) .el-input__wrapper,
+body[inis-theme] .el-input-number__increase:hover~.el-input:not(.is-disabled) .el-input__wrapper{
+    box-shadow: unset;
 }
 /* ==================== 自定义 el-input-number - 结束 ==================== */
 /* ==================== 自定义 el-dialog - 开始 ==================== */
-.el-dialog{
+body[inis-theme] .el-dialog{
     background: #f2f3f5;
     background-image: linear-gradient(90deg,rgba(159,219,252,.15) 3%,transparent 0),linear-gradient(1turn,rgba(159,219,252,.15) 3%,transparent 0);
     background-size: 20px 20px;
     background-position: 50%;
 }
-.sm .el-dialog__body{
+body[inis-theme] .sm .el-dialog__body{
     padding: 0;
 }
 /* ==================== 自定义 el-dialog - 结束 ==================== */
 /* ==================== 自定义 el-input - 开始 ==================== */
-.el-input .el-input__wrapper{
+body[inis-theme] .el-input .el-input__wrapper{
     background: unset;
     backdrop-filter: unset;
-    border-bottom: 1px solid #ccc;
     border-radius: 0;
-    height: 28px;
+    height: 28px !important;
     padding: 0;
 }
-.el-input .el-input__wrapper input:hover, .el-input .el-input__wrapper input:focus{
-    border-bottom: 2px solid #ccc!important;
+body[inis-theme] .el-input .el-input__wrapper input{
+    border-bottom: 1px solid rgb(var(--assist-color));
+}
+body[inis-theme] .el-input .el-input__wrapper input:hover, body[inis-theme] .el-input .el-input__wrapper input:focus{
+    border-bottom: 2px solid rgb(var(--assist-color))!important;
 }
 /* ==================== 自定义 el-input - 结束 ==================== */
 
 
 
 /* ==================== 自定义 bootstrap modal - 开始 ==================== */
-.modal .modal-dialog{
+body[inis-theme] .modal .modal-dialog{
+
 }
-.modal .modal-content{
+body[inis-theme] .modal .modal-content{
     background: rgba(var(--theme-color), var(--theme-opacity)) !important;
     backdrop-filter: var(--theme-blur);
 }
-.modal .modal-header{
+body[inis-theme] .modal .modal-header{
     border-radius: 4px 4px 0 0;
 }
-.modal .modal-body{
+body[inis-theme] .modal .modal-body{
+
 }
-.modal .modal-footer{
+body[inis-theme] .modal .modal-footer{
     border-radius: 0 0 4px 4px !important;
 }
 /* ==================== 自定义 bootstrap modal - 结束 ==================== */
 
 /* ==================== 自定义 bootstrap btn - 开始 ==================== */
-.btn-info{
+body[inis-theme] .btn-info{
     color: var(--theme-font-color);
     background-color: rgba(var(--color-info), 1);
     border-color: rgba(var(--color-info), 1);
 }
-.btn-info:hover{
+body[inis-theme] .btn-info:hover{
     background-color: rgba(var(--color-info), 0.8);
     border-color: rgba(var(--color-info), 0.8);
     backdrop-filter: var(--theme-blur);
 }
-.btn-info:not(:disabled):not(.disabled).active,
-.btn-info:not(:disabled):not(.disabled):active,
-.show>.btn-info.dropdown-toggle{
+body[inis-theme] .btn-info:not(:disabled):not(.disabled).active,
+body[inis-theme] .btn-info:not(:disabled):not(.disabled):active,
+body[inis-theme] .show>.btn-info.dropdown-toggle{
     color: var(--theme-font-color);
     background-color: rgba(var(--color-info), 0.8);
     border-color: rgba(var(--color-info), 0.8);
 }
-.btn-info:not(:disabled):not(.disabled).active:focus,
-.btn-info:not(:disabled):not(.disabled):active:focus,
-.show>.btn-info.dropdown-toggle:focus{
+body[inis-theme] .btn-info:not(:disabled):not(.disabled).active:focus,
+body[inis-theme] .btn-info:not(:disabled):not(.disabled):active:focus,
+body[inis-theme] .show>.btn-info.dropdown-toggle:focus{
     box-shadow: 0 0 0 0.2rem rgba(var(--color-info), 0.5);
 }
-.btn.disabled,
-.btn:disabled,
-fieldset:disabled .btn{
+body[inis-theme] .btn.disabled,
+body[inis-theme] .btn:disabled,
+body[inis-theme] fieldset:disabled .btn{
     opacity: unset;
     border: unset;
 }
-.btn-outline-light:hover{
+body[inis-theme] .btn-outline-light:hover{
     color: rgb(var(--theme-font-color));
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
 }
-btn-outline-light:not(:disabled):not(.disabled).active,
-.btn-outline-light:not(:disabled):not(.disabled):active,
-.show>.btn-outline-light.dropdown-toggle{
+body[inis-theme] .btn-outline-light:not(:disabled):not(.disabled).active,
+body[inis-theme] .btn-outline-light:not(:disabled):not(.disabled):active,
+body[inis-theme] .show>.btn-outline-light.dropdown-toggle{
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.65));
     backdrop-filter: var(--theme-blur);
 }
 /* ==================== 自定义 bootstrap btn - 结束 ==================== */
 /* ==================== 自定义 bootstrap alert - 开始 ==================== */
-.alert-primary{
+body[inis-theme] .alert-primary{
     background: unset;
 }
 /* ==================== 自定义 bootstrap btn - 结束 ==================== */
@@ -648,12 +683,12 @@ btn-outline-light:not(:disabled):not(.disabled).active,
 
 
 /* ==================== 自定义 Tinymce 编辑器 - 开始 ==================== */
-.tox .tox-mbtn, .tox .tox-tbtn svg,
-.tox .tox-tbtn{
+body[inis-theme] .tox .tox-mbtn, body[inis-theme] .tox .tox-tbtn svg,
+body[inis-theme] .tox .tox-tbtn{
     color: rgba(var(--theme-font-color), 1);
     fill: rgba(var(--theme-font-color), 1);
 }
-.tox .tox-pop__dialog{
+body[inis-theme] .tox .tox-pop__dialog{
     background: rgba(var(--theme-color), var(--theme-opacity)) !important;
     backdrop-filter: var(--theme-blur);
     -webkit-backdrop-filter: var(--theme-blur);
@@ -661,21 +696,21 @@ btn-outline-light:not(:disabled):not(.disabled).active,
     box-shadow: 0px 5px 40px 0px rgb(17 58 93 / 10%);
     -webkit-box-shadow: 0px 5px 40px 0px rgb(17 58 93 / 10%);
 }
-.tox .tox-edit-area__iframe, .tox .tox-menubar,
-.tox:not(.tox-tinymce-inline) .tox-editor-header, .tox .tox-toolbar-overlord,
-.tox .tox-toolbar, .tox .tox-toolbar__overflow, .tox .tox-toolbar__primary{
+body[inis-theme] .tox .tox-edit-area__iframe, body[inis-theme] .tox .tox-menubar,
+body[inis-theme] .tox:not(.tox-tinymce-inline) .tox-editor-header, body[inis-theme] .tox .tox-toolbar-overlord,
+body[inis-theme] .tox .tox-toolbar, body[inis-theme] .tox .tox-toolbar__overflow, body[inis-theme] .tox .tox-toolbar__primary{
     background: unset;
 }
-.tox .tox-tbtn--bespoke{
+body[inis-theme] .tox .tox-tbtn--bespoke{
     background: unset;
 }
-.tox .tox-tbtn:hover{
+body[inis-theme] .tox .tox-tbtn:hover{
     background: unset;
 }
-.tox-tinymce{
+body[inis-theme] .tox-tinymce{
     border: unset;
 }
-.tox .tox-menu{
+body[inis-theme] .tox .tox-menu{
     background: rgba(var(--theme-color), var(--theme-opacity)) !important;
     backdrop-filter: var(--theme-blur);
     -webkit-backdrop-filter: var(--theme-blur);
@@ -683,50 +718,50 @@ btn-outline-light:not(:disabled):not(.disabled).active,
     box-shadow: 0px 5px 40px 0px rgb(17 58 93 / 10%);
     -webkit-box-shadow: 0px 5px 40px 0px rgb(17 58 93 / 10%);
 }
-.tox .tox-collection--list .tox-collection__item--active{
+body[inis-theme] .tox .tox-collection--list .tox-collection__item--active{
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8)) !important;
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8)) !important;
 }
-.tox .tox-mbtn--active, .tox .tox-mbtn:hover:not(:disabled):not(.tox-mbtn--active){
+body[inis-theme] .tox .tox-mbtn--active, body[inis-theme] .tox .tox-mbtn:hover:not(:disabled):not(.tox-mbtn--active){
     background: rgba(var(--theme-color), var(--theme-opacity)) !important;
     margin-bottom: 2px;
     color: var(--theme-font-color);
     font-weight: bolder;
 }
-.tox .tox-tbtn--enabled, .tox .tox-tbtn--enabled:hover{
+body[inis-theme] .tox .tox-tbtn--enabled, body[inis-theme] .tox .tox-tbtn--enabled:hover{
     background: unset;
     border-radius: unset;
     border-bottom: 3px solid rgba(var(--theme-color), var(--theme-opacity));
 }
-.tox .tox-menu.tox-collection.tox-collection--list{
+body[inis-theme] .tox .tox-menu.tox-collection.tox-collection--list{
     margin-top: 4px;
 }
-.tox .tox-dialog{
+body[inis-theme] .tox .tox-dialog{
     max-width: 70%;
     background-color: unset;
 }
-.tox .tox-dialog__header, .tox .tox-dialog__footer,
-.tox .tox-dropzone, .tox .tox-dialog__body-nav-item:focus{
+body[inis-theme] .tox .tox-dialog__header, body[inis-theme] .tox .tox-dialog__footer,
+body[inis-theme] .tox .tox-dropzone, body[inis-theme] .tox .tox-dialog__body-nav-item:focus{
     background-color: unset;
 }
-.tox .tox-dialog__table tbody tr{
+body[inis-theme] .tox .tox-dialog__table tbody tr{
     border-bottom: unset;
 }
-.tox .tox-dialog-wrap__backdrop{
+body[inis-theme] .tox .tox-dialog-wrap__backdrop{
     background-color: rgb(0 0 0 / 22%);
     filter: blur(10px);
     z-index: 1;
     backdrop-filter: var(--theme-blur);
     -webkit-backdrop-filter: var(--theme-blur);
 }
-.tox input {
+body[inis-theme] .tox input {
     border: unset;
     background: unset;
     border-bottom: 1px solid #ccc!important;
     border-radius: 0;
     padding-left: 0!important;
 }
-.tox input:focus{
+body[inis-theme] .tox input:focus{
     cursor: pointer;
     background: unset;
     border-bottom: 2px solid #ccc!important;
@@ -736,7 +771,7 @@ btn-outline-light:not(:disabled):not(.disabled).active,
     -o-transition: all .4s ease;
     box-shadow: unset;
 }
-.tox .tox-textarea{
+body[inis-theme] .tox .tox-textarea{
     height: 100%;
     border: unset;
     background: unset;
@@ -744,8 +779,8 @@ btn-outline-light:not(:disabled):not(.disabled).active,
     border-radius: 0;
     padding-left: 0!important;
 }
-.tox-textarea-wrap{height: 100% !important}
-.tox .tox-textarea:focus{
+body[inis-theme] .tox-textarea-wrap{height: 100% !important}
+body[inis-theme] .tox .tox-textarea:focus{
     cursor: pointer;
     background: unset;
     border-bottom: 2px solid #ccc!important;
@@ -757,25 +792,25 @@ btn-outline-light:not(:disabled):not(.disabled).active,
     border: unset;
     border-radius: unset;
 }
-.tox .tox-listboxfield .tox-listbox--select{
+body[inis-theme] .tox .tox-listboxfield .tox-listbox--select{
     border: unset;
     background: unset;
     border-radius: unset;
     box-shadow: unset;
     border-bottom: 1px solid #ccc!important;
 }
-.tox .tox-listboxfield .tox-listbox--select:focus{
+body[inis-theme] .tox .tox-listboxfield .tox-listbox--select:focus{
     border-bottom: 2px solid #ccc!important;
 }
-.tox .tox-dialog__body-content, .tox .tox-textarea{
+body[inis-theme] .tox .tox-dialog__body-content, body[inis-theme] .tox .tox-textarea{
     scrollbar-width: thin;
     scrollbar-color: rgba(0,0,0,.2) transparent;
 }
-.tox .tox-dialog__body-content::-webkit-scrollbar, .tox .tox-textarea::-webkit-scrollbar{
+body[inis-theme] .tox .tox-dialog__body-content::-webkit-scrollbar, body[inis-theme] .tox .tox-textarea::-webkit-scrollbar{
     width:4px;height:10px;
     background-color:rgba(0,0,0,0);
 }
-.tox .tox-dialog__body-content::-webkit-scrollbar-thumb, .tox .tox-textarea::-webkit-scrollbar{
+body[inis-theme] .tox .tox-dialog__body-content::-webkit-scrollbar-thumb, body[inis-theme] .tox .tox-textarea::-webkit-scrollbar{
     border-radius:6px;
     background-color:rgba(0,0,0,.2);
     transition:all .4s ease;
@@ -783,34 +818,34 @@ btn-outline-light:not(:disabled):not(.disabled).active,
     -webkit-transition:all .4s ease;
     -o-transition:all .4s ease
 }
-.tox .tox-dialog__body-content::-webkit-scrollbar-track, .tox .tox-textarea::-webkit-scrollbar{
+body[inis-theme] .tox .tox-dialog__body-content::-webkit-scrollbar-track, body[inis-theme] .tox .tox-textarea::-webkit-scrollbar{
     background-color:rgba(0,0,0,.1)
 }
-.tox .tox-dialog--width-lg {
+body[inis-theme] .tox .tox-dialog--width-lg {
     max-width: 1200px !important;
 }
-.tox .tox-collection--list .tox-collection__item--enabled{
+body[inis-theme] .tox .tox-collection--list .tox-collection__item--enabled{
     background: unset;
 }
 /* ==================== 自定义 Tinymce 编辑器 - 结束 ==================== */
 
 /* ==================== 自定义 Vditor 编辑器 - 开始 ==================== */
-.vditor{
+body[inis-theme] .vditor{
     border: unset;
 }
-.vditor-toolbar{
+body[inis-theme] .vditor-toolbar{
     background-color: unset;
     border-bottom: unset;
     box-shadow: 0 2px 2px -2px rgba(34,47,62,.1), 0 8px 8px -4px rgba(34,47,62,.07);
     padding-bottom: 10px;
 }
-.vditor-ir pre.vditor-reset, .vditor-wysiwyg pre.vditor-reset{
+body[inis-theme] .vditor-ir pre.vditor-reset, body[inis-theme] .vditor-wysiwyg pre.vditor-reset{
     background-color: unset;
 }
-.vditor-reset{
+body[inis-theme] .vditor-reset{
     padding: unset !important;
 }
-.vditor-hint, .vditor-panel{
+body[inis-theme] .vditor-hint, body[inis-theme] .vditor-panel{
     background: rgba(var(--theme-color), var(--theme-opacity)) !important;
     backdrop-filter: var(--theme-blur);
     -webkit-backdrop-filter: var(--theme-blur);
@@ -818,32 +853,32 @@ btn-outline-light:not(:disabled):not(.disabled).active,
     box-shadow: 0px 5px 40px 0px rgb(17 58 93 / 10%);
     -webkit-box-shadow: 0px 5px 40px 0px rgb(17 58 93 / 10%);
 }
-.vditor-panel--arrow:before{
+body[inis-theme] .vditor-panel--arrow:before{
     border-bottom-color: rgba(var(--theme-color), var(--theme-opacity)) !important;
     backdrop-filter: var(--theme-blur);
     -webkit-backdrop-filter: var(--theme-blur);
 }
-.vditor-hint--current, .vditor-hint button:not(.vditor-menu--disabled):hover{
+body[inis-theme] .vditor-hint--current, body[inis-theme] .vditor-hint button:not(.vditor-menu--disabled):hover{
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8)) !important;
     border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8)) !important;
 }
-.vditor-reset table tr, .vditor-reset table tbody tr:nth-child(2n){
+body[inis-theme] .vditor-reset table tr, body[inis-theme] .vditor-reset table tbody tr:nth-child(2n){
     background-color: unset;
 }
-.hljs{
+body[inis-theme] .hljs{
     background: rgba(var(--vice-color), 0.7) !important;
     backdrop-filter: var(--theme-blur);
     -webkit-backdrop-filter: var(--theme-blur);
 }
-.vditor-input, .vditor-sv, .vditor-preview,
-.vditor-preview__action, .vditor-preview__action button.vditor-preview__action--current,
-.vditor-preview__action button:hover, .vditor-preview__action button{
+body[inis-theme] .vditor-input, body[inis-theme] .vditor-sv, body[inis-theme] .vditor-preview,
+body[inis-theme] .vditor-preview__action, body[inis-theme] .vditor-preview__action button.vditor-preview__action--current,
+body[inis-theme] .vditor-preview__action button:hover, body[inis-theme] .vditor-preview__action button{
     background-color: unset;
 }
-.vditor-input::placeholder {
+body[inis-theme] .vditor-input::placeholder {
     color: rgb(var(--theme-font-color));
 }
-.vditor-resize > div{
+body[inis-theme] .vditor-resize > div{
     background-color: #f6f8fa38;
 }
 /* ==================== 自定义 Vditor 编辑器 - 结束 ==================== */

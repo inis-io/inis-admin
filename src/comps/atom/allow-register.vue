@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <i-svg name="register" color="rgb(var(--svg-color))" size="50px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="register" color="rgb(var(--assist-color))" size="50px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>

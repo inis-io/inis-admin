@@ -1,8 +1,5 @@
 @import url('{src}/assets/css/root.css');
 @import url('{src}/assets/css/animation.css');
-@import url('{src}/assets/css/dark.min.css');
-/*@import url('/assets/css/white.min.css');*/
-/*@import url('{src}/assets/css/white-lighten.min.css');*/
 
 /* 页面滚动条 */
 html, .vditor-reset, .custom-scroll{scrollbar-width: thin;scrollbar-color: rgba(0,0,0,.2) transparent;}
@@ -12,16 +9,16 @@ html::-webkit-scrollbar-track, .vditor-reset::-webkit-scrollbar-track, .custom-s
 img, a, p, span, ul, li, .card, svg, h1, h2, h3, h4, h5, h6, h7{
     animation: fadenum 0.4s ease-in-out;
 }
-*, a, p {
-    text-decoration: none !important;
-    transition: 0.3s;
-    color: #efefef;
-    /* -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none; */
-    /*cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' width='10px' height='10px'><circle cx='4' cy='4' r='4' fill='white' /></svg>") 4 4, auto !important;*/
-}
+/**, a, p {*/
+/*    text-decoration: none !important;*/
+/*    transition: 0.3s;*/
+/*    color: #efefef;*/
+/*    !* -webkit-user-select: none;*/
+/*    -moz-user-select: none;*/
+/*    -ms-user-select: none;*/
+/*    user-select: none; *!*/
+/*    !*cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' width='10px' height='10px'><circle cx='4' cy='4' r='4' fill='white' /></svg>") 4 4, auto !important;*!*/
+/*}*/
 
 body{
     font-family: 'HarmonyOS_Regular', sans-serif;
@@ -385,23 +382,23 @@ input.customize:hover, input.customize:focus, textarea.customize:hover, textarea
 
 /* WebKit, Blink, Edge */
 input.customize::-webkit-input-placeholder, textarea.customize::-webkit-input-placeholder {
-    color: rgba(var(--vice-font-color),.6) !important;
+    color: rgba(var(--assist-font-color),.6) !important;
 }
 /* Mozilla Firefox 4 to 18 */
 input.customize:-moz-placeholder, textarea.customize:-moz-placeholder {
-    color: rgba(var(--vice-font-color),.6)!important;
+    color: rgba(var(--assist-font-color),.6)!important;
 }
 /* Mozilla Firefox 19+ */
 input.customize::-moz-placeholder, textarea.customize::-moz-placeholder {
-    color: rgba(var(--vice-font-color),.6)!important;
+    color: rgba(var(--assist-font-color),.6)!important;
 }
 /* Internet Explorer 10-11 */
 input.customize:-ms-input-placeholder, textarea.customize:-ms-input-placeholder {
-    color: rgba(var(--vice-font-color),.6)!important;
+    color: rgba(var(--assist-font-color),.6)!important;
 }
 /* Microsoft Edge */
 input.customize::-ms-input-placeholder, textarea.customize::-ms-input-placeholder {
-    color: rgba(var(--vice-font-color),.6)!important;
+    color: rgba(var(--assist-font-color),.6)!important;
 }
 select.customize{
     border: unset;
