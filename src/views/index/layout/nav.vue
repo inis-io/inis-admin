@@ -196,7 +196,8 @@ const method = {
         show: () => proxy.$refs['register']['show'](),
         // 注册完成
         finish: (user) => {
-            state.login.user = user
+            state.login.user   = user
+            state.login.finish = true
         }
     },
     // 忘记密码

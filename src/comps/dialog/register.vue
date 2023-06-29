@@ -89,8 +89,8 @@
                             </label>
                             <el-input v-model="state.struct.code" class="custom" placeholder="请输入验证码">
                                 <template #suffix>
-                                    <el-button v-on:click="method.code()" ref="verify-code">
-                                        获取
+                                    <el-button v-on:click="method.code()" :loading="state.item.loading">
+                                        获取 <span v-if="state.item.loading">{{ state.item.second }} s</span>
                                     </el-button>
                                 </template>
                             </el-input>
@@ -104,8 +104,8 @@
                 <el-button v-on:click="method.login()">
                     已有账号？点我登录
                 </el-button>
-                <el-button v-on:click="method.register()" :loading="state.item.loading">
-                    {{state.item.loading ? '注册中 ...' : '注  册'}}
+                <el-button v-on:click="method.register()" :loading="state.item.wait">
+                    {{state.item.wait ? '注册中 ...' : '注  册'}}
                 </el-button>
             </div>
         </template>
@@ -123,6 +123,8 @@ const state = reactive({
     item: {
         loading:  false,        // 是否加载中
         dialog :  false,
+        wait: false,
+        second: 0,
     },
     struct: {
         social:   null,         // 联系方式
@@ -150,9 +152,13 @@ const method = {
         if (utils.is.empty(state.struct.code))              return notyf.warn('请输入验证码！')
         if (state.password.value !== state.password.verify) return notyf.warn('两次输入的密码不一致！')
 
+        state.item.wait           = true
+
         const { code, msg, data } = await axios.post('/api/comm/register', {
             ...state.struct, password: state.password.value
         })
+
+        state.item.wait           = false
 
         if (code !== 200) return notyf.error(msg)
 
@@ -173,23 +179,10 @@ const method = {
 
         if (!utils.in.array(code, [200,201])) return notyf.error(msg)
 
-        let time = 60
+        state.item.second = 60
         state.timer = setInterval(() => {
-
-            time--
-
-            if (time > 0) {
-                proxy.$refs['verify-code'].innerText = `获取 ${time}s`
-                proxy.$refs['verify-code'].disabled = true
-            } else {
-                // 当减到0时赋值为60
-                time = 60
-                proxy.$refs['verify-code'].innerText = '获取'
-                // 清除定时器
-                clearInterval(state.timer)
-                proxy.$refs['verify-code'].disabled = false
-            }
-
+            state.item.second--
+            if (state.item.second <= 0) clearInterval(state.timer)
         }, 1000)
     },
     // 显示对话框
@@ -201,13 +194,12 @@ const method = {
     },
 }
 
-watch(() => state.item.loading, (val) => {
-    proxy.$refs['register-btn'].disabled = val
-})
-
 watch(() => state.struct.code, (val) => {
     // 去除空字符串
     state.struct.code = val?.replace(/\s+/g, '')
+})
+watch(() => state.item.second, (val) => {
+    state.item.loading = val > 0
 })
 
 // 将子组件方法暴露给父组件

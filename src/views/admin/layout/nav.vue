@@ -32,7 +32,7 @@
                                     </strong>
                                     <small>{{state.user?.email}}</small>
                                 </div>
-                                <el-avatar :src="state.user?.avatar" class="me-1" shape="square" size="medium"></el-avatar>
+                                <el-avatar :src="state.user?.avatar" shape="square" size="medium"></el-avatar>
                             </template>
                             <el-menu-item route="/admin">
                                 <i-svg color="rgb(var(--assist-color))" name="console" size="16px" class="me-1"></i-svg>
