@@ -32,7 +32,7 @@
                             <el-menu-item v-on:click="method.router({name:'admin-icons'})" route="/admin/icons">图标</el-menu-item>
                         </el-sub-menu>
                     </el-menu>
-                    <el-menu class="navbar-nav d-flex align-items-center justify-content-end w-100" :unique-opened="true" mode="horizontal" background-color="transparent">
+                    <el-menu :router="true" :unique-opened="true" mode="horizontal" class="navbar-nav d-flex align-items-center justify-content-end w-100" background-color="transparent">
                         <template v-if="state.login.finish">
                             <el-sub-menu index="login-user" class="icon-none">
                                 <template #title>
@@ -52,17 +52,17 @@
                                     </div>
                                     <el-avatar :src="state.login.user?.avatar + (state.login.user?.avatar.includes('?') ? '&' : '?') + 'size=40x40'" class="me-1" shape="square" size="medium"></el-avatar>
                                 </template>
-                                <el-menu-item v-on:click="push('/admin')">
-                                    <i-svg name="console" size="16px" class="me-1"></i-svg>
+                                <el-menu-item index="/admin">
+                                    <i-svg color="rgb(var(--assist-color))" name="console" size="16px" class="me-1"></i-svg>
                                     控制台
                                 </el-menu-item>
-                                <el-menu-item route="/admin/personal">
-                                    <i-svg name="personal" size="16px" class="me-1"></i-svg>
+                                <el-menu-item index="/admin/account/home">
+                                    <i-svg color="rgb(var(--assist-color))" name="personal" size="16px" class="me-1"></i-svg>
                                     个人中心
                                 </el-menu-item>
                                 <el-menu-item v-on:click="method.logout()">
-                                    <i-svg name="logout" size="16px" class="me-1"></i-svg>
-                                    <strong class="w-100">退出登录</strong>
+                                    <i-svg color="rgb(var(--assist-color))" name="logout" size="16px" class="me-1"></i-svg>
+                                    <span class="w-100">退出登录</span>
                                 </el-menu-item>
                             </el-sub-menu>
                         </template>

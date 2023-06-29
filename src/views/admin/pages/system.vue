@@ -118,7 +118,7 @@
 </template>
 <script setup>
 import MouseMenu from '@howdyjs/mouse-menu'
-import { config as MenuConfig } from '{src}/utils/menu'
+import {config as MenuConfig, list as MenuList} from '{src}/utils/menu'
 import AtomSmsEmail from '{src}/comps/atom/sms-email.vue'
 import AtomSmsAliyun from '{src}/comps/atom/sms-aliyun.vue'
 import AtomSmsTencent from '{src}/comps/atom/sms-tencent.vue'
@@ -161,6 +161,11 @@ const state  = reactive({
         storage : ['storage-local','storage-oss','storage-cos','storage-kodo'],
         security: ['api-key','qps','page-limit','jwt','allow-register','qps-black'],
     },
+})
+
+onMounted(async () => {
+    // 追加鼠标右键菜单
+    state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
 })
 
 // 方法

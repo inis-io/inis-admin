@@ -26,15 +26,7 @@
     --el-color-primary: #000000;
 }
 
-/* 属性不为空 */
-/*body[inis-theme]:not([theme=""]) .el-tabs__header.is-top{*/
-/*    background: red;*/
-/*}*/
-/*body[inis-theme=white] .el-tabs__header.is-top{*/
-/*    background: pink;*/
-/*}*/
 body[inis-theme] *, a, p {
-    /*transition: 0.3s;*/
     color: rgb(var(--vice-font-color));
     font-family: -apple-system,system-ui,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
 }

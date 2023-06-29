@@ -1,23 +1,32 @@
 <template>
     <div class="container-fluid container-box">
-        后台首页
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <el-avatar :size="100" fit="cover" src="https://inis.cc/storage/users/head/uid-1/1642299935.gif" size="large"></el-avatar>
+                    </div>
+                    <div class="col">
+                        这是邮编
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <mouse-menu ref="mouse" v-bind="state.item.menu"></mouse-menu>
 </template>
 
 <script setup>
 import utils from '{src}/utils/utils'
-import notyf from '{src}/utils/notyf'
-import axios from '{src}/utils/request'
 import MouseMenu from '@howdyjs/mouse-menu'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()
-
-const router = useRouter()
 const state  = reactive({
     item: {
-        menu  : {
+        user: utils.get.session('USERINFO'),
+        menu: {
             ...MenuConfig,
             menuList: [{
                 label: '刷新',
@@ -31,11 +40,14 @@ const state  = reactive({
     }
 })
 
+console.log(state.item.user)
+
 onMounted(async () => {
     // 追加鼠标右键菜单
     state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
 })
 
+// 方法
 const method = {
 
 }
@@ -45,6 +57,6 @@ document.addEventListener('contextmenu', (event) => {
     // 阻止默认事件
     event.preventDefault()
     // 判断点击在不在 #tabs-area 区域内，在不显示右键菜单
-    proxy.$refs['mouse']?.show(event.x, event.y)
+    if (!event?.target?.closest('#tabs-area')) proxy.$refs['mouse']?.show(event.x, event.y)
 })
 </script>

@@ -254,3 +254,36 @@ div.loaded div.spinner-box {
 	0% { transform:rotateX(35deg) rotateY(55deg) rotateZ(0) }
     100% { transform:rotateX(35deg) rotateY(55deg) rotateZ(360deg) }
 }
+
+/* 缩放头像 - 开始 */
+.avatar-scale{
+    --size: 280px;
+    --circle: 192, 41, 66;
+    --background: 236, 208, 120;
+    --border: 5px;
+    --scale: 1;
+    --option: content-box no-repeat center / calc(100% / var(--scale)) 100%;
+    --shrink: calc((var(--size) / var(--scale) - var(--size)) / 2 - var(--border));
+
+    width: var(--size);
+    height: var(--size);
+    cursor: pointer;
+    transition: 0.5s;
+    padding-top: 100px;
+    outline: var(--border) solid rgb(var(--circle));
+    outline-offset: calc(var(--shrink) + var(--border));
+    border-radius: 0 0 999px 999px;
+    transform: scale(var(--scale));
+    background: radial-gradient(circle closest-side,
+        rgb(var(--background)) calc(99% - var(--border)),
+        rgb(var(--circle)) calc(100% - var(--border)),
+        rgb(var(--circle)) 99%, transparent 100%
+    ) var(--option);
+    -webkit-mask: linear-gradient(#000, #000, #000) no-repeat center calc(0px - var(--shrink)) / calc(100% / var(--scale) - 2 * var(--border) ) 50%,
+        radial-gradient(circle closest-side, #000 99%, transparent) var(--option);
+    object-fit: contain;
+    box-sizing: content-box;
+}
+.avatar-scale:hover{
+    --scale: 1.35;
+}

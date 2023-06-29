@@ -46,10 +46,15 @@ const admin = {
     path: '/admin',
     component: ()    => import('{src}/views/admin/layout/base.vue'),
     children: [{
-        path: /index|home|admin/,  // 正则匹配：空 或 / 或 index 或 home
+        path: /index|admin/,  // 正则匹配：空 或 / 或 index 或 home
         name: 'admin-home',
         meta: { title: '首页', auth: false },
         component: () => import('{src}/views/admin/pages/index.vue'),
+    },{
+        path: '/admin/account/home',
+        name: 'admin-account-home',
+        meta: { title: '个人中心' },
+        component: () => import('{src}/views/admin/pages/account-home.vue'),
     },{
         path: '/admin/users',
         name: 'admin-users',
@@ -154,11 +159,6 @@ const admin = {
 }
 
 const routes = [ index, install, admin, {
-    path: '/register',
-    name: 'register',
-    meta: { title: '注册' },
-    component: () => import('{src}/views/index/pages/register.vue'),
-},{
     // 404 路由
     path: '/:pathMatch(.*)*',
     name: 'not-found',
@@ -210,7 +210,7 @@ route.beforeEach(async (to, from, next) => {
 
         // 获取菜单列表
         let list = await MenuList()
-        let array = ['/admin/test']
+        let array = ['/admin/test','/admin/account/home']
         // 把 list.children 下的 item.path 放到一维数组 array 中
         list.map(item => {
             if (item.children) {

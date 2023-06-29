@@ -9,13 +9,13 @@
                         </el-menu-item>
                         <el-sub-menu v-for="(item, index) in state.menu" :key="index" :index="index.toString()" show-timeout="50" hide-timeout="50">
                             <template #title>{{ item.label }}</template>
-                            <el-menu-item v-for="(val, key) in item.children" :key="key" v-on:click="val.fn()">
+                            <el-menu-item v-for="(val, key) in item.children" :key="key" :index="key.toString()" v-on:click="val.fn()">
                                 <i-svg :name="val.icon" :size="val.size" color="rgb(var(--assist-color))" class="me-1"></i-svg>
                                 {{ val.label }}
                             </el-menu-item>
                         </el-sub-menu>
                     </el-menu>
-                    <el-menu class="navbar-nav d-flex align-items-center justify-content-end w-100" :unique-opened="true" mode="horizontal" background-color="transparent">
+                    <el-menu :router="true" :unique-opened="true" mode="horizontal" class="navbar-nav d-flex align-items-center justify-content-end w-100" background-color="transparent">
                         <el-sub-menu show-timeout="50" hide-timeout="50" index="login-user" class="icon-none">
                             <template #title>
                                 <div class="d-flex flex-column align-items-end user-select-text me-2">
@@ -34,11 +34,11 @@
                                 </div>
                                 <el-avatar :src="state.user?.avatar" shape="square" size="medium"></el-avatar>
                             </template>
-                            <el-menu-item route="/admin">
+                            <el-menu-item index="/admin">
                                 <i-svg color="rgb(var(--assist-color))" name="console" size="16px" class="me-1"></i-svg>
                                 控制台
                             </el-menu-item>
-                            <el-menu-item route="/admin/personal">
+                            <el-menu-item index="/admin/account/home">
                                 <i-svg color="rgb(var(--assist-color))" name="personal" size="16px" class="me-1"></i-svg>
                                 个人中心
                             </el-menu-item>
