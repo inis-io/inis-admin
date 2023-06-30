@@ -183,7 +183,13 @@ route.beforeEach(async (to, from, next) => {
     const invalid = async (params = { path: '/' }) => {
 
         utils.clear.session('USERINFO')
-        await axios.del('/api/comm/logout')
+        const { code } = await axios.del('/api/comm/logout')
+
+        // 退出登录失败 - 清除登录信息
+        if (code !== 200) {
+            utils.clear.session('USERINFO')
+            utils.clear.cookie(globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN')
+        }
 
         next(params)
     }

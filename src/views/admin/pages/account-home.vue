@@ -1,31 +1,105 @@
 <template>
-    <div class="container-fluid container-box">
-        <div class="card">
+    <div id="account-home" class="container-fluid container-box">
+        <div class="card mb-3">
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <el-avatar :size="100" fit="cover" src="https://inis.cc/storage/users/head/uid-1/1642299935.gif" size="large"></el-avatar>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <el-avatar :src="state.user.avatar" :size="100" fit="cover" size="large" class="box-shadow" style="border: 2px solid #fff;"></el-avatar>
+                            </div>
+                            <div class="col">
+                                <span class="mb-0 d-flex align-items-center">
+                                    <span class="font-20">{{ state.user.nickname }}</span>
+                                    <i-svg v-if="!utils.is.empty(state.user?.gender)" :name="state.user?.gender" size="20px"></i-svg>
+                                    <span class="badge item right bg-assist font-white px-2 py-1 ms-1">
+                                        LV.{{ state.user.result.level.current.value }}
+                                        <span class="ms-1"></span>
+                                        {{ state.user.result.level.current.name }}
+                                    </span>
+                                </span>
+                                <el-progress :percentage="(state.user?.exp / state.user.result?.level?.next?.exp || 1) * 100" color="rgb(var(--assist-color))" style="width: 200px" class="mb-1"></el-progress>
+                                <p>{{ state.user.description }}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col">
-                        这是邮编
+                    <div class="col-md-4 d-flex justify-content-end">
+                        <el-button v-on:click="method.edit.show()" type="primary">修改资料</el-button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <el-tabs v-model="state.item.tabs">
+
+                    <el-tab-pane name="info">
+                        <template #label>
+                            <span class="fw-bolder font-12">基本信息</span>
+                        </template>
+                        <div class="card">
+                            <div class="card-body">
+                                <i-row-text title="昵称" :value="state.user.nickname"></i-row-text>
+                                <i-row-text title="头衔" :value="state.user.title"></i-row-text>
+                                <i-row-text title="性别">
+                                    <template #value>
+                                        <span v-if="utils.is.empty(state.user.gender)">保密</span>
+                                        <span v-else>
+                                            {{ state.user.gender === 'boy' ? '男' : '女' }}
+                                        </span>
+                                    </template>
+                                </i-row-text>
+                                <i-row-text title="个人简介" :value="state.user.description"></i-row-text>
+                                <i-row-text title="注册时间" :value="utils.time.nature(state.user.create_time)"></i-row-text>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+
+                    <el-tab-pane name="account">
+                        <template #label>
+                            <span class="fw-bolder font-12">账号设置</span>
+                        </template>
+                        <div class="card">
+                            <div class="card-body">
+                                <user-edit-account  v-model="state.item.edit" v-on:finish="method.edit.finish" v-on:edit="method.edit.click"></user-edit-account>
+                                <user-edit-email    v-model="state.item.edit" v-on:finish="method.edit.finish" v-on:edit="method.edit.click"></user-edit-email>
+                                <user-edit-phone    v-model="state.item.edit" v-on:finish="method.edit.finish" v-on:edit="method.edit.click"></user-edit-phone>
+                                <user-edit-password v-model="state.item.edit" v-on:finish="method.edit.finish" v-on:edit="method.edit.click"></user-edit-password>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+
+                    <el-tab-pane name="collect">
+                        <template #label>
+                            <span class="fw-bolder font-12">我的收藏</span>
+                        </template>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
+        </div>
     </div>
 
+    <user-edit-info ref="info" v-on:finish="method.edit.finish"></user-edit-info>
     <mouse-menu ref="mouse" v-bind="state.item.menu"></mouse-menu>
 </template>
 
 <script setup>
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
+import iRowText from '{src}/comps/custom/i-row-text.vue'
+import UserEditInfo from '{src}/comps/user/edit-info.vue'
+import UserEditAccount from '{src}/comps/user/edit-account.vue'
+import UserEditEmail from '{src}/comps/user/edit-email.vue'
+import UserEditPhone from '{src}/comps/user/edit-phone.vue'
+import UserEditPassword from '{src}/comps/user/edit-password.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
+    user: utils.get.session('USERINFO'),
     item: {
-        user: utils.get.session('USERINFO'),
+        tabs: 'info',
+        edit: null,
         menu: {
             ...MenuConfig,
             menuList: [{
@@ -40,16 +114,22 @@ const state  = reactive({
     }
 })
 
-console.log(state.item.user)
-
 onMounted(async () => {
     // 追加鼠标右键菜单
-    state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
+    state.item.menu.menuList.push(...[{ line: true }, ...await MenuList()])
 })
 
 // 方法
 const method = {
-
+    // 修改资料
+    edit: {
+        show: () => proxy.$refs['info'].show(),
+        finish: params => {
+            if (utils.is.empty(params)) return
+            state.user = params
+        },
+        click: params => (state.item.edit = params),
+    }
 }
 
 // 监听 html 下的鼠标右键事件

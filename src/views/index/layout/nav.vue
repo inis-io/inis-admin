@@ -32,7 +32,8 @@
                             <el-menu-item v-on:click="method.router({name:'admin-icons'})" route="/admin/icons">图标</el-menu-item>
                         </el-sub-menu>
                     </el-menu>
-                    <el-menu :router="true" :unique-opened="true" mode="horizontal" class="navbar-nav d-flex align-items-center justify-content-end w-100" background-color="transparent">
+                    <el-menu :router="true" :unique-opened="true" mode="horizontal" background-color="transparent"
+                             class="navbar-nav d-flex align-items-center justify-content-end w-100">
                         <template v-if="state.login.finish">
                             <el-sub-menu index="login-user" class="icon-none">
                                 <template #title>
@@ -67,10 +68,10 @@
                             </el-sub-menu>
                         </template>
                         <template v-else>
-                            <el-menu-item v-if="state.config.register" index="register">
+                            <el-menu-item v-if="state.config.register" :index="1">
                                 <strong v-on:click="method.register.show()" class="font-12">注册</strong>
                             </el-menu-item>
-                            <el-menu-item index="login">
+                            <el-menu-item :index="2">
                                 <strong v-on:click="method.login.show()" class="font-12">登录</strong>
                             </el-menu-item>
                         </template>
@@ -208,11 +209,15 @@ const method = {
     // 退出登录
     async logout() {
 
-        const { code, msg } = await axios.del('/api/comm/logout')
+        const { code } = await axios.del('/api/comm/logout')
 
-        if (code !== 200) return notyf.error(msg)
+        // 退出登录失败 - 清除登录信息
+        if (code !== 200) {
+            utils.clear.session('USERINFO')
+            utils.clear.cookie(globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN')
+            return
+        }
 
-        notyf.success(msg)
         state.login.finish = false
         utils.clear.session('USERINFO')
         utils.clear.cookie(globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN')
@@ -242,7 +247,7 @@ const method = {
     },
     // 是否允许注册
     async ALLOW_REGISTER() {
-        let { value } = await session.config.get('ALLOW_REGISTER')
+        let { value } = await session.config.get('ALLOW_REGISTER') || { value: 0 }
         state.config.register = parseInt(value) === 1
     },
     router: (params = {}) => router.push(params),

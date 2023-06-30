@@ -103,11 +103,11 @@
 
     <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
         <template #header>
-            <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
+            <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '添 加' : '编 辑' }} 用 户</strong>
         </template>
         <template #default>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="这位兄dei叫什么？" placement="top">
@@ -120,7 +120,7 @@
                         <el-input v-model="state.struct.nickname"></el-input>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group mb-3">
                         <label class="form-label required">
                             <el-tooltip content="（必须）可用于账密登录" placement="top">
@@ -133,7 +133,7 @@
                         <el-input v-model="state.struct.account"></el-input>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="建议设置一个头像，效果更佳" placement="top">
@@ -196,7 +196,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="为该用户分配权限，默认只有公共权限" placement="top">
@@ -213,7 +213,7 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="为用户分配后台的页面访问权限" placement="top">
@@ -235,7 +235,23 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="您的性别是？" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">性别：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-select v-model="state.struct.gender" class="d-block custom font-13" placeholder="请选择">
+                            <el-option v-for="item in state.select.gender" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-md-3">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="为这个用户设置一个专属的头衔，彰显与众不同" placement="top">
@@ -384,6 +400,11 @@ const state  = reactive({
     select: {
         auth_group: [],
         auth_pages: [],
+        gender: [
+            { value: null, label: '保密'},
+            { value: 'boy', label: '男' },
+            { value: 'girl', label: '女' },
+        ]
     },
     selected: {
         auth_pages: [],

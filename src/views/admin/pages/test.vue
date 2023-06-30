@@ -10,7 +10,7 @@
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
-import AnimateAvatar from '{src}/comps//animate/avatar-scale.vue'
+import AnimateAvatar from '{src}/comps/animate/avatar-scale.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({

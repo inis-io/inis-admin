@@ -70,7 +70,7 @@
 
     <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
         <template #header>
-            <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '新 增' : '编 辑' }}</strong>
+            <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '添 加' : '编 辑' }} 页 面 权 限</strong>
         </template>
         <template #default>
             <div class="row">

@@ -64,4 +64,15 @@
     .el-dialog.custom{
         --el-dialog-width: 90% !important;
     }
+    #account-home > .card:nth-child(1) .col-md-8 > .row,
+    #account-home > .card:nth-child(1) .col-md-8 > .row > .col > span {
+        justify-content: center;
+        text-align: center;
+    }
+    #account-home > .card:nth-child(1) .col-md-8 > .row > .col > .el-progress{
+        margin: 0 auto;
+    }
+    #account-home > .card:nth-child(1) .col-md-4{
+        justify-content: center !important;
+    }
 }
