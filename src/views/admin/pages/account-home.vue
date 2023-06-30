@@ -10,7 +10,7 @@
                             </div>
                             <div class="col">
                                 <span class="mb-0 d-flex align-items-center">
-                                    <span class="font-20">{{ state.user.nickname }}</span>
+                                    <span class="font-18">{{ state.user.nickname }}</span>
                                     <i-svg v-if="!utils.is.empty(state.user?.gender)" :name="state.user?.gender" size="20px"></i-svg>
                                     <span class="badge item right bg-assist font-white px-2 py-1 ms-1">
                                         LV.{{ state.user.result.level.current.value }}
