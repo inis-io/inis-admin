@@ -1,7 +1,7 @@
 <template>
     <div v-load="[state.status.loading, null, null]" class="card">
         <div class="card-body">
-            <el-image src="/assets/images/png/qiniu.png" class="position-absolute opacity-25" style="right: 1.5rem; height: 65px" />
+            <el-image src="/assets/imgs/png/qiniu.png" class="position-absolute opacity-25" style="right: 1.5rem; height: 65px" />
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>
@@ -236,9 +236,7 @@ const method = {
             return notyf.success(msg)
         }
 
-        notyf.error(msg)
-
-        if (!utils.is.empty(data)) return notyf.error(data)
+        notyf.error(`${msg}<br>${data}`)
     },
 }
 

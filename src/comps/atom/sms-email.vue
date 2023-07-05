@@ -259,9 +259,7 @@ const method = {
             return notyf.success(msg)
         }
 
-        notyf.error(msg)
-
-        if (!utils.is.empty(data)) return notyf.error(data)
+        notyf.error(`${msg}<br>${data}`)
     },
 }
 

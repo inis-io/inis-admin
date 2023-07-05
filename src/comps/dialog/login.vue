@@ -2,7 +2,7 @@
     <el-dialog v-model="state.item.dialog" class="custom sm" :close-on-click-modal="false">
         <template #header>
             <div class="flex-center">
-                <el-image src="/assets/images/logo-white.png" style="height: 52px" class="my-1 py-1"></el-image>
+                <el-image src="/assets/imgs/logo-white.png" style="height: 52px" class="my-1 py-1"></el-image>
             </div>
         </template>
         <template #default>
@@ -118,7 +118,6 @@ const method = {
             state.item.wait = false
 
             if (code === 200) {
-                notyf.success(msg)
                 utils.set.session('USERINFO' , data.user)
                 utils.set.cookie(globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
                 state.item.finish = true
@@ -126,10 +125,10 @@ const method = {
                 emit('finish', data.user)
                 return
             }
-            if (code === 201) return notyf.success(msg)
+            if (code === 201) return notyf.info(msg)
 
             setTimeout(() => {
-                notyf.warn(msg)
+                notyf.error(msg)
                 // 重置计时器
                 state.item.second = 0
                 clearInterval(state.timer)

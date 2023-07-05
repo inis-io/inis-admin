@@ -14,6 +14,8 @@
 </template>
 
 <script setup>
+import utils from '{src}/utils/utils'
+import axios from '{src}/utils/request'
 
 const { ctx, proxy } = getCurrentInstance()
 
@@ -22,7 +24,4 @@ const state  = reactive({
     
 })
 
-onMounted(() => {
-
-})
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div ref="pointer" id="pointer"></div>
     <div id="background">
-        <el-image src="/assets/images/bg.webp" fit="cover" style="width: 100%; height: 100%;position: fixed;left: 0;top: 0;">
+        <el-image src="/assets/imgs/bg.webp" fit="cover" style="width: 100%; height: 100%;position: fixed;left: 0;top: 0;">
             <template #error>
                 <el-image :src="state.cover" fit="cover" style="width: 100%; height: 100%;position: fixed;left: 0;top: 0;">
                 </el-image>

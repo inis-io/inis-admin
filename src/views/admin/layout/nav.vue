@@ -5,7 +5,7 @@
                 <div class="collapse navbar-collapse justify-content-between">
                     <el-menu class="navbar-nav w-100" :router="true" :unique-opened="true" menu-trigger="hover" mode="horizontal" background-color="transparent">
                         <el-menu-item index="/">
-                            <el-image v-on:click="push('/')" :src="`/assets/images/logo-${state.theme}.png`" style="width: 100px;" class="d-flex flex-center"></el-image>
+                            <el-image v-on:click="push('/')" :src="`/assets/imgs/logo-${state.theme}.png`" style="width: 100px;" class="d-flex flex-center"></el-image>
                         </el-menu-item>
                         <el-sub-menu v-for="(item, index) in state.menu" :key="index" :index="index.toString()" show-timeout="50" hide-timeout="50">
                             <template #title>{{ item.label }}</template>
