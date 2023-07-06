@@ -43,7 +43,7 @@
                                             <span class="ms-1 required">标题：</span>
                                         </span>
                                     </el-tooltip>
-                                    <input v-model="state.struct.title" type="text" autocomplete="new-password" class="form-control customize text-white" placeholder="文章标题">
+                                    <el-input v-model="state.struct.title" placeholder="文章标题"></el-input>
                                 </div>
                                 <div class="form-group mb-3">
                                     <el-tooltip content="文章的摘要" placement="top">
@@ -52,7 +52,8 @@
                                             <span class="ms-1">摘要：</span>
                                         </span>
                                     </el-tooltip>
-                                    <textarea v-model="state.struct.abstract" class="form-control customize custom-scroll text-white" rows="10" placeholder="简单的描述一下您的文章"></textarea>
+                                    <el-input v-model="state.struct.abstract" :autosize="{ minRows: 3, maxRows: 10 }" placeholder="简单的描述一下您的文章" type="textarea">
+                                    </el-input>
                                 </div>
                             </el-collapse-item>
                         </div>
@@ -66,12 +67,15 @@
                                 <el-tabs v-model="state.item.tabs" :stretch="true">
                                     <el-tab-pane label="预览" name="preview">
                                         <el-upload class="custom upload" action="/api/file/upload" :headers="method.headers()" :multiple="true" list-type="picture"
-                                            :on-remove="method.cover.remove" :on-success="method.cover.success" :on-error="method.cover.error" :file-list="state.item.cover.preview">
-                                            <button class="btn btn-auto mimic w-100" type="button">上 传</button>
+                                            :on-remove="method.cover.remove" :on-success="method.cover.success"
+                                            :on-error="method.cover.error" :file-list="state.item.cover.preview">
+                                            <el-button type="primary" class="w-100">上 传</el-button>
                                         </el-upload>
                                     </el-tab-pane>
                                     <el-tab-pane label="外链" name="links">
-                                        <textarea v-model="state.item.cover.links" wrap="off" class="form-control customize custom-scroll text-white" rows="10" placeholder="外链图片地址，一行一个"></textarea>
+                                        <el-input v-model="state.item.cover.links" v-on:change="method.cover.change" wrap="off"
+                                            :autosize="{ minRows: 3, maxRows: 10 }" placeholder="外链图片地址，一行一个" type="textarea">
+                                        </el-input>
                                     </el-tab-pane>
                                 </el-tabs>
                             </el-collapse-item>
@@ -144,7 +148,6 @@
 </template>
 
 <script setup>
-import MarkdownIt from 'markdown-it'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
@@ -378,6 +381,10 @@ const method = {
         // 上传失败
         error: (err, file, fileList) => {
             console.log(err, file, fileList)
+        },
+        // 外链输入框事件
+        change: (data) => {
+            state.item.cover.preview = data.split('\n').filter(item => !utils.is.empty(item)).map(item => ({ name: item.replace(/.*\//, ''), url: item }))
         }
     },
     // 文件上传自定义头
@@ -398,24 +405,18 @@ const method = {
     empty: value => utils.is.empty(value),
 }
 
-watch(() => state.item.cover, (value) => {
-    // 计算封面图数量
-    let len = {
-        preview: value.preview.length || 0,
-        links: value.links.split('\n').filter(item => !utils.is.empty(item)).length || 0
-    }
-
-    // 预览图数量大于外链图数量 - 补齐外链图
-    if (len.preview > len.links) {
-        state.item.cover.links = value.preview.map(item => item.url).join('\n') + '\n'
-    }
-    // 外链图数量大于预览图数量 - 补齐预览图
-    else if (len.links > len.preview) {
-        state.item.cover.links   = value.links + '\n'
-        state.item.cover.preview = value.links.split('\n').filter(item => !utils.is.empty(item)).map(item => ({ name: item.replace(/.*\//, ''), url: item }))
-    }
-
+// 监听封面图预览图变化
+watch(() => state.item.cover.preview, (value = {}) => {
+    state.item.cover.links = value.map(item => item.url).join('\n') + '\n'
 }, { deep: true })
+
+watch(() => state.item.cover.links, (value) => {
+    // 去除空格和换行
+    value = value?.replace(/[\s\n]/g, '')
+    // 判断是否为空
+    if (!utils.is.empty(value)) return
+    state.item.cover.links = ''
+})
 
 watch(() => route.params?.id, (value) => {
     if (utils.is.empty(value)) return

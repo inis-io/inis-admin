@@ -4,7 +4,7 @@
             <div class="col-lg-6 d-lg-flex d-none">
                 <div class="input-group custom-search me-1">
                     <i-svg name="search" color="rgb(var(--icon-color))" size="18px"></i-svg>
-                    <input class="form-control custom search mimic" autocomplete="new-password" type="text" placeholder="擅用搜索，事半功倍！">
+                    <input class="form-control custom search mimic" autocomplete="new-password" type="text" placeholder="这是个假搜索">
                 </div>
                 <button v-on:click="method.refresh()" class="btn btn-auto mx-1 mimic" type="button">刷新</button>
             </div>
@@ -104,7 +104,7 @@
                         </template>
                         <div class="row">
                             <div class="col-md-4">
-                                <atom-editor ref="other-editor" v-on:refresh="method.refresh"></atom-editor>
+                                <atom-article-page ref="article-page" v-on:refresh="method.refresh"></atom-article-page>
                             </div>
                         </div>
                     </el-tab-pane>
@@ -135,13 +135,13 @@ import AtomStorageLocal from '{src}/comps/atom/storage-local.vue'
 import AtomStorageOss from '{src}/comps/atom/storage-oss.vue'
 import AtomStorageCos from '{src}/comps/atom/storage-cos.vue'
 import AtomStorageKodo from '{src}/comps/atom/storage-kodo.vue'
-import AtomEditor from '{src}/comps/atom/editor.vue'
+import AtomArticlePage from '{src}/comps/atom/article-page.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
     item: {
         title : '系统配置',
-        tabs  : 'security',
+        tabs  : 'other',
         menu  : {
             ...MenuConfig,
             menuList: [{
@@ -155,7 +155,7 @@ const state  = reactive({
         },
     },
     refresh: {
-        other   : ['other-editor'],
+        other   : ['article-page'],
         optimize: ['cache-redis','cache-file','cache-ram'],
         sms     : ['sms-email','sms-aliyun','sms-tencent'],
         storage : ['storage-local','storage-oss','storage-cos','storage-kodo'],

@@ -5,7 +5,7 @@
                 <div class="collapse navbar-collapse justify-content-between">
                     <el-menu class="navbar-nav w-100" :router="false" :unique-opened="true" mode="horizontal" background-color="transparent">
                         <el-menu-item index="/">
-                            <el-image v-on:click="push('/')" :src="`/assets/images/logo-${state.theme || 'white'}.png`" style="width: 100px;" class="d-flex flex-center"></el-image>
+                            <el-image v-on:click="push('/')" :src="`/assets/imgs/logo-${state.theme || 'white'}.png`" style="width: 100px;" class="d-flex flex-center"></el-image>
                         </el-menu-item>
                         <el-sub-menu index="manage">
                             <template #title>

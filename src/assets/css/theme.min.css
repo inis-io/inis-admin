@@ -563,6 +563,15 @@ body[inis-theme] .el-upload-list--picture .el-upload-list__item-thumbnail{
 body[inis-theme] .custom.upload > .el-upload{
     width: 100%;
 }
+body[inis-theme] .el-upload + .el-upload-list{
+    max-height: 300px;
+    overflow-y: scroll;
+    padding: 0 10px;
+}
+body[inis-theme] .el-upload + .el-upload-list{scrollbar-width: thin;scrollbar-color: rgba(0,0,0,.2) transparent;}
+body[inis-theme] .el-upload + .el-upload-list::-webkit-scrollbar{width:4px;height:10px;background-color:rgba(0,0,0,0);}
+body[inis-theme] .el-upload + .el-upload-list::-webkit-scrollbar-thumb{border-radius:6px;background-color:rgba(0,0,0,.2);transition:all .4s ease;-moz-transition:all .4s ease;-webkit-transition:all .4s ease;-o-transition:all .4s ease}
+body[inis-theme] .el-upload + .el-upload-list::-webkit-scrollbar-track{background-color:rgba(0,0,0,.1)}
 /* ==================== 自定义 el-upload - 结束 ==================== */
 /* ==================== 自定义 el-steps - 开始 ==================== */
 body[inis-theme] .el-steps--simple{
@@ -649,7 +658,8 @@ body[inis-theme] .el-textarea textarea{
     scrollbar-color: rgba(0,0,0,.2) transparent;
 }
 body[inis-theme] .el-textarea textarea::-webkit-scrollbar{
-    width:4px;height:10px;
+    width:4px;
+    height:6px;
     background-color:rgba(0,0,0,0);
 }
 body[inis-theme] .el-textarea textarea::-webkit-scrollbar-thumb{

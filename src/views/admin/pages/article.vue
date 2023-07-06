@@ -67,7 +67,7 @@
 import utils from '{src}/utils/utils'
 import { push } from '{src}/utils/route'
 import MouseMenu from '@howdyjs/mouse-menu'
-import AtomEditor from '{src}/comps/atom/editor.vue'
+import AtomEditor from '{src}/comps/atom/article-page.vue'
 import TableArticle from '{src}/comps/table/article.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
