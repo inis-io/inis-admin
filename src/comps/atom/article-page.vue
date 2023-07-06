@@ -35,7 +35,11 @@
                 <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label class="form-label">
-                            <el-tooltip content="您的性别是？" placement="top">
+                            <el-tooltip placement="top">
+                                <template #content>
+                                    ● Markdown编辑器：Vditor支持所见即所得、即时渲染（类似 Typora）和分屏预览模式。<br>
+                                    ● 富文本编辑器：TinyMCE是一个基于浏览器的所见即所得富文本编辑器，用于编辑HTML文档。<br>
+                                </template>
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                     <span class="ms-1">编辑器：</span>
@@ -53,7 +57,7 @@
                 <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label class="form-label">
-                            <el-tooltip content="您的性别是？" placement="top">
+                            <el-tooltip content="是否允许用户评论" placement="top">
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                     <span class="ms-1">允许评论：</span>
@@ -71,7 +75,7 @@
                 <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label class="form-label">
-                            <el-tooltip content="您的性别是？" placement="top">
+                            <el-tooltip content="是否显示评论" placement="top">
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                     <span class="ms-1">显示评论：</span>

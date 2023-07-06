@@ -141,7 +141,7 @@ const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
     item: {
         title : '系统配置',
-        tabs  : 'other',
+        tabs  : 'security',
         menu  : {
             ...MenuConfig,
             menuList: [{

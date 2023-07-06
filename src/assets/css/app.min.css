@@ -702,3 +702,15 @@ select.customize:disabled:hover, select.customize:disabled:focus, select.customi
 .font-white{
     color: #fff !important;
 }
+.i-ul {
+    list-style: none;
+    padding-left: 0;
+}
+.point-circle{
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+    background-color: #7b68ee;
+    display: inline-block;
+    margin-right: 5px;
+}

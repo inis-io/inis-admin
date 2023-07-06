@@ -1,6 +1,71 @@
 <template>
     <div class="container-fluid container-box">
-        后台首页
+        <div class="row">
+            <div class="col-md-8 px-2">
+                <el-carousel trigger="click" height="230px">
+                    <el-carousel-item v-for="item in 4" :key="item">
+                        <el-image :src="'/api/file/rand?name=imgs.txt&redirect=true&id=' + item" fit="cover" class="h-100 w-100">
+                        </el-image>
+                        <p class="title">
+                            <span class="badge bg-primary font-white me-1"> 更多 </span>
+                            <span class="font-white font-15 fw-bolder">这是测试的内容</span>
+                        </p>
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
+            <div class="col-md-4 px-2">
+                <div class="card mb-3">
+                    <div class="card-body py-2">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span class="font-16 text-dark">热门主题</span>
+                            <span>更多</span>
+                        </div>
+                        <ul class="i-ul mb-0">
+                            <li class="mt-2 d-flex align-items-center justify-content-between">
+                                <span class="font-13">
+                                    <span class="point-circle bg-secondary me-2"></span>
+                                    inis 默认主题
+                                </span>
+                                <span>使用人数 50W+</span>
+                            </li>
+                            <li class="mt-2 d-flex align-items-center justify-content-between">
+                                <span class="font-13">
+                                    <span class="point-circle bg-secondary me-2"></span>
+                                    其它主题
+                                </span>
+                                <span>使用人数 100K+</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <el-image src="/1.png" style="height: 113px" class="w-100" fit="cover"></el-image>
+            </div>
+        </div>
+        <div class="card mt-2">
+            <div class="card-body p-0">
+                <el-tabs v-model="state.item.tabs">
+                    <el-tab-pane name="count">
+                        <template #label>
+                            <span class="fw-bolder font-12">数据统计</span>
+                        </template>
+                        <div class="row px-3 pb-3">
+                            <div v-for="item in 8" :key="item" class="col-md-3 py-1">
+                                <div class="card mb-0" style="box-shadow: unset">
+                                    <div class="card-body">
+                                        {{ item }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane name="other">
+                        <template #label>
+                            <span class="fw-bolder font-12">其它信息</span>
+                        </template>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
+        </div>
     </div>
     <mouse-menu ref="mouse" v-bind="state.item.menu"></mouse-menu>
 </template>
@@ -17,6 +82,7 @@ const { ctx, proxy } = getCurrentInstance()
 const router = useRouter()
 const state  = reactive({
     item: {
+        tabs  : 'count',
         menu  : {
             ...MenuConfig,
             menuList: [{
@@ -32,6 +98,10 @@ const state  = reactive({
 })
 
 onMounted(async () => {
+    document.querySelectorAll('.container-fluid').forEach(el => {
+        el.classList.remove('container-fluid')
+        el.classList.add('container-xl')
+    })
     // 追加鼠标右键菜单
     state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
 })
@@ -47,4 +117,30 @@ document.addEventListener('contextmenu', (event) => {
     // 判断点击在不在 #tabs-area 区域内，在不显示右键菜单
     proxy.$refs['mouse']?.show(event.x, event.y)
 })
+
+// 组件注销前 - 重置 container-xxl
+onBeforeUnmount(() => {
+    document.querySelectorAll('.container-xxl').forEach(el => {
+        el.classList.remove('container-xl')
+        el.classList.add('container-fluid')
+    })
+})
 </script>
+
+<style scoped>
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 18px;
+    opacity: 0.75;
+    line-height: 300px;
+    margin: 0;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+</style>

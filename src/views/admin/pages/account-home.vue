@@ -69,7 +69,7 @@
                         </div>
                     </el-tab-pane>
 
-                    <el-tab-pane name="collect">
+                    <el-tab-pane name="collect" v-if="false">
                         <template #label>
                             <span class="fw-bolder font-12">我的收藏</span>
                         </template>

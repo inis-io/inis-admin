@@ -3,7 +3,6 @@
 </template>
 
 <script setup>
-
 import Vditor from 'vditor'
 import 'vditor/dist/index.css'
 
@@ -80,13 +79,13 @@ onMounted( () => {
 })
 
 watch(() => props.modelValue, (val) => {
-    state.item.setValue(val)
+    state.item?.setValue(val)
 })
 
 // 通过 proxy 暴露给父组件
 defineExpose({
-    getHTML: () => state.item.getHTML(),
-    getValue: () => state.item.getValue(),
-    html2md: (html) => state.item.html2md(html),
+    getHTML: () => state.item?.getHTML(),
+    getValue: () => state.item?.getValue(),
+    html2md: (html) => state.item?.html2md(html),
 })
 </script>

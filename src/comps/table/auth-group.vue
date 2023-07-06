@@ -130,7 +130,7 @@
                         </label>
                         <div>
                             <el-cascader placeholder="试试搜索：文章" :options="state.select.rules" :props="{ multiple: true }" filterable
-                            class="d-block custom multiple" v-model="state.rules.select" @change="method.change()">
+                            class="d-block custom multiple" v-model="state.rules.select" v-on:change="method.change">
                                 <template #default="{ node, data }">
                                     <span>{{ data.label }} </span>
                                     <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
@@ -371,7 +371,7 @@ const method = {
     // 获取全部规则
     async getRules() {
 
-        const { code, data } = await axios.get('/api/auth-rules/column', {
+        let { code, data } = await axios.get('/api/auth-rules/column', {
             field: 'id,name,method,route,hash'
         })
         if (code !== 200) return
@@ -385,7 +385,7 @@ const method = {
         // 分组
         let group = []
         // 正则匹配
-        for (const item of data) {
+        for (let item of data) {
             let match1 = item.name.match(regex1)
             let match2 = item.name.match(regex2)
             if (match1) group.push(match1[1].trim())
@@ -393,25 +393,27 @@ const method = {
         }
         // 去重 去空
         group = [...new Set(group)].filter(item => item)
-        let array = []
         for (const item of group) {
-            array.push({ value: item, label: item, children: [] })
+            state.select.rules.push({ value: item, label: item, children: [] })
         }
-        for (const item of data) {
+
+        // 生成树形结构
+        for (let item of data) {
             let rule   = null
             let match1 = item.name.match(regex1)
             let match2 = item.name.match(regex2)
             if (match1) rule = match1
             else if (match2) rule = match2
-            for (const group of array) {
+            for (const group of state.select.rules) {
                 if (group.value === rule[1].trim()) {
                     group.children.push({ id: item.id, value: parseInt(item.hash), label: rule[2].trim() })
                     break
                 }
             }
         }
+
         // 生成树形结构
-        state.select.rules = array
+        // state.select.rules = array
     },
     // 规则选中事件
     change(){

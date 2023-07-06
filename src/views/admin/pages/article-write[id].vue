@@ -1,5 +1,5 @@
 <template>
-    <div v-load="state.item.loading" class="container-fluid container-box">
+    <div class="container-fluid container-box">
         <div class="row">
             <div class="col-lg-9" id="banner">
                 <div v-if="false" class="card mb-2 carousel-inner">
@@ -81,7 +81,7 @@
                             </el-collapse-item>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card mb-2">
                         <div class="card-body px-2 py-0">
                             <el-collapse-item name="3">
                                 <template #title>
@@ -96,7 +96,7 @@
                                             </span>
                                         </el-tooltip>
                                     </label>
-                                    <el-select v-model="state.struct.top" class="w-100" placeholder="请选择" filterable>
+                                    <el-select v-model="state.struct.top" class="d-block custom" placeholder="请选择" filterable>
                                         <el-option v-for="item in state.select.top" :key="item.value" :label="item.label" :value="item.value">
                                         </el-option>
                                     </el-select>
@@ -123,8 +123,50 @@
                                             </span>
                                         </el-tooltip>
                                     </label>
-                                    <el-select v-model="state.item.tags" multiple collapse-tags class="w-100" placeholder="请选择" filterable>
+                                    <el-select v-model="state.item.tags" v-on:change="method.change.tags"
+                                        multiple collapse-tags filterable allow-create default-first-option class="d-block custom" placeholder="请选择">
                                         <el-option v-for="item in state.select.tags" :key="item.value" :label="item.label" :value="item.value">
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                            </el-collapse-item>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body px-2 py-0">
+                            <el-collapse-item name="4">
+                                <template #title>
+                                    高级选项
+                                </template>
+                                <div class="form-group mb-3">
+                                    <label class="form-label">
+                                        <el-tooltip content="对当前文章的评论选项单独控制" placement="top">
+                                            <span>
+                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <span class="ms-1">允许评论：</span>
+                                            </span>
+                                        </el-tooltip>
+                                    </label>
+                                    <el-select v-model="state.struct.json.comment.allow" class="d-block custom font-13" placeholder="请选择">
+                                        <el-option v-for="item in state.select.comment.allow" :key="item.value" :label="item.label" :value="item.value">
+                                            <span class="font-13">{{ item.label }}</span>
+                                            <small class="text-muted float-end">{{ item.value }}</small>
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label">
+                                        <el-tooltip content="对当前文章的评论选项单独控制" placement="top">
+                                            <span>
+                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <span class="ms-1">显示评论：</span>
+                                            </span>
+                                        </el-tooltip>
+                                    </label>
+                                    <el-select v-model="state.struct.json.comment.show" class="d-block custom font-13" placeholder="请选择">
+                                        <el-option v-for="item in state.select.comment.show" :key="item.value" :label="item.label" :value="item.value">
+                                            <span class="font-13">{{ item.label }}</span>
+                                            <small class="text-muted float-end">{{ item.value }}</small>
                                         </el-option>
                                     </el-select>
                                 </div>
@@ -187,11 +229,27 @@ const state  = reactive({
         },
         loading: false,
     },
-    struct: { content: '', editor: null },
+    struct: {
+        content: '',
+        editor: null,
+        json: { comment: { allow: 0, show: 0 } }
+    },
     select: {
-        top: [{ value: 0, label: '否' }, { value: 1, label: '是' }],
+        top: [{ value: 0, label: '置顶' }, { value: 1, label: '不置顶' }],
         tags: [],
         group: [],
+        comment: {
+            allow: [
+                { value: 0, label: '继承父级（推荐）' },
+                { value: 1, label: '允许' },
+                { value: 2, label: '禁止' },
+            ],
+            show: [
+                { value: 0, label: '继承父级（推荐）' },
+                { value: 1, label: '显示' },
+                { value: 2, label: '隐藏' },
+            ]
+        }
     },
     backup: {
         group: [],
@@ -235,17 +293,18 @@ const method = {
     },
     // 获取文章信息
     getArticle: async (id = null) => {
+
         const { code, msg, data } = await axios.get('/api/article/one', { id })
         if (code !== 200) {
             await router.push({path: '/admin/article/write'})
-            notyf.error(msg)
-            return notyf.warn('已为您跳转到文章撰写页！')
+            return notyf.error('已为您跳转到文章撰写页！', msg)
         }
-        state.struct = data
+
+        // 合并 json 项默认数据
+        state.struct = {...data, json: Object.assign({}, data.json, state.struct.json)}
 
         // 封面图 - 字符串转数组 - name 正则出文件名部分
         if (!utils.is.empty(data.covers)) {
-            // state.item.cover.links   = data.covers.split(',').join('\n')
             state.item.cover.preview = data.covers.split(',').map(item => ({
                 name: item.replace(/.*\//, ''), url: item,
             }))
@@ -317,7 +376,9 @@ const method = {
             state.struct.content = proxy.$refs['vditor'].getValue()
         }
 
-        const { code, msg, data } = await axios.post('/api/article/save', state.struct)
+        const { code, msg, data } = await axios.post('/api/article/save', {
+            ...state.struct, json: JSON.stringify(state.struct.json)
+        })
         if (code !== 200) return notyf.error(msg)
         notyf.success(msg)
 
@@ -403,6 +464,29 @@ const method = {
         return result
     },
     empty: value => utils.is.empty(value),
+    // 数据变化
+    change: {
+        // 标签变化
+        tags: (data) => {
+
+            if (utils.is.empty(data)) return
+
+            data.forEach(async (item, index) => {
+                if (typeof item === 'string') {
+                    const {code, msg, data} = await axios.post('/api/tags/save', {name: item})
+                    // 创建失败，删除对应的 tag
+                    if (code !== 200) {
+                        notyf.error('添加标签失败：' + msg)
+                        return state.item.tags.splice(index, 1)
+                    }
+                    // 把原来的 tag 替换成新的 tag.id
+                    state.item.tags[index] = data.id
+                    // 把新的 tag 添加到 select.tags 列表中
+                    state.select.tags.push({value: data.id, label: item})
+                }
+            })
+        }
+    },
 }
 
 // 监听封面图预览图变化

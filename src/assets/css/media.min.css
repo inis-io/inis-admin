@@ -7,8 +7,11 @@
     body[data-layout=topnav] .container-xxl{
         max-width: 80% !important;
     }
+    body[data-layout=topnav] .container-xl{
+        max-width: 70% !important;
+    }
     body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-lg, body[data-layout=topnav] .container-md,
-    body[data-layout=topnav] .container-sm, body[data-layout=topnav] .container-xl {
+    body[data-layout=topnav] .container-sm {
         max-width: 1200px !important;
     }
 }
@@ -18,8 +21,11 @@
     body[data-layout=topnav] .container-xxl{
         max-width: 85% !important;
     }
+    body[data-layout=topnav] .container-xl{
+        max-width: 75% !important;
+    }
     body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-lg, body[data-layout=topnav] .container-md,
-    body[data-layout=topnav] .container-sm, body[data-layout=topnav] .container-xl {
+    body[data-layout=topnav] .container-sm {
         max-width: 1200px !important;
         /*max-width: 85%;*/
     }
@@ -30,8 +36,11 @@
     body[data-layout=topnav] .container-xxl{
         max-width: 92% !important;
     }
+    body[data-layout=topnav] .container-xl{
+        max-width: 82% !important;
+    }
     body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-lg, body[data-layout=topnav] .container-md,
-    body[data-layout=topnav] .container-sm, body[data-layout=topnav] .container-xl {
+    body[data-layout=topnav] .container-sm {
         max-width: 85%;
     }
     .el-dialog.custom{
@@ -41,7 +50,7 @@
 
 /* 当屏幕宽度小于768px时，应用以下样式 */
 @media screen and (max-width: 767px) {
-    body[data-layout=topnav] .container-xxl{
+    body[data-layout=topnav] .container-xxl, body[data-layout=topnav] .container-xl{
         padding-left: 10px;
         padding-right: 10px;
         max-width: 100% !important;
@@ -74,5 +83,8 @@
     }
     #account-home > .card:nth-child(1) .col-md-4{
         justify-content: center !important;
+    }
+    body[inis-theme] .container-box{
+        margin-top: 50px !important;
     }
 }

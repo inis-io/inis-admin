@@ -2,21 +2,6 @@
     <div class="container-fluid container-box">
         <div class="row">
             <div class="col-lg-9" id="banner">
-                <div v-if="false" class="card mb-2 carousel-inner">
-                    <div class="card-body p-0 m-0 position-relative">
-                        <el-image style="height: 300px; width: 100%;" src="https://api.inis.cn/api/file/random" fit="cover"></el-image>
-                        <div class="carousel-caption position-absolute start-0 end-0 bottom-0 text-start pb-0 pt-3 px-3 single-cover">
-                            <span class="text-white">
-                                <h5 class="subscript-left my-0">标题</h5>
-                                <p class="pointer d-flex align-items-center">
-                                    <i-svg name="book-white" class="me-1" size="14px"></i-svg>
-                                    <span>描述 ...</span>
-                                </p>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="card mb-2">
                     <div v-load="utils.is.empty(state.struct.editor)" class="card-body custom" style="min-height: 485px">
                         <span v-show="state.struct.editor === 'tinymce'">
@@ -43,7 +28,22 @@
                                             <span class="ms-1 required">标题：</span>
                                         </span>
                                     </el-tooltip>
-                                    <input v-model="state.struct.title" type="text" autocomplete="new-password" class="form-control customize text-white" placeholder="页面标题">
+                                    <el-input v-model="state.struct.title" placeholder="页面标题"></el-input>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <el-tooltip content="可同时选择多个标签" placement="top">
+                                            <span>
+                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <span class="ms-1">标签：</span>
+                                            </span>
+                                        </el-tooltip>
+                                    </label>
+                                    <el-select v-model="state.item.tags" v-on:change="method.change.tags"
+                                        multiple collapse-tags filterable allow-create default-first-option class="d-block custom" placeholder="请选择">
+                                        <el-option v-for="item in state.select.tags" :key="item.value" :label="item.label" :value="item.value">
+                                        </el-option>
+                                    </el-select>
                                 </div>
                                 <div class="form-group mb-3">
                                     <el-tooltip content="（必须）可以用做页面的唯一识别码或页面入口" placement="top">
@@ -52,7 +52,7 @@
                                             <span class="ms-1 required">唯一键：</span>
                                         </span>
                                     </el-tooltip>
-                                    <input v-model="state.struct.key" type="text" autocomplete="new-password" class="form-control customize text-white" placeholder="唯一识别码">
+                                    <el-input v-model="state.struct.key" autocomplete="new-password" placeholder="唯一识别码"></el-input>
                                 </div>
                                 <div class="form-group mb-3">
                                     <el-tooltip content="备注一下" placement="top">
@@ -61,7 +61,48 @@
                                             <span class="ms-1">备注：</span>
                                         </span>
                                     </el-tooltip>
-                                    <textarea v-model="state.struct.remark" class="form-control customize text-white" rows="5"></textarea>
+                                    <el-input v-model="state.struct.remark" :autosize="{ minRows: 3, maxRows: 10 }" type="textarea"></el-input>
+                                </div>
+                            </el-collapse-item>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body px-2 py-0">
+                            <el-collapse-item name="2">
+                                <template #title>
+                                    高级选项
+                                </template>
+                                <div class="form-group mb-3">
+                                    <label class="form-label">
+                                        <el-tooltip content="可同时选择多个分类" placement="top">
+                                            <span>
+                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <span class="ms-1">允许评论：</span>
+                                            </span>
+                                        </el-tooltip>
+                                    </label>
+                                    <el-select v-model="state.struct.json.comment.allow" class="d-block custom font-13" placeholder="请选择">
+                                        <el-option v-for="item in state.select.comment.allow" :key="item.value" :label="item.label" :value="item.value">
+                                            <span class="font-13">{{ item.label }}</span>
+                                            <small class="text-muted float-end">{{ item.value }}</small>
+                                        </el-option>
+                                    </el-select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label">
+                                        <el-tooltip content="可同时选择多个分类" placement="top">
+                                            <span>
+                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <span class="ms-1">显示评论：</span>
+                                            </span>
+                                        </el-tooltip>
+                                    </label>
+                                    <el-select v-model="state.struct.json.comment.show" class="d-block custom font-13" placeholder="请选择">
+                                        <el-option v-for="item in state.select.comment.show" :key="item.value" :label="item.label" :value="item.value">
+                                            <span class="font-13">{{ item.label }}</span>
+                                            <small class="text-muted float-end">{{ item.value }}</small>
+                                        </el-option>
+                                    </el-select>
                                 </div>
                             </el-collapse-item>
                         </div>
@@ -99,6 +140,7 @@ const state  = reactive({
     item: {
         id: null,
         active: ['1'],
+        tags: [],
         menu: {
             ...MenuConfig,
             menuList: [{
@@ -110,7 +152,26 @@ const state  = reactive({
             }],
         },
     },
-    struct: { content: '', editor: null },
+    struct: {
+        content: '',
+        editor: null,
+        json: { comment: { allow: 0, show: 0 } }
+    },
+    select: {
+        tags: [],
+        comment: {
+            allow: [
+                { value: 0, label: '继承父级（推荐）' },
+                { value: 1, label: '允许' },
+                { value: 2, label: '禁止' },
+            ],
+            show: [
+                { value: 0, label: '继承父级（推荐）' },
+                { value: 1, label: '显示' },
+                { value: 2, label: '隐藏' },
+            ]
+        }
+    }
 })
 
 onMounted(async () => {
@@ -127,11 +188,20 @@ const method = {
     init: async () => {
         let id = route.params?.id
         if (!utils.is.empty(id)) state.item.id = parseInt(id)
+        await method.getTags()
         if (!utils.is.empty(state.item.id)) {
             await method.getPage(state.item.id)
         } else {
             await method.getConfig()
         }
+    },
+    // 获取文章标签
+    getTags: async () => {
+        const { code, data } = await axios.get('/api/tags/column', {
+            field: 'id,name'
+        })
+        if (code !== 200) return
+        state.select.tags = data.map(item => ({ value: item.id, label: item.name }))
     },
     // Editor 切换
     getConfig: async () => {
@@ -145,13 +215,16 @@ const method = {
     },
     // 获取页面信息
     getPage: async (id = null) => {
+
         const { code, msg, data } = await axios.get('/api/pages/one', { id })
         if (code !== 200) {
             await router.push({path: '/admin/pages/write'})
             notyf.error(msg)
             return notyf.warn('已为您跳转到页面撰写页！')
         }
-        state.struct = data
+
+        // 合并 json 项默认数据
+        state.struct = {...data, json: Object.assign({}, data.json, state.struct.json)}
 
         // 封面图 - 字符串转数组 - name 正则出文件名部分
         if (!utils.is.empty(data.covers)) {
@@ -191,7 +264,11 @@ const method = {
         }
         if (utils.is.empty(state.struct?.title)) return notyf.warn('你可能忘记写标题了')
 
-        const { code, msg, data } = await axios.post('/api/pages/save', state.struct)
+        state.struct.tags = !utils.is.empty(state.item.tags) ? `|${state.item.tags.join('|')}|` : ''
+
+        const { code, msg, data } = await axios.post('/api/pages/save', {
+            ...state.struct, json: JSON.stringify(state.struct.json)
+        })
         if (code !== 200) return notyf.error(msg)
         notyf.success(msg)
 
@@ -199,6 +276,29 @@ const method = {
         state.struct.id = data.id
 
         await router.push({path: '/admin/pages/write/' + parseInt(data.id)})
+    },
+    // 数据变化
+    change: {
+        // 标签变化
+        tags: (data) => {
+
+            if (utils.is.empty(data)) return
+
+            data.forEach(async (item, index) => {
+                if (typeof item === 'string') {
+                    const {code, msg, data} = await axios.post('/api/tags/save', {name: item})
+                    // 创建失败，删除对应的 tag
+                    if (code !== 200) {
+                        notyf.error('添加标签失败：' + msg)
+                        return state.item.tags.splice(index, 1)
+                    }
+                    // 把原来的 tag 替换成新的 tag.id
+                    state.item.tags[index] = data.id
+                    // 把新的 tag 添加到 select.tags 列表中
+                    state.select.tags.push({value: data.id, label: item})
+                }
+            })
+        }
     },
 }
 
