@@ -451,10 +451,10 @@ const method = {
     // 文件上传自定义头
     headers: () => {
         let result = {}
-        if (!utils.is.empty(globalThis?.inis?.API_KEY)) {
-            result['i-api-key'] = globalThis?.inis?.API_KEY
+        if (!utils.is.empty(globalThis?.inis?.api?.key)) {
+            result['i-api-key'] = globalThis?.inis?.api?.key
         }
-        let TOKEN_NAME = globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN'
+        let TOKEN_NAME = globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN'
         if (utils.has.cookie(TOKEN_NAME)) {
             let token = utils.get.cookie(TOKEN_NAME)
             if (!utils.is.empty(token)) {

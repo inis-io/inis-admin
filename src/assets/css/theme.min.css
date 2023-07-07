@@ -206,6 +206,9 @@ body[inis-theme] textarea.customize:hover,
 body[inis-theme] textarea.customize:focus{
     border-bottom: 2px solid rgb(var(--assist-color)) !important;
 }
+body[inis-theme] .search.mimic:hover{
+    border: 1px solid transparent;
+}
 
 
 
@@ -340,6 +343,7 @@ body[inis-theme] .custom .el-pagination.is-background .el-pager li.is-active{
     color: var(--theme-font-color) !important;
     box-shadow: 0px 0px 0px rgb(0 0 0 / 10%), 0px 0px 0px rgb(255 255 255 / 80%), inset 18px 18px 30px rgb(0 0 0 / 6%), inset -18px -18px 30px rgb(255 255 255 / 30%) !important;
     transition: box-shadow .2s ease-out;
+    border: 1px solid transparent;
 }
 body[inis-theme] .custom .el-pagination.is-background .el-pager li:hover{
     box-shadow: 0px 0px 0px rgb(0 0 0 / 10%), 0px 0px 0px rgb(255 255 255 / 80%), inset 18px 18px 30px rgb(0 0 0 / 6%), inset -18px -18px 30px rgb(255 255 255 / 30%) !important;
@@ -654,6 +658,9 @@ body[inis-theme] .el-input .el-input__wrapper{
     height: 28px !important;
     padding: 0;
 }
+body[inis-theme] .el-input.is-disabled .el-input__wrapper{
+    box-shadow: unset;
+}
 body[inis-theme] .el-input .el-input__wrapper input{
     border-bottom: 1px solid rgb(var(--assist-color));
 }
@@ -730,6 +737,9 @@ body[inis-theme] .el-carousel .el-carousel__container .el-carousel__item .title{
     padding: 0 0 5px 10px;
     align-items: center;
     background: -webkit-linear-gradient(transparent,rgba(0,0,0,.5));
+}
+body[inis-theme] .el-carousel .el-carousel__indicator.is-active button{
+    background-color: rgb(var(--assist-color));
 }
 /* ==================== 自定义 el-carousel - 结束 ==================== */
 

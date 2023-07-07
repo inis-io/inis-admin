@@ -38,8 +38,8 @@
                             </label>
                             <el-select v-model="state.struct.charset" placeholder="请选择方式" class="d-block custom font-13">
                                 <el-option v-for="item in state.select.charset" :key="item.value" :label="item.value" :value="item.value">
-                                    <span class="font-13">{{ item.label }}</span>
-                                    <small class="text-muted float-end">{{ item.value }}</small>
+                                    <span class="font-13">{{ item.value }}</span>
+                                    <small class="text-muted float-end">{{ item.label }}</small>
                                 </el-option>
                             </el-select>
                         </div>
@@ -59,7 +59,7 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.struct.hostname" placeholder="如：localhost" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.struct.hostname" placeholder="如：localhost"></el-input>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -72,7 +72,7 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.struct.hostport" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.struct.hostport"></el-input>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -85,7 +85,7 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.struct.prefix" disabled type="text" class="form-control customize text-white">
+                            <el-input v-model="state.struct.prefix" disabled></el-input>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.struct.database" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.struct.database"></el-input>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -113,7 +113,7 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.struct.username" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.struct.username"></el-input>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -126,13 +126,16 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.struct.password" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.struct.password" show-password></el-input>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button v-on:click="method.connect()" type="button" class="btn btn-outline-light mx-2">测试连接</button>
-                    <button v-on:click="method.next(2)" type="button" class="btn btn-outline-light mx-2">下一步</button>
+                    <el-button v-on:click="method.connect()" :loading="state.item.connect" class="mx-2">
+                        <i-svg v-if="!state.item.connect" name="connect" size="14px"></i-svg>
+                        <span class="ms-1">测试连接</span>
+                    </el-button>
+                    <el-button v-on:click="method.next(2)" type="primary" class="mx-2">下一步</el-button>
                 </div>
             </div>
             <div v-else-if="state.item.active === 2" class="card-body">
@@ -150,7 +153,7 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.user.account" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.user.account"></el-input>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -163,7 +166,7 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.user.password1" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.user.password1" show-password></el-input>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -176,7 +179,7 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.user.password2" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.user.password2" show-password></el-input>
                         </div>
                     </div>
                 </div>
@@ -194,20 +197,20 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.user.nickname" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.user.nickname"></el-input>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             <label class="form-label required">
-                                <el-tooltip content="（必须）开启验证码服务之后，用来登录或找回密码" placement="top">
+                                <el-tooltip content="（必须）开启短信服务之后，用来登录或找回密码" placement="top">
                                     <span>
                                         <i-svg name="hint" size="14px"></i-svg>
                                         <span class="ms-1">邮箱：</span>
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <input v-model="state.user.email" type="text" class="form-control customize text-white">
+                            <el-input v-model="state.user.email"></el-input>
                         </div>
                     </div>
                 </div>
@@ -222,13 +225,13 @@
                                     </span>
                                 </el-tooltip>
                             </label>
-                            <textarea v-model="state.user.description" placeholder="写点什么吧 ..." class="form-control customize text-white" rows="3"></textarea>
+                            <el-input v-model="state.user.description" :autosize="{ minRows: 3, maxRows: 10 }" placeholder="写点什么吧 ..." type="textarea"></el-input>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button v-on:click="method.prev(1)" type="button" class="btn btn-outline-light mx-2">上一步</button>
-                    <button v-on:click="method.createAdmin()" type="button" class="btn btn-outline-light mx-2">下一步</button>
+                    <el-button v-on:click="method.prev(1)" class="mx-2">上一步</el-button>
+                    <el-button v-on:click="method.createAdmin()" type="primary" class="mx-2">下一步</el-button>
                 </div>
             </div>
             <div v-else class="card-body">
@@ -263,7 +266,7 @@
                     </p>
                     <hr>
                     <p class="d-flex justify-content-center my-3">
-                        <button v-on:click="method.window()" type="button" class="btn btn-outline-light mx-2">回 到 首 页</button>
+                        <el-button v-on:click="method.window()" type="primary" class="mx-2">回 到 首 页</el-button>
                     </p>
                 </div>
             </div>
@@ -272,7 +275,6 @@
 </template>
 
 <script setup>
-
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'

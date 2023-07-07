@@ -84,7 +84,7 @@ const method = {
 
         // 清除登录信息
         utils.clear.session('USERINFO')
-        utils.clear.cookie(globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN')
+        utils.clear.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN')
 
         // 回到首页
         setTimeout(() => (globalThis.location.href = '/'), 800)

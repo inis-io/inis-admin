@@ -51,9 +51,9 @@
         <template #i-route="{ scope = {} }">
             <el-tooltip placement="top">
                 <template #content>
-                    <span v-if="scope.type === 'login'">需登录类型</span>
+                    <span v-if="scope.type === 'login'">登录类型</span>
                     <span v-else-if="scope.type === 'common'">公共类型</span>
-                    <span v-else>公共类型</span>
+                    <span v-else>默认类型</span>
                 </template>
                 <span :class="scope.type === 'login' ? 'me-1' : 'me-2'">
                     <i-svg color="rgb(var(--icon-color))" v-if="scope.type === 'login'" name="user" size="18px"></i-svg>

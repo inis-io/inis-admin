@@ -164,7 +164,7 @@ const method = {
 
         notyf.success(msg)
         utils.set.session('USERINFO' , data.user)
-        utils.set.cookie(globalThis?.inis?.TOKEN_NAME || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
+        utils.set.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
         state.item.dialog = false
         emit('finish', data.user)
     },

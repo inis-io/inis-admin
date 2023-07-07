@@ -10,4 +10,13 @@ const state = reactive({
     // 将默认语言设置为中文
     locale: lang
 })
+
+// 追加配置
+globalThis.inis = {
+    api: { uri: '', key: '' },
+    lazy_time : 500,
+    token_name: import.meta.env.VITE_TOKEN_NAME,
+    ...globalThis.inis,
+    version   : import.meta.env.VITE_VERSION,
+}
 </script>

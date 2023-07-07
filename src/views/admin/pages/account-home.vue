@@ -18,7 +18,7 @@
                                         {{ state.user.result.level.current.name }}
                                     </span>
                                 </span>
-                                <el-progress :percentage="(state.user?.exp / state.user.result?.level?.next?.exp || 1) * 100" color="rgb(var(--assist-color))" style="width: 200px" class="mb-1"></el-progress>
+                                <el-progress :percentage="((state.user?.exp / state.user.result?.level?.next?.exp || 1) * 100).toFixed(2)" color="rgb(var(--assist-color))" style="width: 200px" class="mb-1"></el-progress>
                                 <p>{{ state.user.description }}</p>
                             </div>
                         </div>

@@ -147,7 +147,7 @@ watch(() => state.item.search, (val) => {
 
     // 防抖 - 没变化的 500ms 后再刷新
     clearTimeout(state.item.timer)
-    state.item.timer = setTimeout(() => method.refresh(...allow), globalThis.inis?.SearchLazyTime ?? 500)
+    state.item.timer = setTimeout(() => method.refresh(...allow), globalThis.inis?.lazy_time ?? 500)
 })
 
 // 监听 html 下的鼠标右键事件
