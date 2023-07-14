@@ -110,10 +110,6 @@ const state  = reactive({
 })
 
 onMounted(async () => {
-    // document.querySelectorAll('.container-xxl').forEach(el => {
-    //     el.classList.remove('container-xxl')
-    //     el.classList.add('container-fluid')
-    // })
     // 追加鼠标右键菜单
     state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
 })
@@ -123,16 +119,12 @@ const method = {
     // 设置排序方式
     order(order = 'create_time asc', sort = '排序') {
         state.item.sort = sort
-        for (let item in state.params) {
-            state.params[item].order = order
-        }
+        for (let item in state.params) state.params[item].order = order
         // 指定刷新
         method.refresh('all','remove')
     },
     // 添加
-    add() {
-        push('/admin/article/write')
-    },
+    add: () => proxy.$refs['all']['add'](),
     // 刷新
     refresh(...args) {
         // 允许刷新的参数
