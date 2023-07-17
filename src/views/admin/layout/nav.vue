@@ -58,7 +58,7 @@
                         </span>
                     </span>
                     <span>
-                        <a v-if="!state.login.finish" data-bs-toggle="modal" data-bs-target="#fill-item-modal" href="javascript:;" class="mx-2">
+                        <a v-if="!state.login.finish" data-bs-toggle="modal" data-bs-target="#fill-item-modal" href="javascript:" class="mx-2">
                             <i-svg color="rgb(var(--assist-color))" name="user-white" size="26px"></i-svg>
                         </a>
                         <a v-else href="/admin">

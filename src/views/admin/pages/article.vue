@@ -63,7 +63,6 @@
 </template>
 
 <script setup>
-
 import utils from '{src}/utils/utils'
 import { push } from '{src}/utils/route'
 import MouseMenu from '@howdyjs/mouse-menu'
@@ -124,7 +123,7 @@ const method = {
         method.refresh('all','remove')
     },
     // 添加
-    add: () => proxy.$refs['all']['add'](),
+    add: () => push({ name: 'admin-article-write' }),
     // 刷新
     refresh(...args) {
         // 允许刷新的参数

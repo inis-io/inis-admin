@@ -255,7 +255,7 @@ const state  = reactive({
         params: props.params,
         columns: [
             { prop: 'nickname', label: '昵称', width: 120, slot: true, fixed: left },
-            { prop: 'url', label: '链接', width: 150, slot: true },
+            { prop: 'url', label: '链接', width: 160, slot: true },
             { prop: 'description' , label: '描述', width: 200, slot: true },
             { prop: 'remark' , label: '备注', width: 200, slot: true },
             { prop: 'update_time', label: '更新时间', width: 120, sortable: true },

@@ -87,4 +87,8 @@
     body[inis-theme] .container-box{
         margin-top: 50px !important;
     }
+    .topnav > .container-fluid{
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
 }

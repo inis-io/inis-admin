@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid container-box">
-        <div class="row">
+        <div v-if="false" class="row">
             <div class="col-md-8 px-2">
                 <el-carousel trigger="click" height="230px">
                     <el-carousel-item v-for="item in 4" :key="item">

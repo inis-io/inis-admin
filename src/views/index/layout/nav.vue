@@ -1,7 +1,7 @@
 <template>
     <div class="topnav">
         <div class="container-fluid user-select-none">
-            <nav class="navbar navbar-dark navbar-expand-lg topnav-menu py-1">
+            <nav class="navbar navbar-dark navbar-expand-lg topnav-menu py-1 d-none d-lg-block">
                 <div class="collapse navbar-collapse justify-content-between">
                     <el-menu class="navbar-nav w-100" :router="false" :unique-opened="true" mode="horizontal" background-color="transparent">
                         <el-menu-item index="/">
@@ -78,17 +78,17 @@
                     </el-menu>
                 </div>
             </nav>
-            <nav class="d-lg-none d-black">
+            <nav class="d-lg-none d-black py-1">
                 <div class="d-flex justify-content-between">
                     <span>
                         <span v-on:click="state.drawer = true" class="mx-2">
-                            <i-svg name="menu" size="24px"></i-svg>
+                            <i-svg name="menu" size="24px" color="rgb(var(--assist-color))"></i-svg>
                         </span>
                     </span>
                     <span>
-                        <a v-if="!state.login.finish" data-bs-toggle="modal" data-bs-target="#fill-item-modal" href="javascript:" class="mx-2">
-                            <i-svg name="user-white" size="26px"></i-svg>
-                        </a>
+                        <span v-if="!state.login.finish" v-on:click="method.login.show()" class="mx-2">
+                            <i-svg name="user" size="26px" color="rgb(var(--assist-color))"></i-svg>
+                        </span>
                         <a v-else href="/admin">
                             <el-avatar :src="state.login.user?.avatar" :size="26" class="mx-2"></el-avatar>
                         </a>

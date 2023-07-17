@@ -62,7 +62,6 @@
 </template>
 
 <script setup>
-
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
 import AtomQpsBlack from '{src}/comps/atom/qps-black.vue'

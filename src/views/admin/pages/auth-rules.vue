@@ -77,7 +77,6 @@
 </template>
 
 <script setup>
-
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
 import AtomQps from '{src}/comps/atom/qps.vue'
@@ -152,7 +151,7 @@ const method = {
         method.refresh('all','remove')
     },
     // 添加
-    add: () => proxy.$refs['all']['add'](),
+    add: () => proxy.$refs['all']['show'](),
     // 刷新
     refresh(...args) {
         // 允许刷新的参数

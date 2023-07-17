@@ -51,7 +51,6 @@
 </template>
 
 <script setup>
-
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
 import TableComment from '{src}/comps/table/comment.vue'

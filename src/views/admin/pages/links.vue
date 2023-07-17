@@ -64,7 +64,6 @@
 </template>
 
 <script setup>
-
 import utils from '{src}/utils/utils'
 import axios from '{src}/utils/request'
 import MouseMenu from '@howdyjs/mouse-menu'
@@ -148,7 +147,7 @@ const method = {
         method.refresh('all','remove')
     },
     // 添加
-    add: () => proxy.$refs['all']['add'](),
+    add: () => proxy.$refs['all']['show'](),
     // 刷新
     refresh(...args) {
         // 允许刷新的参数
