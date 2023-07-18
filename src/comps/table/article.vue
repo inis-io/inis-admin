@@ -57,6 +57,14 @@
             </el-tooltip>
         </template>
 
+        <template #i-views="{ scope = {} }">
+            {{ utils.format.number(scope.views) || 0 }}
+        </template>
+
+        <template #i-top="{ scope = {} }">
+            <el-switch v-model="scope.top" v-on:change="change.top(scope)" :active-value="1" :inactive-value="0" active-text="Y" inactive-text="N" inline-prompt></el-switch>
+        </template>
+
         <template #i-remark="{ scope }">
             <el-tooltip :disabled="utils.is.empty(scope?.remark)" placement="top">
                 <template #content>
@@ -118,7 +126,9 @@ const state  = reactive({
         columns: [
             { prop: 'title'  , label: '标题', width: 150, slot: true, fixed: left },
             { prop: 'abstract', label: '摘要', width: 200, slot: true },
-            { prop: 'remark' , label: '备注', width: 200, slot: true },
+            { prop: 'views', label: '访问', width: 100, align: 'center', slot: true },
+            { prop: 'top', label: '置顶', width: 100, slot: true },
+            { prop: 'remark' , label: '备注', width: 150, slot: true },
             { prop: 'update_time', label: '更新时间', width: 120, sortable: true },
             { prop: 'create_time', label: '创建时间', width: 120, sortable: true },
         ],
@@ -214,6 +224,21 @@ const method = {
     omit  : (text = null, length = 10, omission = ' ... ', location = 'center') => {
         if (utils.is.empty(text)) return '空'
         return utils.string.omit(text, length, omission, location)
+    },
+}
+
+const change = {
+    top: async struct => {
+        if (!struct.id) return
+
+        const { code, msg } = await axios.post(`/api/${state.item.table}/save`, {
+            id: struct.id, top: struct.top
+        })
+
+        if (code === 200) return
+
+        struct.top = !struct.top
+        return notyf.error(msg)
     },
 }
 
