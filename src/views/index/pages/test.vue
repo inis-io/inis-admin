@@ -1,24 +1,11 @@
 <template>
     <div class="container-fluid container-box">
-        <el-select
-    v-model="state.value"
-    multiple
-    filterable
-    allow-create
-    default-first-option
-    placeholder="请选择文章标签">
-    <el-option
-      v-for="item in state.options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
+        <anime-donate wx="/assets/imgs/jpg/wx.jpg" alipay="/assets/imgs/jpg/alipay.jpg"></anime-donate>
     </div>
 </template>
 
 <script setup>
-
+import AnimeDonate from '{src}/comps/animate/donate.vue'
 const state  = reactive({
     options: [{
       value: 'HTML',
