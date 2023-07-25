@@ -714,3 +714,6 @@ select.customize:disabled:hover, select.customize:disabled:focus, select.customi
     display: inline-block;
     margin-right: 5px;
 }
+.white-space-line{
+    white-space: pre-line;
+}

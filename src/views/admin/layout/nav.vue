@@ -17,7 +17,7 @@
                     </el-menu>
                     <el-menu :unique-opened="true" mode="horizontal" class="navbar-nav d-flex align-items-center justify-content-end w-100" background-color="transparent">
                         <el-menu-item index="1">
-                            <i-lottie v-model="AstronautJSON" width="30px" height="30px"></i-lottie>
+                            <atom-upgrade></atom-upgrade>
                         </el-menu-item>
                         <el-sub-menu show-timeout="50" hide-timeout="50" index="login-user" class="icon-none">
                             <template #title>
@@ -123,7 +123,7 @@ import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
 import { list as MenuList } from '{src}/utils/menu'
-import AstronautJSON from '{src}/assets/json/beil.json'
+import AtomUpgrade from '{src}/comps/atom/upgrade.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const router = useRouter()

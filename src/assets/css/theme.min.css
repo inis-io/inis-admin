@@ -655,6 +655,9 @@ body[inis-theme] .el-dialog{
 body[inis-theme] .sm .el-dialog__body{
     padding: 0;
 }
+body[inis-theme] .el-dialog.pt-0 .el-dialog__body{
+    padding-top: 0;
+}
 /* ==================== 自定义 el-dialog - 结束 ==================== */
 /* ==================== 自定义 el-input - 开始 ==================== */
 body[inis-theme] .el-input .el-input__wrapper{
@@ -1019,3 +1022,8 @@ body[inis-theme] .vditor-resize > div{
     background-color: #f6f8fa38;
 }
 /* ==================== 自定义 Vditor 编辑器 - 结束 ==================== */
+/* ==================== 自定义 i-lottie - 开始 ==================== */
+body[inis-theme] .i-lottie svg path{
+    stroke: rgb(var(--assist-color));
+}
+/* ==================== 自定义 i-lottie - 结束 ==================== */

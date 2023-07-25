@@ -174,6 +174,10 @@ export default ({ mode }) => {
                     target: env.VITE_API,
                     changeOrigin: true,
                 },
+                '/inis': {
+                    target: env.VITE_API,
+                    changeOrigin: true,
+                },
                 '/socket.io': {
                     target: env.VITE_SOCKET,
                     ws: true,

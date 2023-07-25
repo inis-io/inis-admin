@@ -65,7 +65,7 @@
         <template #i-email="{ scope = {} }">
             <el-tooltip :content="'双击复制：' + scope?.email" :disabled="utils.is.empty(scope?.email)" placement="top">
                 <span v-on:dblclick="method.copy(scope?.email, '复制成功！')">
-                    {{ method.omit(scope?.email) }}
+                    {{ method.omit(scope?.email, 9) }}
                 </span>
             </el-tooltip>
         </template>

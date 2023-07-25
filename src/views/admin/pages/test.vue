@@ -7,6 +7,7 @@
 
 <script setup>
 import utils from '{src}/utils/utils'
+import axios from 'axios'
 import MouseMenu from '@howdyjs/mouse-menu'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
