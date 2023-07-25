@@ -1,7 +1,7 @@
 <!-- 组件二次封装 -->
 <template>
     <span class="i-lottie">
-        <span ref="ctx"></span>
+        <span ref="dest"></span>
     </span>
 </template>
 
@@ -9,8 +9,8 @@
 import axios from 'axios'
 import lottie from 'lottie-web'
 import utils from '{src}/utils/utils'
-const { ctx, proxy } = getCurrentInstance()
 
+const dest  = ref(null)
 const emit  = defineEmits(['update:modelValue'])
 const props = defineProps({
     modelValue: {
@@ -43,12 +43,8 @@ const state = reactive({
     lottie: null,
 })
 
-onMounted( async () => {
+nextTick(async () => {
     await method.init()
-    const entries = Object.entries(proxy?.$refs['ctx'])
-    for (const [key, value] of entries) {
-        ctx[key] = value
-    }
 })
 
 const method = {
@@ -56,9 +52,9 @@ const method = {
         const data = await axios.get(`/assets/json/lottie/${props.name}.json`)
         if (utils.is.empty(data)) return
         state.lottie = lottie.loadAnimation({
-            container: proxy.$refs['ctx'],  // 选择渲染dom
-            loop: true,                     // 循环播放
+            container: dest.value,          // 选择渲染dom
             autoplay: props.modelValue,     // 自动播放
+            loop: true,                     // 循环播放
             renderer: 'svg',                // 渲染格式
             animationData: data,            // 渲染动效json
             ...props.opts,                  // 其他参数

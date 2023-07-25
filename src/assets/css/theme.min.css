@@ -658,6 +658,9 @@ body[inis-theme] .sm .el-dialog__body{
 body[inis-theme] .el-dialog.pt-0 .el-dialog__body{
     padding-top: 0;
 }
+body[inis-theme] .el-dialog.pb-0 .el-dialog__body{
+    padding-bottom: 0;
+}
 /* ==================== 自定义 el-dialog - 结束 ==================== */
 /* ==================== 自定义 el-input - 开始 ==================== */
 body[inis-theme] .el-input .el-input__wrapper{

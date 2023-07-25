@@ -170,7 +170,7 @@ class helper{
 
         // 链式操作 compare 属性
         this.compare = {
-            version:(versionA,versionB,parting) => this.CompareVersion(versionA,versionB,parting)
+            version:(v1,v2,parting) => this.CompareVersion(v1,v2,parting)
         }
 
         // 链式操作 to 属性
@@ -1797,21 +1797,21 @@ class helper{
      * @param {string} parting [分隔符]
      * @return {boolean}
      */
-    CompareVersion(versionA, versionB, parting = '.')
+    CompareVersion(v1, v2, parting = '.')
     {
-        if (versionA && versionB) {
+        if (v2 && v1) {
 
             // 将两个版本号拆成数字
-            let arrayA = versionA.split(parting)
-            let arrayB = versionB.split(parting)
-            let minLength = Math.min(arrayA.length, arrayB.length)
+            let array2 = v2.split(parting)
+            let array1 = v1.split(parting)
+            let minLength = Math.min(array2.length, array1.length)
             let position = 0
             let diff = 0
 
             // 依次比较版本号每一位大小，当对比得出结果后跳出循环（后文有简单介绍）
-            while (position < minLength && ((diff = parseInt(arrayA[position]) - parseInt(arrayB[position])) === 0)) position++;
+            while (position < minLength && ((diff = parseInt(array2[position]) - parseInt(array1[position])) === 0)) position++;
 
-            diff = (diff !== 0) ? diff: (arrayA.length - arrayB.length);
+            diff = (diff !== 0) ? diff: (array2.length - array1.length);
 
             // 若versionA大于versionB，则返回true
             return diff > 0;

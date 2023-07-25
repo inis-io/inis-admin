@@ -4,7 +4,7 @@
         <i-lottie name="beil" v-model="state.lottie.play" v-on:click="state.item.dialog = true"></i-lottie>
     </span>
     <teleport to="body">
-        <el-dialog v-model="state.item.dialog" class="custom pt-0" :close-on-click-modal="false">
+        <el-dialog v-model="state.item.dialog" class="custom pt-0 pb-0" :close-on-click-modal="false">
             <template #header>
                 <strong class="font-14">
                     <span>{{ state.struct.title }}：</span>
@@ -26,8 +26,10 @@
             </template>
             <template #footer>
                 <div class="modal-footer d-flex justify-content-center">
-                    <el-button v-on:click="state.item.dialog = false">忽略此版本</el-button>
-                    <el-button v-on:click="method.save()" :loading="state.item.wait">立即更新</el-button>
+                    <el-button v-on:click="state.item.dialog = false">忽略本次更新</el-button>
+                    <el-button v-on:click="method.upgrade()" :loading="state.loading.upgrade">
+                        {{ state.loading.upgrade ? '正在更新' : '立即更新' }}
+                    </el-button>
                 </div>
             </template>
         </el-dialog>
@@ -36,18 +38,18 @@
 
 <script setup>
 import utils from '{src}/utils/utils'
+import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import MarkdownIt from 'markdown-it'
 
 const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
     item: {
-        wait  : false,
-        dialog: true,
-        lottie: false,
+        dialog: false,
     },
     loading: {
         markdown: true,
+        upgrade : false,
     },
     lottie: {
         show: false,
@@ -72,11 +74,16 @@ onMounted(async () => {
 const method = {
     // 检查更新
     check: async () => {
-        const { code, msg, data } = await axios.get('/inis/theme-version/next', {
-            theme_key: 'inis',
-            progress: 'pro'
+
+        const { code, data } = await axios.get('/inis/theme-version/next', {
+            theme_key: 'inis', progress: 'pro'
         })
+
         if (code !== 200) return
+
+        // 本地版本与最新版本对比
+        if (!utils.compare.version(inis?.version, data?.version)) return
+
         state.struct      = data
         state.lottie.show = true
         state.lottie.play = true
@@ -91,6 +98,40 @@ const method = {
         const md = new MarkdownIt()
         state.loading.markdown = false
         return md.render(content)
+    },
+    // 升级
+    upgrade: async () => {
+
+        state.loading.upgrade = true
+
+        const url = await method.download()
+
+        const { code, msg }   = await axios.post('/api/upgrade/theme', { url })
+
+        if (code !== 200) {
+            state.loading.upgrade = false
+            return notyf.error(msg)
+        }
+
+        state.item.dialog     = false
+        state.lottie.show     = false
+        state.loading.upgrade = false
+
+        notyf.success('升级成功！')
+    },
+    // 获取更新地址
+    download: async () => {
+
+        if (utils.is.empty(state.struct?.id)) return notyf.warn('未查询到更新信息')
+
+        const { code, msg, data } = await axios.get('/inis/theme-version/download', {
+            id: state.struct?.id
+        })
+        if (code !== 200) return notyf.error(msg)
+
+        if (utils.is.empty(data?.url)) return notyf.warn('未查询到更新包下载地址')
+
+        return data?.url
     },
 }
 </script>
