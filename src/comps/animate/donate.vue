@@ -1,26 +1,26 @@
 <template>
     <div class="donate">
         <div class="content">
-            <slot name="front">
-                <div class="front pt-3">
+            <div class="front pt-3">
+                <slot name="front">
                     <h3 class="title mb-2">{{ state.title[0] }}</h3>
                     <h3 class="title-pay">
                         <span class="me-1">使用微信支付</span>
                         <span>鼠标悬停使用支付宝</span>
                     </h3>
                     <img :src="props.wx" class="subtitle-img" alt="">
-                </div>
-            </slot>
-            <slot name="back">
-                <div class="back pt-3">
+                </slot>
+            </div>
+            <div class="back pt-3">
+                <slot name="back">
                     <h3 class="title mb-2">{{ state.title[1] }}</h3>
                     <h3 class="title-pay">
                         <span class="me-1">使用支付宝支付</span>
                         <span>移开鼠标使用微信</span>
                     </h3>
                     <img :src="props.alipay" class="subtitle-img" alt="">
-                </div>
-            </slot>
+                </slot>
+            </div>
         </div>
     </div>
 </template>
@@ -95,7 +95,7 @@ const method = {
 method.init()
 </script>
 
-<style scoped>
+<style scoped lang="css">
 h3 {
     font-size: 1em;
     margin: 1px 10px;

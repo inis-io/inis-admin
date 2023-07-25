@@ -51,7 +51,7 @@
                                         </strong>
                                         <small>{{state.login.user?.email}}</small>
                                     </div>
-                                    <el-avatar :src="state.login.user?.avatar + (state.login.user?.avatar.includes('?') ? '&' : '?') + 'size=40x40'" class="me-1" shape="square" size="medium"></el-avatar>
+                                    <el-avatar :src="state.login.user?.avatar + (state.login.user?.avatar.includes('?') ? '&' : '?') + 'size=40x40'" class="me-1 mirror-scan" shape="square" size="medium"></el-avatar>
                                 </template>
                                 <el-menu-item index="/admin">
                                     <i-svg color="rgb(var(--assist-color))" name="console" size="16px" class="me-1"></i-svg>

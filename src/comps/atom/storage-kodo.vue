@@ -16,12 +16,12 @@
             </h6>
             <h2 class="m-b-20">
                 <el-switch v-model="state.status.active" v-on:change="method.change" :disabled="!state.status.finish"
-                           active-text="开始" inactive-text="关闭" active-color="#13ce66" inactive-color="#ff4949">
+                           active-text="开始" inactive-text="关闭">
                 </el-switch>
             </h2>
             <span class="badge bg-info font-white"> 一般 </span>
             <span class="text-muted ms-1">
-                不是很好用，<span v-on:click="method.show()" class="text-warning pointer">点我配置</span>
+                不是很好用，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
             </span>
         </div>
     </div>

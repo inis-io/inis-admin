@@ -16,12 +16,12 @@
             </h6>
             <h2 class="m-b-20">
                 <el-switch v-model="state.status.active" v-on:change="method.change" :disabled="!state.status.finish"
-                           active-text="开始" inactive-text="关闭" active-color="#13ce66" inactive-color="#ff4949">
+                           active-text="开始" inactive-text="关闭">
                 </el-switch>
             </h2>
             <span class="badge bg-primary font-white"> 推荐 </span>
             <span class="text-muted ms-1">
-                这个也不错，<span v-on:click="method.show()" class="text-warning pointer">点我配置</span>
+                这个也不错，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
             </span>
         </div>
     </div>
@@ -84,7 +84,7 @@
                         <el-input v-model="state.struct.bucket"></el-input>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group mb-3">
                         <label class="form-label required">
                             <el-tooltip content="所在地区，如这里的 ap-guangzhou（广州）" placement="top">
@@ -100,6 +100,19 @@
                                 <small class="text-muted float-end">{{ item.value }} | {{ item.area }}</small>
                             </el-option>
                         </el-select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="存储在哪个目录下" placement="top">
+                                <span>
+                                    <i-svg name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">存储目录：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-input v-model="state.struct.path" placeholder="如: inis"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -137,6 +150,7 @@ const { ctx, proxy } = getCurrentInstance()
 const emit  = defineEmits(['refresh'])
 const state = reactive({
     struct: {
+        path:       'inis',
         default:    null,
         domain:     null,
         app_id:     null,

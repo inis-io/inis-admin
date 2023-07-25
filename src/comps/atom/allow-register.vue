@@ -16,7 +16,7 @@
             </h6>
             <h2 class="m-b-20">
                 <el-switch v-model="state.status.active" v-on:change="method.change" :disabled="!state.status.finish"
-                           active-text="允许" inactive-text="不允许" active-color="#13ce66" inactive-color="#ff4949">
+                           active-text="允许" inactive-text="不允许">
                 </el-switch>
             </h2>
             <span class="badge bg-primary font-white"> +0.1% </span>

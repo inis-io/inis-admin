@@ -16,7 +16,7 @@
             </h6>
             <h2 class="m-b-20">
                 <el-switch v-model="state.struct.json.editor" v-on:change="method.change" :disabled="!state.status.finish"
-                           active-value="tinymce" inactive-value="vditor" active-text="富文本" inactive-text="Markdown" active-color="#13ce66" inactive-color="#409eff">
+                           active-value="tinymce" inactive-value="vditor" active-text="富文本" inactive-text="Markdown">
                 </el-switch>
             </h2>
             <span class="badge bg-success font-white"> 更多 </span>

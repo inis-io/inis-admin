@@ -287,3 +287,22 @@ div.loaded div.spinner-box {
 .avatar-scale:hover{
     --scale: 1.35;
 }
+
+@keyframes mirror-scan {
+    0% { left: -200px;top: -300px}
+    to { left: -160px;top: 800px}
+}
+.mirror-scan{
+    overflow: hidden;
+    position: relative;
+    transition-duration: 5s;
+}
+.mirror-scan:before{
+    animation: mirror-scan 2s ease-in 2s infinite;
+    background-image: linear-gradient(180deg,transparent,hsla(0,0%,100%,.5),transparent);
+    content: "";
+    height: 20px;
+    position: absolute;
+    transform: rotate(-45deg);
+    width: 1000px;
+}

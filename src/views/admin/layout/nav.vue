@@ -15,7 +15,10 @@
                             </el-menu-item>
                         </el-sub-menu>
                     </el-menu>
-                    <el-menu :router="true" :unique-opened="true" mode="horizontal" class="navbar-nav d-flex align-items-center justify-content-end w-100" background-color="transparent">
+                    <el-menu :unique-opened="true" mode="horizontal" class="navbar-nav d-flex align-items-center justify-content-end w-100" background-color="transparent">
+                        <el-menu-item index="1">
+                            <i-lottie v-model="AstronautJSON" width="30px" height="30px"></i-lottie>
+                        </el-menu-item>
                         <el-sub-menu show-timeout="50" hide-timeout="50" index="login-user" class="icon-none">
                             <template #title>
                                 <div class="d-flex flex-column align-items-end user-select-text me-2">
@@ -32,13 +35,13 @@
                                     </strong>
                                     <small>{{state.user?.email}}</small>
                                 </div>
-                                <el-avatar :src="state.user?.avatar" shape="square" size="medium"></el-avatar>
+                                <el-avatar :src="state.user?.avatar + (state.user?.avatar.includes('?') ? '&' : '?') + 'size=40x40'" class="mirror-scan" shape="square" size="medium"></el-avatar>
                             </template>
-                            <el-menu-item index="/admin">
+                            <el-menu-item v-on:click="push({ name: 'admin-home' })" index="index-home">
                                 <i-svg color="rgb(var(--assist-color))" name="console" size="16px" class="me-1"></i-svg>
                                 控制台
                             </el-menu-item>
-                            <el-menu-item index="/admin/account/home">
+                            <el-menu-item v-on:click="push({ name: 'admin-account-home' })" index="/admin/account/home">
                                 <i-svg color="rgb(var(--assist-color))" name="personal" size="16px" class="me-1"></i-svg>
                                 个人中心
                             </el-menu-item>
@@ -115,12 +118,12 @@
 </template>
 
 <script setup>
-
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
 import { list as MenuList } from '{src}/utils/menu'
+import AstronautJSON from '{src}/assets/json/beil.json'
 
 const { ctx, proxy } = getCurrentInstance()
 const router = useRouter()

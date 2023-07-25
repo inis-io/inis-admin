@@ -230,12 +230,13 @@ const state  = reactive({
         loading: false,
     },
     struct: {
+        top: 0,
         content: '',
         editor: null,
         json: { comment: { allow: 0, show: 0 } }
     },
     select: {
-        top: [{ value: 0, label: '置顶' }, { value: 1, label: '不置顶' }],
+        top: [{ value: 1, label: '置顶' }, { value: 0, label: '不置顶' }],
         tags: [],
         group: [],
         comment: {

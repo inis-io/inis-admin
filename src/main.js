@@ -4,7 +4,8 @@ import route  from '{src}/route'
 
 // 注册 vsg-icons 组件
 import 'virtual:svg-icons-register'
-import svg from '{src}/utils/plugins/svg/index.vue'
+import svg from '{src}/comps/custom/i-svg.vue'
+import lottie from '{src}/comps/custom/i-lottie.vue'
 
 // 默认的bootstrap样式
 // https://github.com/caroso1222/notyf
@@ -18,7 +19,7 @@ import socket from '{src}/utils/socket'
 
 const app = createApp(App)
 app.use(route).use(directives)
-app.component('i-svg', svg)
+app.component('i-svg', svg).component('i-lottie', lottie)
 app.provide('socket', socket)
 app.mount('#app')
 

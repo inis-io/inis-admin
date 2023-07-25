@@ -209,7 +209,9 @@ body[inis-theme] textarea.customize:focus{
 body[inis-theme] .search.mimic:hover{
     border: 1px solid transparent;
 }
-
+body[inis-theme] .i-lottie svg{
+    display: block;
+}
 
 
 
@@ -394,7 +396,11 @@ body[inis-theme] .el-button--primary{
     box-shadow: 0 2px 6px 0 rgb(57 175 209 / 50%);
 }
 /* ==================== 自定义 el-button - 结束 ==================== */
-
+/* ==================== 自定义 el-switch - 开始 ==================== */
+body[inis-theme] .el-switch{
+    --el-switch-on-color: rgb(var(--assist-color));
+}
+/* ==================== 自定义 el-switch - 结束 ==================== */
 /* =================== 自定义 el-dropdown - 结束 =================== */
 body[inis-theme] .el-dropdown.custom {
     font-weight: 400;
@@ -974,7 +980,7 @@ body[inis-theme] .vditor-ir pre.vditor-reset, body[inis-theme] .vditor-wysiwyg p
     background-color: unset;
 }
 body[inis-theme] .vditor-reset{
-    padding: unset !important;
+    padding: 12px 0 0 12px !important;
 }
 body[inis-theme] .vditor-hint, body[inis-theme] .vditor-panel{
     background: rgba(var(--theme-color), var(--theme-opacity)) !important;

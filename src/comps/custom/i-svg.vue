@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -20,7 +19,6 @@ const props = defineProps({
 
 const symbol    = computed(() => `#${props.prefix}-${props.name}`)
 const classList = computed(() => [`${props.prefix}-${props.name}`, 'svg-icon', props.class])
-
 </script>
   
 <style scoped>

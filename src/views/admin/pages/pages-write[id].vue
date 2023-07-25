@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid container-box">
         <div class="row">
-            <div class="col-lg-9" id="banner">
+            <div class="col-lg-9">
                 <div class="card mb-2">
                     <div v-load="utils.is.empty(state.struct.editor)" class="card-body custom" style="min-height: 485px">
                         <span v-show="state.struct.editor === 'tinymce'">
@@ -263,6 +263,7 @@ const method = {
             if (length < 10) return notyf.warn('你这太水了，10个字都不到。')
         }
         if (utils.is.empty(state.struct?.title)) return notyf.warn('你可能忘记写标题了')
+        if (utils.is.empty(state.struct?.key))   return notyf.warn('唯一键不能为空')
 
         state.struct.tags = !utils.is.empty(state.item.tags) ? `|${state.item.tags.join('|')}|` : ''
 

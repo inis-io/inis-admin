@@ -19,12 +19,12 @@
             </h6>
             <h2 class="m-b-20">
                 <el-switch v-model="state.status.active" v-on:change="method.change" :disabled="!state.status.finish"
-                           active-text="我怂" inactive-text="无所畏惧" active-color="#13ce66" inactive-color="#ff4949">
+                           active-text="我怂" inactive-text="无所畏惧">
                 </el-switch>
             </h2>
             <span class="badge bg-primary font-white"> +30% </span>
             <span class="text-muted ms-1">
-                安全性提升，<span v-on:click="method.show()" class="text-warning pointer">点我配置</span>
+                安全性提升，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
             </span>
         </div>
     </div>
