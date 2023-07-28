@@ -12,11 +12,19 @@ const state  = reactive({
 
 })
 
-const key = crypto.token('key', 16)
-const iv  = crypto.token('iv', 16)
-const item= crypto.AES(key, iv)
+// X-Khronos
+const unix = Math.round(new Date() / 1000)
+// X-Gorgon
+const iv   = crypto.token(`iv-${unix}` , 16, 'login')
+const key  = crypto.token(`key-${unix}`, 16, 'login')
+const AES  = crypto.AES(key, iv)
 
-console.log(item.encrypt('123456789'), item.decrypt(item.encrypt('123456789')))
+// X-Argus
+const params = {
+    iv, key, unix
+}
+
+console.log(AES.encrypt(JSON.stringify(params)))
 
 if (0) console.log(`/**
  *   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

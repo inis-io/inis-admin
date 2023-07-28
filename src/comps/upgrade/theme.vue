@@ -45,23 +45,9 @@ const method = {
     },
     // 升级
     upgrade: async () => {
-
-        const url = await method.download()
-
-        if (!utils.is.empty(url)) await axios.post('/api/upgrade/theme', { url })
-    },
-    // 获取更新地址
-    download: async () => {
-
-        if (utils.is.empty(state.struct?.id)) return
-
-        const { code, data } = await axios.get('/inis/theme-version/download', {
+        await axios.post('/api/upgrade/theme', {
             id: state.struct?.id
         })
-        if (code !== 200) return
-        if (utils.is.empty(data?.url)) return
-
-        return data?.url
     },
 }
 </script>

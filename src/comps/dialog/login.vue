@@ -73,10 +73,11 @@
 </template>
 
 <script setup>
-import cache   from '{src}/utils/cache'
-import utils   from '{src}/utils/utils'
-import notyf   from '{src}/utils/notyf'
-import axios   from '{src}/utils/request'
+import crypto from '{src}/utils/crypto'
+import cache from '{src}/utils/cache'
+import utils from '{src}/utils/utils'
+import notyf from '{src}/utils/notyf'
+import axios from '{src}/utils/request'
 
 const { ctx, proxy } = getCurrentInstance()
 const emit  = defineEmits(['finish','register','reset'])
@@ -107,19 +108,32 @@ const method = {
     // 登录
     async login() {
 
+        const unix = Math.round(new Date() / 1000)
+        const iv   = crypto.token(`iv-${unix}` , 16, 'login')
+        const key  = crypto.token(`key-${unix}`, 16, 'login')
+        const AES  = crypto.AES(key, iv)
+
         state.item.wait = true
 
         const params = state.item.tabs === 'code' ? {
             code  : state.struct.code,
             social: state.struct.account
         } : {
-            account : state.struct.account,
-            password: state.struct.password
+            account : AES.encrypt(state.struct.account),
+            password: AES.encrypt(state.struct.password)
         }
 
         try {
 
-            const { data, code, msg } = await axios.post('/api/comm/' + state.item.type, params)
+            const { data, code, msg } = await axios.post('/api/comm/' + state.item.type, params, {
+                headers: {
+                    'X-Khronos': unix,
+                    'X-Gorgon' : `${key} ${iv}`,
+                    'X-Argus'  : AES.encrypt(JSON.stringify({
+                        unix, account: state.struct.account, password: state.struct.password
+                    }))
+                }
+            })
 
             state.item.wait = false
 

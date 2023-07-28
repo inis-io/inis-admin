@@ -184,9 +184,9 @@ const method = {
 
         state.loading.upgrade = true
 
-        const url = await method.download()
-
-        const { code, msg }   = await axios.post('/api/upgrade/system', { url })
+        const { code, msg }   = await axios.post('/api/upgrade/system', {
+            id: state.struct?.id
+        })
 
         if (code !== 200) {
             state.loading.upgrade = false
@@ -198,21 +198,6 @@ const method = {
         state.loading.upgrade = false
 
         notyf.success('升级成功！')
-    },
-    // 获取更新地址
-    download: async () => {
-
-        if (utils.is.empty(state.struct?.id)) return notyf.warn('未查询到更新信息')
-
-        const { code, msg, data } = await axios.get('/inis/system-version/download', {
-            id: state.struct?.id
-        })
-
-        if (code !== 200) return notyf.error(msg)
-
-        if (utils.is.empty(data?.url)) return notyf.warn('未查询到更新包下载地址')
-
-        return data?.url
     },
     // 忽略本次更新
     ignore: async () => {
