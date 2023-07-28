@@ -179,7 +179,7 @@ const method = {
         
         state.user = data.user
         state.login.finish = true
-        cache.set('user-info', data.user, 10)
+        cache.set('user-info', data.user, inis.cache)
     },
     async getTheme() {
         let theme = document.querySelector('body').getAttribute('inis-theme')

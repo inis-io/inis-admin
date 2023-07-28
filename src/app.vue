@@ -17,6 +17,7 @@ const state = reactive({
 // 追加配置
 globalThis.inis = {
     api: { uri: '', key: '' },
+    cache: 10,
     lazy_time : 500,
     token_name: import.meta.env.VITE_TOKEN_NAME,
     ...globalThis.inis,

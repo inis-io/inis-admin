@@ -297,7 +297,6 @@
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
-import session from '{src}/utils/session'
 import ITable from '{src}/comps/custom/i-table.vue'
 import { config as MenuConfig } from '{src}/utils/menu'
 
@@ -425,7 +424,9 @@ const method = {
     },
     // 获取页面权限
     async authPages() {
-        state.select.auth_pages = await session.auth.pages.column.get()
+        state.select.auth_pages = await proxy.$api['auth-pages'].column({
+            field: 'name,path,icon,svg,size'
+        })
     },
     // 获取权限分组
     async authGroup() {

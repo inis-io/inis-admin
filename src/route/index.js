@@ -220,9 +220,9 @@ route.beforeEach(async (to, from, next) => {
             if (code !== 200) return invalid()
 
             // 设置用户信息
-            cache.set('user-info', data.user, 10)
-            // 缓存1分钟 - 防止频繁请求
-            cache.set(cacheName, true, 1)
+            cache.set('user-info', data.user, inis.cache)
+            // 缓存10分钟 - 防止频繁请求
+            cache.set(cacheName, true, inis.cache)
         }
 
         // 获取菜单列表

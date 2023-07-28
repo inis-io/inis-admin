@@ -164,7 +164,7 @@ const method = {
         if (code !== 200) return notyf.error(msg)
 
         notyf.success(msg)
-        cache.set('user-info', data.user, 10)
+        cache.set('user-info', data.user, inis.cache)
         utils.set.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
         state.item.dialog = false
         emit('finish', data.user)

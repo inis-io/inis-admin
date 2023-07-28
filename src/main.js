@@ -24,6 +24,10 @@ app.use(route).use(directives).use(ElementPlus)
 app.component('i-svg', svg)
 app.component('i-lottie', lottie)
 app.provide('socket', socket)
+
+import API from '{src}/api'
+app.config.globalProperties.$api = API
+
 app.mount('#app')
 
 const { VITE_LOG_ERROR, VITE_LOG_WARN } = import.meta.env

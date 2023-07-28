@@ -27,7 +27,7 @@
 
 <script setup>
 import utils from '{src}/utils/utils'
-import { defineProps, reactive } from 'vue'
+import { reactive } from 'vue'
 
 const props = defineProps({
     wx: {

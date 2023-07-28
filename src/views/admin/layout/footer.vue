@@ -7,9 +7,8 @@
 </template>
 
 <script setup>
-import cache from 'lscache'
-import utils from '{src}/utils/utils.js'
-import axios from '{src}/utils/request.js'
+import cache from '{src}/utils/cache'
+import axios from '{src}/utils/request'
 
 const state = reactive({
     year: new Date().getFullYear(),
@@ -29,8 +28,8 @@ const method = {
         // 缓存名称
         const cacheName = 'system-version-local'
 
-        if (!utils.is.empty(cache?.get(cacheName))) {
-            state.version.system = cache?.get(cacheName)
+        if (cache.has(cacheName)) {
+            state.version.system = cache.get(cacheName)
             return
         }
 
@@ -41,7 +40,7 @@ const method = {
 
         state.version.system = data?.inis
         // 缓存10分钟 - 防止频繁请求
-        cache?.set(cacheName, data?.inis, 24 * 60)
+        cache.set(cacheName, data?.inis, inis.cache)
     }
 }
 </script>

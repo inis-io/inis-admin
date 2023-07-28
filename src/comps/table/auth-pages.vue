@@ -163,12 +163,12 @@
 </template>
 
 <script setup>
+import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import ITable from '{src}/comps/custom/i-table.vue'
 import { config as MenuConfig } from '{src}/utils/menu'
-import session from '{src}/utils/session'
 
 const emit  = defineEmits(['refresh'])
 const props = defineProps({
@@ -263,8 +263,9 @@ const method = {
         state.item.dialog = false
         // 重新加载数据
         await method.init()
-        await session.del.AuthPagesColumn()
-        await session.auth.pages.column.del()
+        cache.del(`auth-pages-column?${JSON.stringify({
+            field: 'name,path,icon,svg,size'
+        })}`)
     },
     // 编辑数据
     edit: struct => {

@@ -77,7 +77,6 @@ import cache   from '{src}/utils/cache'
 import utils   from '{src}/utils/utils'
 import notyf   from '{src}/utils/notyf'
 import axios   from '{src}/utils/request'
-import session from '{src}/utils/session'
 
 const { ctx, proxy } = getCurrentInstance()
 const emit  = defineEmits(['finish','register','reset'])
@@ -174,7 +173,7 @@ const method = {
     },
     // 是否允许注册
     async ALLOW_REGISTER() {
-        let { value } = await session.config.get('ALLOW_REGISTER')
+        let { value } = await proxy?.$api.config.one('ALLOW_REGISTER')
         state.item.register = parseInt(value) === 1
     },
 }

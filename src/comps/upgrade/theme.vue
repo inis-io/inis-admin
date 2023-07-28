@@ -1,7 +1,10 @@
+<template>
+</template>
+
 <script setup>
 import cache from '{src}/utils/cache'
-import utils from '{src}/utils/utils.js'
-import axios from '{src}/utils/request.js'
+import utils from '{src}/utils/utils'
+import axios from '{src}/utils/request'
 
 const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
@@ -24,7 +27,7 @@ const method = {
 
         if (cache.has(cacheName)) return
         // 缓存10分钟 - 防止频繁请求
-        else cache?.set(cacheName, true, 10)
+        else cache.set(cacheName, true, 10)
 
         const { code, data } = await axios.get('/inis/theme-version/next', {
             theme_key: 'inis', progress: 'pro'

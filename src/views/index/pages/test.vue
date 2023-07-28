@@ -6,9 +6,17 @@
 
 <script setup>
 import AnimeDonate from '{src}/comps/animate/donate.vue'
+import crypto from '{src}/utils/crypto'
+const { proxy } = getCurrentInstance()
 const state  = reactive({
 
 })
+
+const key = crypto.token('key', 16)
+const iv  = crypto.token('iv', 16)
+const item= crypto.AES(key, iv)
+
+console.log(item.encrypt('123456789'), item.decrypt(item.encrypt('123456789')))
 
 if (0) console.log(`/**
  *   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -72,9 +72,9 @@
 
 <script setup>
 import cache from '{src}/utils/cache'
-import utils from '{src}/utils/utils.js'
-import notyf from '{src}/utils/notyf.js'
-import axios from '{src}/utils/request.js'
+import utils from '{src}/utils/utils'
+import notyf from '{src}/utils/notyf'
+import axios from '{src}/utils/request'
 import MarkdownIt from 'markdown-it'
 
 const { ctx, proxy } = getCurrentInstance()
@@ -150,7 +150,7 @@ const method = {
 
         state.version = data?.inis
         // 缓存10分钟 - 防止频繁请求
-        cache.set(cacheName, data?.inis, 24 * 60)
+        cache.set(cacheName, data?.inis, inis.cache)
     },
     // 获取下个版本
     next: async () => {
@@ -161,14 +161,12 @@ const method = {
             return
         }
 
-        const { code, data } = await axios.get('/inis/system-version/next', {
+        const { data } = await axios.get('/inis/system-version/next', {
             progress: 'pro'
         })
-        if (code !== 200) return
-
         state.struct = data
         // 缓存10分钟 - 防止频繁请求
-        cache.set(cacheName, data, 10)
+        cache.set(cacheName, data, inis.cache)
     },
     // 查找版本
     progress: value => {

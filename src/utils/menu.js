@@ -1,14 +1,13 @@
+import API from '{src}/api'
 import cache from '{src}/utils/cache'
-import notyf from '{src}/utils/notyf'
-import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
-import session from '{src}/utils/session'
-import utils from "{src}/utils/utils.js";
 
 export const list = async () => {
 
-    // 全部的权限
-    let all = await session.auth.pages.column.get()
+
+    let all = await API['auth-pages'].column({
+        field: 'name,path,icon,svg,size'
+    })
     // 用户权限
     let auth = cache.get('user-info')['pages'] || ''
     // 用户权限列表

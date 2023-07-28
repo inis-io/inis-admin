@@ -81,7 +81,7 @@ const method = {
 
         emit('finish', data.user)
 
-        cache.set('user-info', data.user, 10)
+        cache.set('user-info', data.user, inis.cache)
     },
 }
 

@@ -155,7 +155,6 @@ import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
-import session from '{src}/utils/session'
 import DialogLogin from '{src}/comps/dialog/login.vue'
 import UpgradeSystem from '{src}/comps/upgrade/system.vue'
 import DialogRegister from '{src}/comps/dialog/register.vue'
@@ -240,7 +239,7 @@ const method = {
         
         state.login.user   = data.user
         state.login.finish = true
-        cache.set('user-info', data.user, 10)
+        cache.set('user-info', data.user, inis.cache)
     },
     // 获取当前主题
     async getTheme() {
@@ -252,7 +251,7 @@ const method = {
     },
     // 是否允许注册
     async ALLOW_REGISTER() {
-        let { value } = await session.config.get('ALLOW_REGISTER') || { value: 0 }
+        let { value } = await proxy?.$api.config.one('ALLOW_REGISTER')
         state.config.register = parseInt(value) === 1
     },
     router: (params = {}) => router.push(params),
