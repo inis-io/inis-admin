@@ -26,6 +26,7 @@
 </template>
 
 <script setup>
+import cache from '{src}/utils/cache'
 import notyf from '{src}/utils/notyf'
 import utils from '{src}/utils/utils'
 import axios from '{src}/utils/request'
@@ -45,14 +46,14 @@ const state = reactive({
         loading: false,
         second: 0,
     },
-    struct: utils.get.session('USERINFO'),
+    struct: cache.get('user-info'),
     timer: null,
 })
 
 const method = {
     edit: {
         finish() {
-            state.struct = utils.get.session('USERINFO')
+            state.struct = cache.get('user-info')
         },
         click: () => {
             state.item.edit = true
@@ -83,7 +84,7 @@ const method = {
         notyf.success('密码重置成功，请重新登录！')
 
         // 清除登录信息
-        utils.clear.session('USERINFO')
+        cache.del('user-info')
         utils.clear.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN')
 
         // 回到首页

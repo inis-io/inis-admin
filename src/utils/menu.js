@@ -1,3 +1,4 @@
+import cache from '{src}/utils/cache'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
@@ -9,7 +10,7 @@ export const list = async () => {
     // 全部的权限
     let all = await session.auth.pages.column.get()
     // 用户权限
-    let auth = utils.get.session('USERINFO', 'pages') || ''
+    let auth = cache.get('user-info')['pages'] || ''
     // 用户权限列表
     let list = [{
         label: '创作',

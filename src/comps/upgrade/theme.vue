@@ -1,12 +1,12 @@
 <script setup>
-import cache from 'lscache'
+import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils.js'
 import axios from '{src}/utils/request.js'
 
 const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
     struct: {},
-    user: utils.get.session('USERINFO') || {}
+    user: cache.get('user-info') || {}
 })
 
 onMounted(async () => {
@@ -22,7 +22,7 @@ const method = {
 
         const cacheName = 'theme-update'
 
-        if (!utils.is.empty(cache?.get(cacheName))) return
+        if (cache.has(cacheName)) return
         // 缓存10分钟 - 防止频繁请求
         else cache?.set(cacheName, true, 10)
 

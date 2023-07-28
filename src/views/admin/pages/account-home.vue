@@ -84,6 +84,7 @@
 </template>
 
 <script setup>
+import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
 import iRowText from '{src}/comps/custom/i-row-text.vue'
@@ -96,7 +97,7 @@ import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
-    user: utils.get.session('USERINFO'),
+    user: cache.get('user-info'),
     item: {
         tabs: 'info',
         edit: null,

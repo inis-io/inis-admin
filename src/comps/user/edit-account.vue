@@ -20,6 +20,7 @@
 </template>
 
 <script setup>
+import cache from '{src}/utils/cache'
 import notyf from '{src}/utils/notyf'
 import utils from '{src}/utils/utils'
 import axios from '{src}/utils/request'
@@ -37,13 +38,13 @@ const state = reactive({
         edit: false,
         wait: false,
     },
-    struct: utils.get.session('USERINFO'),
+    struct: cache.get('user-info'),
 })
 
 const method = {
     edit: {
         finish() {
-            state.struct = utils.get.session('USERINFO')
+            state.struct = cache.get('user-info')
         },
         click: () => {
             state.item.edit = true
@@ -80,7 +81,7 @@ const method = {
 
         emit('finish', data.user)
 
-        utils.set.session('USERINFO', data.user)
+        cache.set('user-info', data.user, 10)
     },
 }
 
