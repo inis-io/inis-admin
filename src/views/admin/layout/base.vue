@@ -11,6 +11,8 @@
     <!-- 页脚 -->
     <i-footer></i-footer>
 
+    <!-- 检查客户端页面更新 -->
+    <upgrade-page></upgrade-page>
 </template>
 
 <script setup>
@@ -20,7 +22,7 @@ import '{src}/assets/css/theme.min.css'
 import iNav from '{src}/views/admin/layout/nav.vue'
 import iBeautify from '{src}/views/admin/layout/beautify.vue'
 import iFooter from '{src}/views/admin/layout/footer.vue'
-import utils from '{src}/utils/utils'
+import upgradePage from '{src}/comps/upgrade/page.vue'
 
 nextTick(() => {
     // white-lighten

@@ -1,14 +1,17 @@
 <template>
-    <el-config-provider :locale="state.locale">
+    <!-- :locale="state.locale" -->
+    <el-config-provider>
         <router-view></router-view>
     </el-config-provider>
+    <upgrade-theme></upgrade-theme>
 </template>
 
 <script setup>
-import lang from 'element-plus/lib/locale/lang/zh-cn'
+import upgradeTheme from '{src}/comps/upgrade/theme.vue'
+// import lang from 'element-plus/lib/locale/lang/zh-cn'
 const state = reactive({
     // 将默认语言设置为中文
-    locale: lang
+    // locale: lang
 })
 
 // 追加配置

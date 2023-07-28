@@ -1,8 +1,9 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { list as MenuList } from '{src}/utils/menu'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
 // 安装引导
 const install = {
@@ -182,12 +183,12 @@ route.beforeEach(async (to, from, next) => {
     // 登录状态无效 - 跳转到登录页面
     const invalid = async (params = { path: '/' }) => {
 
-        utils.clear.session('USERINFO')
+        cache.del('user-info')
         const { code } = await axios.del('/api/comm/logout')
 
         // 退出登录失败 - 清除登录信息
         if (code !== 200) {
-            utils.clear.session('USERINFO')
+            cache.del('user-info')
             utils.clear.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN')
         }
 
@@ -210,9 +211,19 @@ route.beforeEach(async (to, from, next) => {
     // 判断 to.name 是否为 admin-开头的路由
     if (to.path.indexOf('/admin') === 0) {
 
-        const { data, code } = await axios.post('/api/comm/check-token')
+        const cacheName = 'check-token'
 
-        if (code !== 200) return invalid()
+        if (!cache.has(cacheName)) {
+
+            const { data, code } = await axios.post('/api/comm/check-token')
+
+            if (code !== 200) return invalid()
+
+            // 设置用户信息
+            cache.set('user-info', data.user, 10)
+            // 缓存1分钟 - 防止频繁请求
+            cache.set(cacheName, true, 1)
+        }
 
         // 获取菜单列表
         let list = await MenuList()
@@ -233,9 +244,6 @@ route.beforeEach(async (to, from, next) => {
             }
             if (!check) return next('/')
         }
-
-        // 设置用户信息
-        utils.set.session('USERINFO', data.user)
 
         next()
 

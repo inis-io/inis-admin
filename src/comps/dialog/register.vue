@@ -113,6 +113,7 @@
 </template>
 
 <script setup>
+import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
@@ -163,7 +164,7 @@ const method = {
         if (code !== 200) return notyf.error(msg)
 
         notyf.success(msg)
-        utils.set.session('USERINFO' , data.user)
+        cache.set('user-info', data.user, 10)
         utils.set.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
         state.item.dialog = false
         emit('finish', data.user)

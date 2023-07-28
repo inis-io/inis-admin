@@ -17,7 +17,7 @@
                     </el-menu>
                     <el-menu :unique-opened="true" mode="horizontal" class="navbar-nav d-flex align-items-center justify-content-end w-100" background-color="transparent">
                         <el-menu-item index="1">
-                            <atom-upgrade></atom-upgrade>
+                            <upgrade-system></upgrade-system>
                         </el-menu-item>
                         <el-sub-menu show-timeout="50" hide-timeout="50" index="login-user" class="icon-none">
                             <template #title>
@@ -118,12 +118,13 @@
 </template>
 
 <script setup>
+import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
 import { list as MenuList } from '{src}/utils/menu'
-import AtomUpgrade from '{src}/comps/atom/upgrade.vue'
+import UpgradeSystem from '{src}/comps/upgrade/system.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const router = useRouter()
@@ -132,7 +133,7 @@ const state  = reactive({
     login: {
         finish : false,         // 登录完成
     },
-    user: utils.get.session('USERINFO'),
+    user: cache.get('user-info'),
     drawer: false,
     menu: [],
 })
@@ -154,13 +155,13 @@ const method = {
         
         // 退出登录失败 - 清除登录信息
         if (code !== 200) {
-            utils.clear.session('USERINFO')
+            cache.del('user-info')
             utils.clear.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN')
             return
         }
         
         state.login.finish = false
-        utils.clear.session('USERINFO')
+        cache.del('user-info')
         // 返回首页
         setTimeout(() => {
             proxy.$router.push('/')
@@ -169,7 +170,7 @@ const method = {
     // 校验登录
     async checkToken() {
 
-        if (utils.has.session('USERINFO')) return state.login.finish = true
+        if (cache.has('user-info')) return state.login.finish = true
 
         const { data, code, msg } = await axios.post('/api/comm/check-token')
         
@@ -178,7 +179,7 @@ const method = {
         
         state.user = data.user
         state.login.finish = true
-        utils.set.session('USERINFO', data.user)
+        cache.set('user-info', data.user, 10)
     },
     async getTheme() {
         let theme = document.querySelector('body').getAttribute('inis-theme')

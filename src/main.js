@@ -16,10 +16,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '{src}/assets/libs/bootstrap.min.css'
 import directives from '{src}/utils/directives'
 import socket from '{src}/utils/socket'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 
 const app = createApp(App)
-app.use(route).use(directives)
-app.component('i-svg', svg).component('i-lottie', lottie)
+app.use(route).use(directives).use(ElementPlus)
+app.component('i-svg', svg)
+app.component('i-lottie', lottie)
 app.provide('socket', socket)
 app.mount('#app')
 

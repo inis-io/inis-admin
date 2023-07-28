@@ -7,6 +7,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 // element-plus 自动按需引入
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import ElementPlus from 'unplugin-element-plus/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -95,11 +96,15 @@ export default ({ mode }) => {
             // 生成全局变量名
             dts: 'src/auto-imports.d.ts',
             // element-plus - 自动按需引入 - 注册中文
-            resolvers: [ElementPlusResolver()],
+            // resolvers: [ElementPlusResolver()],
         }),
-        Components({
+        // Components({
+        //     // element-plus - 自动按需引入 - 注册中文
+        //     // resolvers: [ElementPlusResolver()],
+        // }),
+        ElementPlus({
             // element-plus - 自动按需引入 - 注册中文
-            resolvers: [ElementPlusResolver()],
+            // resolvers: [ElementPlusResolver()],
         }),
         createHtmlPlugin({
             inject: {

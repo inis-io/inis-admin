@@ -34,6 +34,9 @@
                     </el-menu>
                     <el-menu :router="true" :unique-opened="true" mode="horizontal" background-color="transparent"
                              class="navbar-nav d-flex align-items-center justify-content-end w-100">
+                        <el-menu-item index="1">
+                            <upgrade-system></upgrade-system>
+                        </el-menu-item>
                         <template v-if="state.login.finish">
                             <el-sub-menu index="login-user" class="icon-none">
                                 <template #title>
@@ -147,12 +150,14 @@
 </template>
 
 <script setup>
+import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
 import session from '{src}/utils/session'
 import DialogLogin from '{src}/comps/dialog/login.vue'
+import UpgradeSystem from '{src}/comps/upgrade/system.vue'
 import DialogRegister from '{src}/comps/dialog/register.vue'
 import DialogResetPassword from '{src}/comps/dialog/reset-password.vue'
 
@@ -163,7 +168,7 @@ const state  = reactive({
     drawer: false,
     login: {
         finish: false,
-        user: utils.get.session('USERINFO'),
+        user: cache.get('user-info'),
     },
     config: {
         // 是否允许注册
@@ -213,19 +218,19 @@ const method = {
 
         // 退出登录失败 - 清除登录信息
         if (code !== 200) {
-            utils.clear.session('USERINFO')
+            cache.del('user-info')
             utils.clear.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN')
             return
         }
 
         state.login.finish = false
-        utils.clear.session('USERINFO')
+        cache.del('user-info')
         utils.clear.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN')
     },
     // 校验登录
     async checkToken() {
 
-        if (utils.has.session('USERINFO')) return state.login.finish = true
+        if (cache.has('user-info')) return state.login.finish = true
 
         const { data, code, msg } = await axios.post('/api/comm/check-token')
         
@@ -233,9 +238,9 @@ const method = {
         if (code === 401) return method.logout()
         if (code !== 200) return notyf.error(msg)
         
-        state.login.user = data.user
+        state.login.user   = data.user
         state.login.finish = true
-        utils.set.session('USERINFO', data.user)
+        cache.set('user-info', data.user, 10)
     },
     // 获取当前主题
     async getTheme() {

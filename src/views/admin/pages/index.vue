@@ -1,10 +1,10 @@
 <template>
     <div class="container-fluid container-box">
-        <div v-if="false" class="row">
+        <div class="row">
             <div class="col-md-8 px-2">
                 <el-carousel trigger="click" height="230px">
                     <el-carousel-item v-for="item in 4" :key="item">
-                        <el-image :src="'https://dev.inis.cn/api/file/rand?name=imgs.txt&redirect=true&id=' + item" fit="cover" class="h-100 w-100">
+                        <el-image :src="'https://inis.cn/api/file/rand?name=imgs.txt&redirect=true&id=' + item" fit="cover" class="h-100 w-100">
                         </el-image>
                         <p class="title">
                             <span class="badge bg-primary font-white me-1"> 更多 </span>

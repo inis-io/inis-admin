@@ -79,6 +79,7 @@
 </template>
 
 <script setup>
+import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
@@ -91,7 +92,7 @@ const state = reactive({
         dialog: false,  // 是否显示对话框
         upload: false,  // 是否正在上传
     },
-    struct: utils.get.session('USERINFO'),
+    struct: cache.get('user-info'),
     select: {
         gender: [
             { value: null, label: '保密'},
@@ -130,7 +131,7 @@ const method = {
 
         emit('finish', data.user)
 
-        utils.set.session('USERINFO', data.user)
+        cache.set('user-info', data.user, 10)
     },
     // 上传
     async upload(field = 'image') {

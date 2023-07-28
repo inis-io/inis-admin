@@ -30,6 +30,9 @@
                                 </el-input>
                             </div>
                         </div>
+                        <div class="flex-center">
+                            无账号自动注册
+                        </div>
                     </el-tab-pane>
                     <el-tab-pane name="tradition">
                         <template #label>
@@ -46,6 +49,9 @@
                             <div class="col-9 d-flex">
                                 <el-input v-model="state.struct.password" v-on:keyup.enter="method.login()" show-password class="custom" placeholder="请输入密码"></el-input>
                             </div>
+                        </div>
+                        <div class="flex-center">
+                            推荐验证码登录
                         </div>
                     </el-tab-pane>
                 </el-tabs>
@@ -67,9 +73,10 @@
 </template>
 
 <script setup>
-import utils from '{src}/utils/utils'
-import notyf from '{src}/utils/notyf'
-import axios from '{src}/utils/request'
+import cache   from '{src}/utils/cache'
+import utils   from '{src}/utils/utils'
+import notyf   from '{src}/utils/notyf'
+import axios   from '{src}/utils/request'
 import session from '{src}/utils/session'
 
 const { ctx, proxy } = getCurrentInstance()
@@ -118,7 +125,7 @@ const method = {
             state.item.wait = false
 
             if (code === 200) {
-                utils.set.session('USERINFO' , data.user)
+                cache?.set('user-info', data.user, 10)
                 utils.set.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
                 state.item.finish = true
                 state.item.dialog = false

@@ -7,17 +7,7 @@
 <script setup>
 import AnimeDonate from '{src}/comps/animate/donate.vue'
 const state  = reactive({
-    options: [{
-      value: 'HTML',
-      label: 'HTML'
-    }, {
-      value: 'CSS',
-      label: 'CSS'
-    }, {
-      value: 'JavaScript',
-      label: 'JavaScript'
-    }],
-    value: []
+
 })
 
 if (0) console.log(`/**

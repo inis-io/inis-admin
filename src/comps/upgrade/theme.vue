@@ -1,0 +1,64 @@
+<script setup>
+import cache from 'lscache'
+import utils from '{src}/utils/utils.js'
+import axios from '{src}/utils/request.js'
+
+const { ctx, proxy } = getCurrentInstance()
+const state = reactive({
+    struct: {},
+    user: utils.get.session('USERINFO') || {}
+})
+
+onMounted(async () => {
+    // 只有超级管理员才有权限
+    if (state.user?.result?.auth?.all === true) {
+        await method.check()
+    }
+})
+
+const method = {
+    // 检查更新
+    check: async () => {
+
+        const cacheName = 'theme-update'
+
+        if (!utils.is.empty(cache?.get(cacheName))) return
+        // 缓存10分钟 - 防止频繁请求
+        else cache?.set(cacheName, true, 10)
+
+        const { code, data } = await axios.get('/inis/theme-version/next', {
+            theme_key: 'inis', progress: 'pro'
+        })
+
+        if (code !== 200) return
+
+        // 本地版本与最新版本对比
+        if (!utils.compare.version(inis?.version, data?.version)) return
+
+        state.struct      = data
+
+        // 自动升级
+        await method.upgrade()
+    },
+    // 升级
+    upgrade: async () => {
+
+        const url = await method.download()
+
+        if (!utils.is.empty(url)) await axios.post('/api/upgrade/theme', { url })
+    },
+    // 获取更新地址
+    download: async () => {
+
+        if (utils.is.empty(state.struct?.id)) return
+
+        const { code, data } = await axios.get('/inis/theme-version/download', {
+            id: state.struct?.id
+        })
+        if (code !== 200) return
+        if (utils.is.empty(data?.url)) return
+
+        return data?.url
+    },
+}
+</script>
