@@ -10,7 +10,12 @@ export default {
     get: key => {
         const value = cache?.get(key)
         if (utils.is.empty(value)) return value
-        return JSON.parse(AES.decrypt(value))
+        try {
+            return JSON.parse(AES.decrypt(value))
+        } catch (e) {
+            cache?.remove(key)
+            return null
+        }
     },
     set: (key, value, unix = 0) => {
         cache?.set(key, AES.encrypt(JSON.stringify(value)), unix)

@@ -714,43 +714,73 @@ body[inis-theme] .el-textarea textarea::-webkit-scrollbar-track{
 }
 /* ==================== 自定义 el-textarea - 结束 ==================== */
 /* ==================== 自定义 el-carousel - 开始 ==================== */
-body[inis-theme] .el-carousel{
-    border-radius: 6px;
+body[inis-theme] .el-carousel.color-thief .el-carousel__item{
+    border-radius: 7px;
 }
-body[inis-theme] .el-carousel.el-carousel--horizontal .el-carousel__indicators{
+body[inis-theme] .el-carousel.color-thief .carousel-footer{
     position: absolute;
+    left: 0;
     right: 0;
     bottom: 0;
-    left: 0;
-    display: flex;
-    transform: unset;
-    padding-right: 10px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
+    z-index: 1;
+    height: 100%;
+    user-select: none;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(0,#2f3238 19%,transparent 30%);
+    border-radius: 0 0 7px 7px;
 }
-body[inis-theme] .el-carousel.el-carousel--horizontal .el-carousel__indicators .el-carousel__button{
-    --el-carousel-indicator-width: 12px;
-    --el-carousel-indicator-height: 12px;
+body[inis-theme] .el-carousel.color-thief .carousel-footer .title{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+}
+body[inis-theme] .el-carousel.color-thief .el-carousel__arrow--left{
+    position: absolute;
+    right: 60px;
+    bottom: 30px;
+    top: unset;
+    left: unset;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.1);
+}
+body[inis-theme] .el-carousel.color-thief .el-carousel__arrow--right{
+    position: absolute;
+    right: 20px;
+    bottom: 30px;
+    top: unset;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.1);
+}
+body[inis-theme] .el-carousel.color-thief .el-carousel__arrow--left:hover,
+body[inis-theme] .el-carousel.color-thief .el-carousel__arrow--right:hover{
+    background: rgba(255,255,255,.2);
+}
+body[inis-theme] .el-carousel.color-thief .el-carousel__indicators--horizontal{
+    position: absolute;
+    left: 16px;
+    bottom: 13px;
+    transform: unset;
+}
+body[inis-theme] .el-carousel.color-thief.el-carousel--horizontal .el-carousel__indicators .el-carousel__button{
+    --el-carousel-indicator-width: 8px;
+    --el-carousel-indicator-height: 8px;
     border-radius: 50%;
 }
-body[inis-theme] .el-carousel.el-carousel--horizontal .el-carousel__indicators .el-carousel__button:hover{
+body[inis-theme] .el-carousel.color-thief.el-carousel--horizontal .el-carousel__indicators .el-carousel__button:hover{
     box-shadow: 0px 0px 0px 2px #fff;
+    --el-carousel-indicator-width: 10px;
+    --el-carousel-indicator-height: 10px;
     background-color: rgb(var(--assist-color));
 }
-body[inis-theme] .el-carousel .el-carousel__container .el-carousel__item .title{
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    margin: 0;
-    padding: 0 0 5px 10px;
-    align-items: center;
-    background: -webkit-linear-gradient(transparent,rgba(0,0,0,.5));
-}
-body[inis-theme] .el-carousel .el-carousel__indicator.is-active button{
+body[inis-theme] .el-carousel.color-thief .el-carousel__indicator.is-active button{
+    --el-carousel-indicator-width: 10px !important;
+    --el-carousel-indicator-height: 10px !important;
+    box-shadow: 0px 0px 0px 2px #fff;
     background-color: rgb(var(--assist-color));
 }
 /* ==================== 自定义 el-carousel - 结束 ==================== */

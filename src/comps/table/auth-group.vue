@@ -95,8 +95,9 @@
                             </el-tooltip>
                         </label>
                         <el-select v-model="state.struct.root" placeholder="请选择权限" class="d-block custom font-13">
-                            <el-option v-for="item in state.select.root" :key="item.value" :label="item.label" :value="item.value">
+                            <el-option v-for="item in state.select.root" :key="item.value" :label="item.label" :value="item.value" class="d-flex justify-content-between">
                                 <span class="font-13">{{ item.label }}</span>
+                                <small class="text-muted">{{ item.subtitle }}</small>
                             </el-option>
                         </el-select>
                     </div>
@@ -130,7 +131,7 @@
                         </label>
                         <div>
                             <el-cascader placeholder="试试搜索：文章" :options="state.select.rules" :props="{ multiple: true }" filterable
-                            class="d-block custom multiple" v-model="state.rules.select" v-on:change="method.change">
+                                class="d-block custom multiple" v-model="state.rules.select" v-on:change="method.change">
                                 <template #default="{ node, data }">
                                     <span>{{ data.label }} </span>
                                     <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
@@ -236,7 +237,7 @@ const state  = reactive({
     },
     // 下拉框
     select: {
-        root: [{ value: 0, label: '默认' },{ value: 1, label: '管理权限' }],
+        root: [{ value: 0, label: '默认', subtitle: '只允许操作自己的数据' },{ value: 1, label: '管理权限', subtitle: '（穿透）允许操作他人的数据' }],
         rules: [],
     },
 })

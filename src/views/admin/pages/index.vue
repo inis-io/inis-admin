@@ -2,16 +2,28 @@
     <div class="container-fluid container-box">
         <div class="row">
             <div class="col-md-8 px-2">
-                <el-carousel trigger="click" height="230px">
-                    <el-carousel-item v-for="item in 4" :key="item">
-                        <el-image :src="'https://inis.cn/api/file/rand?name=imgs.txt&redirect=true&id=' + item" fit="cover" class="h-100 w-100">
+                <el-carousel trigger="click" height="390px" class="color-thief" arrow="always">
+                    <el-carousel-item v-for="(item, index) in 6" :key="item">
+                        <el-image :src="'https://inis.cn/api/file/rand?name=imgs.txt&id=' + item" crossorigin="anonymous"
+                            v-on:load="method.load($event.target, index)" fit="cover" class="w-100" style="height: 310px">
                         </el-image>
-                        <p class="title">
-                            <span class="badge bg-primary font-white me-1"> 更多 </span>
-                            <span class="font-white font-15 fw-bolder">这是测试的内容</span>
-                        </p>
+                        <div class="carousel-footer mb-2" ref="carousel-footer">
+                            <p class="title mb-3 ms-3">
+                                <span class="font-white font-17">这是测试的内容</span>
+                            </p>
+                        </div>
                     </el-carousel-item>
                 </el-carousel>
+<!--                <el-carousel :autoplay="false" trigger="click" indicator-position="outside" height="310px">-->
+<!--                    <el-carousel-item v-for="item in 4" :key="item">-->
+<!--                        <el-image :src="'https://inis.cn/api/file/rand?name=imgs.txt&redirect=true&id=' + item" fit="cover" class="h-100 w-100">-->
+<!--                        </el-image>-->
+<!--                        <p class="title">-->
+<!--                            <span class="badge bg-primary font-white me-1"> 更多 </span>-->
+<!--                            <span class="font-white font-15 fw-bolder">这是测试的内容</span>-->
+<!--                        </p>-->
+<!--                    </el-carousel-item>-->
+<!--                </el-carousel>-->
             </div>
             <div class="col-md-4 px-2">
                 <div class="card mb-3">
@@ -76,6 +88,7 @@ import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import MouseMenu from '@howdyjs/mouse-menu'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
+import ColorThief from 'colorthief'
 
 const { ctx, proxy } = getCurrentInstance()
 
@@ -94,7 +107,7 @@ const state  = reactive({
                 fn: () => method.refresh()
             }],
         },
-    }
+    },
 })
 
 onMounted(async () => {
@@ -107,7 +120,10 @@ onMounted(async () => {
 })
 
 const method = {
-
+    load: async (img, index) => {
+        const color = await (new ColorThief).getColor(img)
+        proxy.$refs['carousel-footer'][index].style.background = `rgb(${color.join(',')})`
+    }
 }
 
 // 监听 html 下的鼠标右键事件

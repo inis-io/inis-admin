@@ -1,6 +1,6 @@
 <template>
     <footer id="footer" class="text-white user-select-none">
-        <span>Copyright © 2020 - {{ state.year }}</span>
+        <span>Copyright © 2020 ~ {{ state.year }}</span>
         <span> & <a href="https://inis.cc" target="_blank" class="text-white">inis {{ state.version.system }}</a></span>
         <span> & theme {{ state.version.theme }}</span>
     </footer>
