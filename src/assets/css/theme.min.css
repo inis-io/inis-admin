@@ -520,6 +520,9 @@ body[inis-theme] .el-select .el-input .el-input__wrapper input{
 body[inis-theme] .el-select .el-select__tags > span{
     display: flex;
 }
+body[inis-theme] .el-select.multiple .el-select__tags > span{
+    flex-wrap: wrap;
+}
 /* ==================== 自定义 el-select - 结束 ==================== */
 /* ==================== 自定义 el-cascader - 结束 ==================== */
 body[inis-theme] .el-cascader.custom.multiple .el-input__wrapper{
@@ -726,7 +729,7 @@ body[inis-theme] .el-carousel.color-thief .carousel-footer{
     height: 100%;
     user-select: none;
     pointer-events: none;
-    -webkit-mask-image: linear-gradient(0,#2f3238 19%,transparent 30%);
+    -webkit-mask-image: linear-gradient(0,#2f3238 12%,transparent 30%);
     border-radius: 0 0 7px 7px;
 }
 body[inis-theme] .el-carousel.color-thief .carousel-footer .title{

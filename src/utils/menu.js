@@ -4,12 +4,11 @@ import { push } from '{src}/utils/route'
 
 export const list = async () => {
 
-
     let all = await API['auth-pages'].column({
-        field: 'name,path,icon,svg,size'
+        field: 'name,path,icon,svg,size,hash'
     })
     // 用户权限
-    let auth = cache.get('user-info')['pages'] || ''
+    let auth = cache.get('user-info')?.['result']?.['auth']?.['pages']?.['hash'] || ''
     // 用户权限列表
     let list = [{
         label: '创作',

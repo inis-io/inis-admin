@@ -122,7 +122,29 @@
                 <div class="col-lg-12">
                     <div class="form-group mb-3">
                         <label class="form-label">
-                            <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
+                            <el-tooltip content="为用户分配后台的页面访问权限" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">页面：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-select v-model="state.selected.pages" multiple filterable default-first-option placeholder="请选择权限" class="d-block custom font-13 multiple">
+                            <el-option v-for="item in state.select.pages" :key="item.hash" :label="item.name" :value="item.hash">
+                                <span class="font-13">
+                                    <span v-if="!utils.is.empty(item.svg)" v-html="item.svg"></span>
+                                    <i-svg color="rgb(var(--assist-color))" v-else-if="!utils.is.empty(item.icon)" :name="item.icon" :size="item.size"></i-svg>
+                                    {{ item.name }}
+                                </span>
+                                <small class="text-muted float-end">{{ item.path }}</small>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="该分组下拥有的权限" placement="top">
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
                                     <span class="ms-1">规则：</span>
@@ -155,6 +177,7 @@ import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import ITable from '{src}/comps/custom/i-table.vue'
 import { config as MenuConfig } from '{src}/utils/menu'
+import API from "{src}/api/index.js";
 
 const emit  = defineEmits(['refresh'])
 const props = defineProps({
@@ -239,16 +262,22 @@ const state  = reactive({
     select: {
         root: [{ value: 0, label: '默认', subtitle: '只允许操作自己的数据' },{ value: 1, label: '管理权限', subtitle: '（穿透）允许操作他人的数据' }],
         rules: [],
+        pages: [],
     },
+    selected: {
+        pages: [],
+    }
 })
 
 onMounted(async () => {
+    await method.getPages()
     await method.getRules()
 })
 
 const method = {
     // 刷新数据
     init: async () => {
+        state.selected.pages = []
         // 重新加载数据
         await proxy.$refs['i-table']['init']()
     },
@@ -275,6 +304,14 @@ const method = {
         else if (select) params.rules = select.join(',')
         else params.rules = null
 
+        // 页面权限
+        let arr1 = state.select.pages.map(item => item.hash)
+        let arr2 = [...new Set(state.selected.pages)]
+
+        if (utils.array.equal(arr1, arr2)) params.pages = 'all'
+        else if (utils.is.empty(arr2)) params.pages = ''
+        else params.pages = arr2.join(',')
+
         state.item.wait     = true
 
         const { code, msg } = await axios.post(`/api/${state.item.table}/save`, params)
@@ -292,6 +329,13 @@ const method = {
     edit: struct => {
 
         state.struct = struct
+
+        if (struct.pages?.indexOf('all') !== -1) {
+            state.selected.pages = state.select.pages.map(item => item.hash)
+        } else {
+            // 去空
+            state.selected.pages = struct.pages?.split(',').filter(item => item)
+        }
 
         // 判断 struct.rules 是否包含 all - 全部权限
         if (struct.rules.includes('all')) {
@@ -333,8 +377,9 @@ const method = {
     // 显示盒子
     show: () => {
         state.struct = {}
-        state.rules.select = []
-        state.item.dialog = true
+        state.rules.select   = []
+        state.selected.pages = []
+        state.item.dialog    = true
     },
      // 真删 和 软删
     async delete(ids = [], isSoft = true) {
@@ -415,6 +460,12 @@ const method = {
 
         // 生成树形结构
         // state.select.rules = array
+    },
+    // 获取全部页面
+    async getPages() {
+        state.select.pages = await proxy.$api['auth-pages'].column({
+            field: 'name,path,icon,svg,size,hash'
+        })
     },
     // 规则选中事件
     change(){

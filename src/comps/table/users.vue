@@ -186,7 +186,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="为该用户分配权限，默认只有公共权限" placement="top">
@@ -203,29 +203,7 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-3">
-                        <label class="form-label">
-                            <el-tooltip content="为用户分配后台的页面访问权限" placement="top">
-                                <span>
-                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">页面权限：</span>
-                                </span>
-                            </el-tooltip>
-                        </label>
-                        <el-select v-model="state.selected.auth_pages" multiple collapse-tags placeholder="请选择权限" class="d-block custom font-13">
-                            <el-option v-for="item in state.select.auth_pages" :key="item.path" :label="item.name" :value="item.path">
-                                <span class="font-13">
-                                    <span v-if="!utils.is.empty(item.svg)" v-html="item.svg"></span>
-                                    <i-svg color="rgb(var(--icon-color))" v-else-if="!utils.is.empty(item.icon)" :name="item.icon" :size="item.size"></i-svg>
-                                    {{ item.name }}
-                                </span>
-                                <small class="text-muted float-end">{{ item.path }}</small>
-                            </el-option>
-                        </el-select>
-                    </div>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="您的性别是？" placement="top">
@@ -241,7 +219,7 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="为这个用户设置一个专属的头衔，彰显与众不同" placement="top">
@@ -388,21 +366,16 @@ const state  = reactive({
     // 下拉框
     select: {
         auth_group: [],
-        auth_pages: [],
         gender: [
             { value: null, label: '保密'},
             { value: 'boy', label: '男' },
             { value: 'girl', label: '女' },
         ]
     },
-    selected: {
-        auth_pages: [],
-    },
 })
 
 onMounted( async () => {
     await method.authGroup()
-    await method.authPages()
 })
 
 const method = {
@@ -418,15 +391,8 @@ const method = {
                 }
             }
         }
-        state.selected.auth_pages = []
         // 重新加载数据
         await proxy.$refs['i-table']['init']()
-    },
-    // 获取页面权限
-    async authPages() {
-        state.select.auth_pages = await proxy.$api['auth-pages'].column({
-            field: 'name,path,icon,svg,size'
-        })
     },
     // 获取权限分组
     async authGroup() {
@@ -450,14 +416,6 @@ const method = {
         if (!utils.is.empty(params?.email))  if (!utils.is.email(params?.email)) return notyf.warn('邮箱格式不正确！')
         if (!utils.is.empty(params?.phone))  if (!utils.is.phone(params?.phone)) return notyf.warn('手机号格式不正确！')
 
-        // 页面权限
-        let arr1 = state.select.auth_pages.map(item => item.path)
-        let arr2 = [...new Set(state.selected.auth_pages)]
-
-        if (utils.array.equal(arr1, arr2)) params.pages = 'all'
-        else if (utils.is.empty(arr2)) params.pages = ''
-        else params.pages = arr2.join('|')
-
         state.item.wait           = true
 
         const { code, msg, data } = await axios.post(`/api/${state.item.table}/save`, params)
@@ -476,12 +434,6 @@ const method = {
     // 编辑数据
     edit: struct => {
         state.struct = struct
-        if (struct.pages?.indexOf('all') !== -1) {
-            state.selected.auth_pages = state.select.auth_pages.map(item => item.path)
-        } else {
-            // 去空
-            state.selected.auth_pages = struct.pages?.split('|').filter(item => item)
-        }
         state.item.dialog = true
     },
     // 显示盒子
