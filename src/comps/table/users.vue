@@ -196,7 +196,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-select v-model="state.struct.result.auth.group" multiple collapse-tags placeholder="请选择权限" class="d-block custom font-13">
+                        <el-select v-model="state.struct.result.auth.group.ids" multiple collapse-tags placeholder="请选择权限" class="d-block custom font-13">
                             <el-option v-for="item in state.select.auth_group" :key="item.value" :label="item.label" :value="item.value">
                                 <span class="font-13">{{ item.label }}</span>
                             </el-option>
@@ -320,7 +320,10 @@ const state  = reactive({
             auth: {
                 all: false,
                 root: false,
-                group: [],
+                group: {
+                    ids: [],
+                    list: [],
+                },
             }
         }
     },
@@ -387,7 +390,10 @@ const method = {
                 auth: {
                     all: false,
                     root: false,
-                    group: [],
+                    group: {
+                        ids: [],
+                        list: [],
+                    },
                 }
             }
         }
@@ -429,7 +435,7 @@ const method = {
         // 重新加载数据
         await method.init()
         // 更新用户权限
-        await method.updateAuthGroup(data.id, params.result.auth.group)
+        await method.updateAuthGroup(data.id, params.result.auth.group.ids)
     },
     // 编辑数据
     edit: struct => {

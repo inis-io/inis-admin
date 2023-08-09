@@ -82,6 +82,9 @@ body[inis-theme] #app .topnav, body[inis-theme] #app .topnav{
     z-index: 99;
     width: 100%;
 }
+body[inis-theme] #app .topnav .navbar ul.el-menu{
+    height: 40px;
+}
 body[inis-theme] .navbar-dark .dropdown-menu{
     background: rgba(var(--theme-color), var(--theme-opacity));
     backdrop-filter: var(--theme-blur);
@@ -787,6 +790,20 @@ body[inis-theme] .el-carousel.color-thief .el-carousel__indicator.is-active butt
     background-color: rgb(var(--assist-color));
 }
 /* ==================== 自定义 el-carousel - 结束 ==================== */
+/* ==================== 自定义 el-date-editor - 开始 ==================== */
+body[inis-theme] .el-date-editor{
+    background: unset;
+    backdrop-filter: unset;
+    border-radius: unset;
+    height: 30px;
+    border-bottom: 1px solid rgb(var(--assist-color));
+}
+body[inis-theme] .el-date-editor.el-input__wrapper:hover,
+body[inis-theme] .el-date-editor.el-input__wrapper.is-active{
+    box-shadow: unset;
+    border-bottom: 2px solid rgb(var(--assist-color));
+}
+/* ==================== 自定义 el-date-editor - 结束 ==================== */
 
 
 

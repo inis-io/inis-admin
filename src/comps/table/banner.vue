@@ -94,10 +94,57 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-input v-model="state.struct.title"></el-input>
+                        <el-input v-model="state.struct.title" placeholder="为空不显示"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="这个轮播要不要显示标题" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">时间：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-date-picker v-model="state.struct.time" type="datetimerange" start-placeholder="开始时间" end-placeholder="结束时间" class="w-100">
+                        </el-date-picker>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="点击该轮播图是否需要打开一个网址" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">跳转链接：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-input v-model="state.struct.url" placeholder="如：https://inis.cn"></el-input>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="点击轮播后，跳转链接的执行方式" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">跳转方式：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-select v-model="state.struct.target" placeholder="请选择方式" class="d-block custom font-13">
+                            <el-option v-for="item in state.select.target" :key="item.value" :label="item.value" :value="item.label">
+                                <span class="font-13">{{ item.value }}</span>
+                                <small class="text-muted float-end">{{ item.label }}</small>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label class="form-label required">
                             <el-tooltip content="（必须）轮播图图片，无图不可为轮播" placement="top">
@@ -119,39 +166,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label class="form-label">
-                            <el-tooltip content="点击该轮播图是否需要打开一个网址" placement="top">
-                                <span>
-                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">跳转链接：</span>
-                                </span>
-                            </el-tooltip>
-                        </label>
-                        <el-input v-model="state.struct.url"></el-input>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label class="form-label">
-                            <el-tooltip content="点击轮播后，跳转链接的执行方式" placement="top">
-                                <span>
-                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">跳转方式：</span>
-                                </span>
-                            </el-tooltip>
-                        </label>
-                        <el-select v-model="state.struct.target" placeholder="请选择方式" class="d-block custom font-13">
-                            <el-option v-for="item in state.select.target" :key="item.value" :label="item.value" :value="item.label">
-                                <span class="font-13">{{ item.value }}</span>
-                                <small class="text-muted float-end">{{ item.label }}</small>
-                            </el-option>
-                        </el-select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group mb-3">
                         <label class="form-label">
@@ -162,7 +176,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-input v-model="state.struct.content" :autosize="{ minRows: 3, maxRows: 10 }" type="textarea"></el-input>
+                        <el-input v-model="state.struct.content" :autosize="{ minRows: 1, maxRows: 10 }" type="textarea" placeholder="为空不显示"></el-input>
                     </div>
                 </div>
             </div>
@@ -177,7 +191,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-input v-model="state.struct.remark" :autosize="{ minRows: 3, maxRows: 10 }" placeholder="备注一下，避免忘记！" type="textarea"></el-input>
+                        <el-input v-model="state.struct.remark" :autosize="{ minRows: 1, maxRows: 10 }" placeholder="备注一下，避免忘记！" type="textarea"></el-input>
                     </div>
                 </div>
             </div>
@@ -232,7 +246,9 @@ const state  = reactive({
         upload: false,
         wait: false,
     },
-    struct: {},
+    struct: {
+        time: null
+    },
     opts: {
         url: '/api/banner/all',
         params: props.params,
@@ -285,8 +301,17 @@ const method = {
     // 保存数据
     save: async (params = state.struct || {}) => {
 
+        params = JSON.parse(JSON.stringify(params))
+
         if (utils.is.empty(params)) return notyf.warn('你在想什么？什么都不填！')
         if (utils.is.empty(params?.image)) return notyf.warn('兄dei，图片地址没有设置！')
+
+        // 日期格式转时间戳
+        let time1 = Date.parse(new Date(params.time?.[0]))
+        let time2 = Date.parse(new Date(params.time?.[1]))
+        params.start_time = utils.is.empty(time1) ? Math.round(new Date() / 1000) : Math.round(time1 / 1000)
+        params.end_time   = utils.is.empty(time2) ? params.start_time + 86400 : Math.round(time2 / 1000)
+        delete params.time
 
         state.item.wait     = true
 
@@ -303,7 +328,15 @@ const method = {
     },
     // 编辑数据
     edit: struct => {
-        state.struct = struct
+
+        // 时间戳转日期格式
+        struct.time = []
+        for (const key in struct) {
+            if (key === 'start_time') struct.time[0] = new Date(struct[key] * 1000)
+            if (key === 'end_time')   struct.time[1] = new Date(struct[key] * 1000)
+        }
+
+        state.struct      = struct
         state.item.dialog = true
     },
     // 显示盒子
