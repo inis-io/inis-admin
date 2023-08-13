@@ -54,7 +54,7 @@
 <script setup>
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
-import TablePlacard from '{src}/comps/table/placard.vue'
+import TablePlacard from '{src}/comps/admin/table/placard.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()

@@ -64,8 +64,8 @@
 <script setup>
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
-import AtomQpsBlack from '{src}/comps/atom/qps-black.vue'
-import TableQpsWarn from '{src}/comps/table/qps-warn.vue'
+import AtomQpsBlack from '{src}/comps/admin/atom/qps-black.vue'
+import TableQpsWarn from '{src}/comps/admin/table/qps-warn.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()

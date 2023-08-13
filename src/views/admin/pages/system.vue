@@ -109,6 +109,17 @@
                         </div>
                     </el-tab-pane>
 
+                    <el-tab-pane name="inis">
+                        <template #label>
+                            <span class="fw-bolder font-12">inis 社区</span>
+                        </template>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <device-bind ref="device-bind" v-on:refresh="method.refresh"></device-bind>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+
                 </el-tabs>
             </div>
         </div>
@@ -119,23 +130,24 @@
 <script setup>
 import MouseMenu from '@howdyjs/mouse-menu'
 import {config as MenuConfig, list as MenuList} from '{src}/utils/menu'
-import AtomSmsEmail from '{src}/comps/atom/sms-email.vue'
-import AtomSmsAliyun from '{src}/comps/atom/sms-aliyun.vue'
-import AtomSmsTencent from '{src}/comps/atom/sms-tencent.vue'
-import AtomApiKey from '{src}/comps/atom/api-key.vue'
-import AtomAllowRegister from '{src}/comps/atom/allow-register.vue'
-import AtomQps from '{src}/comps/atom/qps.vue'
-import AtomQpsBlack from '{src}/comps/atom/qps-black.vue'
-import AtomPageLimit from '{src}/comps/atom/page-limit.vue'
-import AtomJwt from '{src}/comps/atom/jwt.vue'
-import AtomCacheRedis from '{src}/comps/atom/cache-redis.vue'
-import AtomCacheFile from '{src}/comps/atom/cache-file.vue'
-import AtomCacheRam from '{src}/comps/atom/cache-ram.vue'
-import AtomStorageLocal from '{src}/comps/atom/storage-local.vue'
-import AtomStorageOss from '{src}/comps/atom/storage-oss.vue'
-import AtomStorageCos from '{src}/comps/atom/storage-cos.vue'
-import AtomStorageKodo from '{src}/comps/atom/storage-kodo.vue'
-import AtomArticlePage from '{src}/comps/atom/article-page.vue'
+import AtomSmsEmail from '{src}/comps/admin/atom/sms-email.vue'
+import AtomSmsAliyun from '{src}/comps/admin/atom/sms-aliyun.vue'
+import AtomSmsTencent from '{src}/comps/admin/atom/sms-tencent.vue'
+import AtomApiKey from '{src}/comps/admin/atom/api-key.vue'
+import AtomAllowRegister from '{src}/comps/admin/atom/allow-register.vue'
+import AtomQps from '{src}/comps/admin/atom/qps.vue'
+import AtomQpsBlack from '{src}/comps/admin/atom/qps-black.vue'
+import AtomPageLimit from '{src}/comps/admin/atom/page-limit.vue'
+import AtomJwt from '{src}/comps/admin/atom/jwt.vue'
+import AtomCacheRedis from '{src}/comps/admin/atom/cache-redis.vue'
+import AtomCacheFile from '{src}/comps/admin/atom/cache-file.vue'
+import AtomCacheRam from '{src}/comps/admin/atom/cache-ram.vue'
+import AtomStorageLocal from '{src}/comps/admin/atom/storage-local.vue'
+import AtomStorageOss from '{src}/comps/admin/atom/storage-oss.vue'
+import AtomStorageCos from '{src}/comps/admin/atom/storage-cos.vue'
+import AtomStorageKodo from '{src}/comps/admin/atom/storage-kodo.vue'
+import AtomArticlePage from '{src}/comps/admin/atom/article-page.vue'
+import DeviceBind from '{src}/comps/inis/device/bind.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
@@ -155,17 +167,13 @@ const state  = reactive({
         },
     },
     refresh: {
+        inis    : ['device-bind'],
         other   : ['article-page'],
         optimize: ['cache-redis','cache-file','cache-ram'],
         sms     : ['sms-email','sms-aliyun','sms-tencent'],
         storage : ['storage-local','storage-oss','storage-cos','storage-kodo'],
         security: ['api-key','qps','page-limit','jwt','allow-register','qps-black'],
     },
-})
-
-onMounted(async () => {
-    // 追加鼠标右键菜单
-    state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
 })
 
 // 方法
@@ -182,6 +190,11 @@ const method = {
         for (let item of args) proxy.$refs[item]['init']()
     },
 }
+
+onMounted(async () => {
+    // 追加鼠标右键菜单
+    state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
+})
 
 // 监听 html 下的鼠标右键事件
 document.addEventListener('contextmenu', (event) => {

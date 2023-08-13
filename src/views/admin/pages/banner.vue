@@ -54,7 +54,7 @@
 <script setup>
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
-import TableBanner from '{src}/comps/table/banner.vue'
+import TableBanner from '{src}/comps/admin/table/banner.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()

@@ -66,9 +66,9 @@
 import utils from '{src}/utils/utils'
 import { push } from '{src}/utils/route'
 import MouseMenu from '@howdyjs/mouse-menu'
-import TablePages from '{src}/comps/table/pages.vue'
+import TablePages from '{src}/comps/admin/table/pages.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
-import AtomEditor from '{src}/comps/atom/article-page.vue'
+import AtomEditor from '{src}/comps/admin/atom/article-page.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({

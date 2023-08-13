@@ -65,8 +65,8 @@
 <script setup>
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
-import AtomApiKey from '{src}/comps/atom/api-key.vue'
-import TableApiKeys from '{src}/comps/table/api-keys.vue'
+import AtomApiKey from '{src}/comps/admin/atom/api-key.vue'
+import TableApiKeys from '{src}/comps/admin/table/api-keys.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()

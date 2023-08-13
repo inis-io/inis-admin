@@ -67,7 +67,7 @@
 import utils from '{src}/utils/utils'
 import axios from '{src}/utils/request'
 import MouseMenu from '@howdyjs/mouse-menu'
-import TableLinks from '{src}/comps/table/links.vue'
+import TableLinks from '{src}/comps/admin/table/links.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()

@@ -155,10 +155,10 @@ import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
 import { push } from '{src}/utils/route'
-import DialogLogin from '{src}/comps/dialog/login.vue'
+import DialogLogin from '{src}/comps/index/dialog/login.vue'
 import UpgradeSystem from '{src}/comps/upgrade/system.vue'
-import DialogRegister from '{src}/comps/dialog/register.vue'
-import DialogResetPassword from '{src}/comps/dialog/reset-password.vue'
+import DialogRegister from '{src}/comps/index/dialog/register.vue'
+import DialogResetPassword from '{src}/comps/index/dialog/reset-password.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const router = useRouter()

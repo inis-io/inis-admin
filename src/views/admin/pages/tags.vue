@@ -54,7 +54,7 @@
 <script setup>
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
-import TableTags from '{src}/comps/table/tags.vue'
+import TableTags from '{src}/comps/admin/table/tags.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()

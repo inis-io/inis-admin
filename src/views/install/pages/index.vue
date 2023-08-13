@@ -131,7 +131,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <el-button v-on:click="method.connect()" :loading="state.item.connect" class="mx-2">
+                    <el-button v-on:click="method.connect()" :loading="state.load.connect" class="mx-2">
                         <i-svg v-if="!state.item.connect" name="connect" size="14px"></i-svg>
                         <span class="ms-1">测试连接</span>
                     </el-button>
@@ -315,6 +315,9 @@ const state  = reactive({
             { value: 'latin1',  label: 'ISO-8859-1字符集，支持西欧语言。' },
         ],
     },
+    load: {
+        connect: false,
+    }
 })
 
 onMounted(async () => {
@@ -333,7 +336,12 @@ const method = {
         if (utils.is.empty(state.struct.username)) return notyf.warn('数据库用户名不能为空！')
         if (utils.is.empty(state.struct.password)) return notyf.warn('数据库密码不能为空！')
 
+        state.load.connect  = true
+
         const { code, msg } = await axios.post('/dev/install/connect-db', state.struct)
+
+        state.load.connect  = false
+
         if (code !== 200) {
             state.item.connect = false
             return notyf.error(msg)

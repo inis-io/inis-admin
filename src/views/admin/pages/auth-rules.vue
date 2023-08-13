@@ -79,9 +79,9 @@
 <script setup>
 import utils from '{src}/utils/utils'
 import MouseMenu from '@howdyjs/mouse-menu'
-import AtomQps from '{src}/comps/atom/qps.vue'
-import AtomPageLimit from '{src}/comps/atom/page-limit.vue'
-import TableAuthRules from '{src}/comps/table/auth-rules.vue'
+import AtomQps from '{src}/comps/admin/atom/qps.vue'
+import AtomPageLimit from '{src}/comps/admin/atom/page-limit.vue'
+import TableAuthRules from '{src}/comps/admin/table/auth-rules.vue'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
 
 const { ctx, proxy } = getCurrentInstance()
