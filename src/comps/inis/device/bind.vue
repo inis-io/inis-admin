@@ -36,7 +36,7 @@
                 <div class="mt-3">
                     <el-tooltip placement="top">
                         <template #content>
-                            ● 程序后端许多功能都依赖于 inis 社区，绑定仅限于为您提供更好的服务体验，不涉及您的程序任何敏感信息，请放心使用。<br>
+                            程序后端许多功能都依赖于 inis 社区，绑定仅限于为您提供更好的服务体验，不涉及您的程序任何敏感信息，请放心使用。<br>
                         </template>
                         <span class="d-inline-flex align-items-center">
                             <i-svg name="hint" color="rgb(var(--icon-color))" size="14px"></i-svg>

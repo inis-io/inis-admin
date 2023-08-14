@@ -317,7 +317,11 @@ const state  = reactive({
     },
     load: {
         connect: false,
-    }
+    },
+    retry: {
+        count: 1,
+        time: 2000,
+    },
 })
 
 onMounted(async () => {
@@ -374,17 +378,45 @@ const method = {
 
         state.user.password = state.user.password2
 
-        const { code, msg } = await axios.post('/dev/install/create-admin', state.user)
-        if (code !== 200) return notyf.error(msg)
+        try {
 
-        delete state.user.password1
-        delete state.user.password2
+            const { code, msg } = await axios.post('/dev/install/create-admin', state.user)
+            if (code === 500) return method.retry()
+            if (code !== 200) return notyf.error(msg)
 
-        notyf.success('创建管理员成功！')
-        utils.clear.session(state.item.DB_KEY)
-        await method.lock()
-        await method.next(3)
+            delete state.user.password1
+            delete state.user.password2
+
+            notyf.success('创建管理员成功！')
+            utils.clear.session(state.item.DB_KEY)
+            await method.lock()
+            await method.next(3)
+
+        } catch (error) {
+            await method.retry()
+        }
     },
+    // 重试
+    retry: async () => {
+
+        if (state.retry.count > 3) return notyf.error('安装失败，请联系兔子，QQ：97783391', {
+            duration: 10 * 60 * 1000,
+        })
+
+        notyf.info(`安装异常，第 ${state.retry.count} 次重试 ...`, {
+            duration: 10 * 1000,
+        })
+
+        await method.sleep(state.retry.time)
+        await method.connect()
+        await method.sleep(state.retry.time)
+        await method.initDB()
+        await method.sleep(state.retry.time)
+        await method.createAdmin()
+
+        state.retry.count++
+    },
+    sleep: (time = 1000) => new Promise((resolve) => setTimeout(resolve, time)),
     // 上锁（安装锁）
     lock: async () => {
         const { code, msg } = await axios.post('/dev/install/lock')
@@ -415,7 +447,7 @@ const method = {
     },
 }
 
-watch(() => state.user, (value) => {
+watch(() => state.user, (value = {}) => {
     // 清除 account 中的空格
     state.user.account = value.account.replace(/\s+/g, '')
 }, { deep: true })
