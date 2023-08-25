@@ -108,7 +108,7 @@ const method = {
     // 登录
     async login() {
 
-        const unix = Math.round(new Date() / 1000)
+        const unix = await method.unix()
         const iv   = crypto.token(`iv-${unix}` , 16, 'login')
         const key  = crypto.token(`key-${unix}`, 16, 'login')
         const AES  = crypto.AES(key, iv)
@@ -189,6 +189,15 @@ const method = {
     async ALLOW_REGISTER() {
         let { value } = await proxy?.$api.config.one('ALLOW_REGISTER')
         state.item.register = parseInt(value) === 1
+    },
+    // 获取当前时间戳 - 服务器时间和客户端时间可能存在误差
+    unix: async () => {
+        // 获取服务器时间
+        const { code, data } = await axios.get('/dev/info/time')
+        // 服务器时间获取失败，返回客户端时间
+        if (code !== 200) return Math.round(new Date() / 1000)
+        // 返回服务器时间戳
+        return data.unix
     },
 }
 

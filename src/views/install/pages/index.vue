@@ -403,7 +403,7 @@ const method = {
             duration: 10 * 60 * 1000,
         })
 
-        notyf.info(`安装异常，第 ${state.retry.count} 次重试 ...`, {
+        notyf.info(`安装异常，请不要刷新页面，正在自动重试 ${state.retry.count}！`, {
             duration: 10 * 1000,
         })
 
