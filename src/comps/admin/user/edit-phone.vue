@@ -69,13 +69,13 @@ const method = {
     },
     save: async () => {
 
-        if (utils.is.empty(state.struct.phone))  return notyf.warn('请输入邮箱！')
-        if (utils.is.empty(state.struct.code))   return notyf.warn('请输入验证码！')
+        if (utils.is.empty(state.struct?.phone))  return notyf.warn('请输入手机号！')
+        if (utils.is.empty(state.struct?.code))   return notyf.warn('请输入验证码！')
 
         state.item.wait     = true
 
         const { code, msg } = await axios.put('/api/users/phone', {
-            phone: state.struct.phone, code: state.struct.code
+            phone: state.struct?.phone, code: state.struct?.code
         })
 
         state.item.wait     = false
@@ -93,10 +93,10 @@ const method = {
     },
     code: async () => {
 
-        if (utils.is.empty(state.struct.phone))  return notyf.warn('请输入邮箱！')
+        if (utils.is.empty(state.struct?.phone))  return notyf.warn('请输入手机号！')
 
         const { code, msg } = await axios.put('/api/users/phone', {
-            phone: state.struct.phone,
+            phone: state.struct?.phone,
         })
 
         if (!utils.in.array(code, [200,201])) return notyf.error(msg)
@@ -116,7 +116,7 @@ const method = {
 
         emit('finish', data.user)
 
-        cache.set('user-info', data.user, inis.cache)
+        cache.set('user-info', data.user, 10)
     },
 }
 

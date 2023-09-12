@@ -1,5 +1,5 @@
 <template>
-    <div v-load="[state.status.loading, null, null]" class="card">
+    <div v-loading="state.status.loading" class="card">
         <div class="card-body">
             <i-svg name="bind" color="rgb(var(--assist-color))" size="43px" class="position-absolute opacity-25" style="right: 2rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
@@ -33,21 +33,21 @@
                 <div class="flex-center">
                     <el-image src="https://inis.cn/assets/imgs/logo-white.png" style="height: 52px" class="my-1 py-1"></el-image>
                 </div>
-                <div class="mt-3">
-                    <el-tooltip placement="top">
-                        <template #content>
-                            程序后端许多功能都依赖于 inis 社区，绑定仅限于为您提供更好的服务体验，不涉及您的程序任何敏感信息，请放心使用。<br>
-                        </template>
-                        <span class="d-inline-flex align-items-center">
-                            <i-svg name="hint" color="rgb(var(--icon-color))" size="14px"></i-svg>
-                            <span class="font-18 fw-medium ms-2">绑定 inis 社区 账号</span>
-                        </span>
-                    </el-tooltip>
-                </div>
             </div>
         </template>
         <template #default>
             <div class="container-xxl">
+                <el-tooltip placement="top">
+                    <template #content>
+                        程序后端许多功能都依赖于 inis 社区，绑定仅限于为您提供更好的服务体验，不涉及您的程序任何敏感信息，请放心使用。<br>
+                    </template>
+                    <el-alert type="success" :closable="false" center class="mb-3 box-shadow-light d-inline-flex align-items-center pointer">
+                        <template #title>
+                            <i-svg name="!" size="15px" color="var(--el-color-success)"></i-svg>
+                            <span class="ms-1">绑定 inis 社区账号</span>
+                        </template>
+                    </el-alert>
+                </el-tooltip>
                 <div class="row mb-3 mt-3">
                     <label class="col-3 col-form-label">帐号：</label>
                     <div class="col-9">
@@ -80,6 +80,7 @@
 import notyf from '{src}/utils/notyf.js'
 import axios from '{src}/utils/request.js'
 import utils from "{src}/utils/utils.js";
+import ISvg from "{src}/comps/custom/i-svg.vue";
 
 const { ctx, proxy } = getCurrentInstance()
 const state = reactive({

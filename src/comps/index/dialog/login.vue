@@ -7,7 +7,13 @@
         </template>
         <template #default>
             <div class="container-xxl">
-                <el-tabs v-model="state.item.tabs" :stretch="true">
+                <el-alert type="success" :closable="false" center class="mb-3 box-shadow-light">
+                    <template #title>
+                        <i-svg name="!" size="15px" color="var(--el-color-success)"></i-svg>
+                        <span class="ms-1">{{ state.item.tabs === 'code' ? '没有账号自动注册' : '推荐验证码登录' }}</span>
+                    </template>
+                </el-alert>
+                <el-tabs v-model="state.item.tabs" stretch>
                     <el-tab-pane name="code">
                         <template #label>
                             <span class="fw-bolder font-12">验证码登录</span>
@@ -20,7 +26,7 @@
                         </div>
                         <div class="row mb-3">
                             <label class="col-3 col-form-label">验证码：</label>
-                            <div class="col-9">
+                            <div ref="verify" class="col-9">
                                 <el-input v-model="state.struct.code" v-on:keyup.enter="method.login()" class="custom" placeholder="请输入验证码">
                                     <template #suffix>
                                         <el-button v-on:click="method.code()" :loading="state.item.loading">
@@ -29,9 +35,6 @@
                                     </template>
                                 </el-input>
                             </div>
-                        </div>
-                        <div class="flex-center">
-                            无账号自动注册
                         </div>
                     </el-tab-pane>
                     <el-tab-pane name="tradition">
@@ -46,19 +49,16 @@
                         </div>
                         <div class="row mb-3">
                             <label class="col-3 col-form-label">密码：</label>
-                            <div class="col-9 d-flex">
+                            <div ref="password" class="col-9 d-flex">
                                 <el-input v-model="state.struct.password" v-on:keyup.enter="method.login()" show-password class="custom" placeholder="请输入密码"></el-input>
                             </div>
-                        </div>
-                        <div class="flex-center">
-                            推荐验证码登录
                         </div>
                     </el-tab-pane>
                 </el-tabs>
                 <div class="d-flex justify-content-center">
                     <span v-on:click="method.reset()" class="pointer">忘记密码</span>
-                    <span v-if="state.item.register" class="mx-2">|</span>
-                    <span v-if="state.item.register" v-on:click="method.register()" class="pointer">注册帐号</span>
+                    <span v-if="parseInt(store.config.getAllowRegister?.value) === 1" class="mx-2">|</span>
+                    <span v-if="parseInt(store.config.getAllowRegister?.value) === 1" v-on:click="method.register()" class="pointer">注册帐号</span>
                 </div>
             </div>
         </template>
@@ -73,14 +73,21 @@
 </template>
 
 <script setup>
-import crypto from '{src}/utils/crypto.js'
 import cache from '{src}/utils/cache.js'
 import utils from '{src}/utils/utils.js'
 import notyf from '{src}/utils/notyf.js'
 import axios from '{src}/utils/request.js'
+import crypto from '{src}/utils/crypto.js'
+import { useCommStore } from '{src}/store/comm'
+import { useConfigStore } from '{src}/store/config'
+import ISvg from "{src}/comps/custom/i-svg.vue";
 
 const { ctx, proxy } = getCurrentInstance()
-const emit  = defineEmits(['finish','register','reset'])
+const emit  = defineEmits(['finish'])
+const store = {
+    comm: useCommStore(),
+    config: useConfigStore()
+}
 const state = reactive({
     item: {
         tabs: 'code',
@@ -89,7 +96,6 @@ const state = reactive({
         loading:  false,        // 是否加载中
         finish :  false,        // 登录完成
         dialog :  false,
-        register: false,        // 是否允许注册
         second: 0,              // 倒计时
     },
     struct: {
@@ -98,10 +104,6 @@ const state = reactive({
         code:     null,         // 验证码
     },
     timer: null,
-})
-
-onMounted(async () => {
-    await method.ALLOW_REGISTER()
 })
 
 const method = {
@@ -138,24 +140,33 @@ const method = {
             state.item.wait = false
 
             if (code === 200) {
-                cache?.set('user-info', data.user, 10)
+                cache.set('user-info', data.user, 10)
                 utils.set.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
                 state.item.finish = true
                 state.item.dialog = false
+                // 更新仓库状态
+                store.comm.login.finish = true
+                store.comm.login.user   = data.user
+                store.comm.switchAuth('login', false)
+                // 通知父组件
                 emit('finish', data.user)
                 return
             }
             if (code === 201) return notyf.info(msg)
 
-            setTimeout(() => {
-                notyf.error(msg)
-                // 重置计时器
-                state.item.second = 0
-                clearInterval(state.timer)
-            }, 1000)
+            // 水平抖动动画
+            method.animation()
+
+            notyf.error(msg)
+            method.clearCache()
+            // 重置计时器
+            state.item.second = 0
+            clearInterval(state.timer)
 
         } catch (error) {
             notyf.error(error)
+            method.clearCache()
+            state.item.wait = false
         }
     },
     // 获取验证码
@@ -177,18 +188,26 @@ const method = {
     show: () => (state.item.dialog = true),
     // 点击注册
     register: () => {
-        state.item.dialog = false
-        emit('register')
+        store.comm.switchAuth('register', true)
     },
     // 点击忘记密码
     reset: () => {
-        state.item.dialog = false
-        emit('reset')
+        store.comm.switchAuth('reset', true)
     },
-    // 是否允许注册
-    async ALLOW_REGISTER() {
-        let { value } = await proxy?.$api.config.one('ALLOW_REGISTER')
-        state.item.register = parseInt(value) === 1
+    // 动画
+    animation: () => {
+        const els = [proxy.$refs.verify, proxy.$refs.password]
+        els.forEach(el => {
+            el.classList.add('active', 'shake-horizontal')
+            setTimeout(() => {
+                el.classList.remove('active', 'shake-horizontal')
+            }, 1000)
+        })
+    },
+    // 清除缓存
+    clearCache: () => {
+        // 清理全部的 Cookie
+        utils.set.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN', '', -1)
     },
     // 获取当前时间戳 - 服务器时间和客户端时间可能存在误差
     unix: async () => {

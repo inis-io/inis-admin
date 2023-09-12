@@ -1,5 +1,5 @@
 <template>
-    <div v-load="[state.status.loading, null, null]" class="card">
+    <div v-loading="state.status.loading" class="card mb-3">
         <div class="card-body">
             <i-svg name="security-1" size="60px" color="rgb(var(--assist-color))" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
@@ -7,7 +7,8 @@
                     <template #content>
                         <strong class="text-success">限制分页查询单次最大数据量，开启让系统毫无瑕疵！</strong><br>
                         分页限制可以限制坏人发起恶意请求，如恶意请求 999999 乃至无限大的数据，<br>
-                        导致服务器崩溃，分页限制可以限制每页最大请求数据量，超过则强制性=最大值
+                        导致服务器崩溃，分页限制可以限制每页最大请求数据量，超过则强制性=最大值<br>
+                        注意：如果开启了缓存，此项可不开，因为缓存数据不会导致重复查询
                     </template>
                     <span class="d-inline-flex align-items-center">
                         <i-svg name="hint" color="rgb(var(--icon-color))" size="14px"></i-svg>

@@ -1,9 +1,9 @@
 <template>
-    <div class="container-fluid container-box">
+    <div class="container-fluid container-box px-1 px-lg-0">
         <div class="row">
             <div class="col-lg-9">
                 <div class="card mb-2">
-                    <div v-load="utils.is.empty(state.struct.editor)" class="card-body custom" style="min-height: 485px">
+                    <div v-loading="utils.is.empty(state.struct.editor)" class="card-body custom" style="min-height: 485px">
                         <span v-show="state.struct.editor === 'tinymce'">
                             <i-tinymce v-model="state.struct.content" id="tinymce"></i-tinymce>
                         </span>
@@ -11,9 +11,12 @@
                             <i-vditor ref="vditor" v-model="state.struct.content" :opts="{ height: 600 }"></i-vditor>
                         </span>
                     </div>
+                    <div class="card-footer">
+                        <el-button v-on:click="method.save()" :loading="state.item.wait" type="primary" plain class="float-end">保 存</el-button>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 custom" id="page-header-title">
+            <div v-loading="state.item.loading" class="col-lg-3 custom" id="page-header-title">
                 <el-collapse accordion v-model="state.item.active">
                     <div class="card mb-2">
                         <div class="card-body px-2 py-0">
@@ -29,6 +32,22 @@
                                         </span>
                                     </el-tooltip>
                                     <el-input v-model="state.struct.title" placeholder="页面标题"></el-input>
+                                </div>
+                                <div v-if="store.comm.login.user.result.auth.all === true" class="form-group mb-3">
+                                    <label class="form-label">
+                                        <el-tooltip content="审核状态" placement="top">
+                                            <span>
+                                                <i-svg name="hint" size="14px"></i-svg>
+                                                <span class="ms-1">审核状态：</span>
+                                            </span>
+                                        </el-tooltip>
+                                    </label>
+                                    <el-select v-model="state.struct.audit" class="d-block custom font-13" placeholder="请选择">
+                                        <el-option v-for="item in state.select.audit" :key="item.value" :label="item.label" :value="item.value">
+                                            <span class="font-13">{{ item.label }}</span>
+                                            <small class="text-muted float-end">{{ item.value }}</small>
+                                        </el-option>
+                                    </el-select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">
@@ -112,13 +131,13 @@
         </div>
     </div>
     <teleport to="body">
-    <div class="inis-save">
-        <el-tooltip content="保存页面" placement="top">
-        <button v-on:click="method.save()" type="button" class="btn btn-auto mimic">
-            <i-svg name="save" size="1.6em"></i-svg>
-        </button>
-        </el-tooltip>
-    </div>
+        <div class="inis-save">
+            <el-tooltip content="保存主题" placement="top">
+                <el-button v-on:click="method.save()" :loading="state.item.wait" class="btn btn-auto mimic ms-0">
+                    <i-svg v-if="!state.item.wait" name="save" size="1.2em"></i-svg>
+                </el-button>
+            </el-tooltip>
+        </div>
     </teleport>
     <mouse-menu ref="global-menu" v-bind="state.item.menu"></mouse-menu>
 </template>
@@ -131,11 +150,15 @@ import IVditor from '{src}/comps/custom/i-vditor.vue'
 import ITinymce from '{src}/comps/custom/i-tinymce.vue'
 import MouseMenu from '@howdyjs/mouse-menu'
 import { list as MenuList, config as MenuConfig } from '{src}/utils/menu'
+import { useCommStore } from '{src}/store/comm'
 
 const { ctx, proxy } = getCurrentInstance()
 
 const route  = useRoute()
 const router = useRouter()
+const store  = {
+    comm: useCommStore(),
+}
 const state  = reactive({
     item: {
         id: null,
@@ -146,11 +169,13 @@ const state  = reactive({
             menuList: [{
                 label: '保存',
                 icon: `<svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="12" height="12">
-                    <path d="M777.216 0a106.496 106.496 0 0 1 77.824 48.128A107.52 107.52 0 0 1 870.4 102.4v153.6h68.096a102.4 102.4 0 0 1 73.216 51.2 120.832 120.832 0 0 1 12.288 39.936v583.68a113.664 113.664 0 0 1-26.112 56.832 106.496 106.496 0 0 1-65.536 34.304H91.136a113.152 113.152 0 0 1-55.808-25.088A106.496 106.496 0 0 1 0 932.352V349.184a112.64 112.64 0 0 1 15.36-45.056A102.4 102.4 0 0 1 92.16 256H153.6V153.6 88.576a96.256 96.256 0 0 1 20.48-51.2A104.96 104.96 0 0 1 247.296 0z m140.288 540.16H83.456v370.688a35.84 35.84 0 0 0 0 17.92 24.576 24.576 0 0 0 13.824 10.752 17.408 17.408 0 0 0 10.24 0h816.64a21.504 21.504 0 0 0 17.92-24.576v-374.784a51.2 51.2 0 0 0-24.576 0z m-204.8 48.64a40.448 40.448 0 0 1 37.888 39.936 44.544 44.544 0 0 1-17.408 34.816l-256 220.16a41.984 41.984 0 0 1-44.032 6.656A72.192 72.192 0 0 1 409.6 870.4l-115.2-132.608a41.984 41.984 0 0 1-13.312-29.184 38.912 38.912 0 0 1 26.112-38.912 39.936 39.936 0 0 1 47.104 10.24c34.304 37.888 67.584 77.312 102.4 115.2 76.288-65.024 153.6-131.072 227.84-196.608a40.96 40.96 0 0 1 28.16-9.728zM870.4 337.92V460.8a98.304 98.304 0 0 0 34.816 2.56 90.624 90.624 0 0 0 35.328-2.56V370.688a70.144 70.144 0 0 0 0-17.92 21.504 21.504 0 0 0-15.36-14.848c-7.68-5.12-17.92 0-26.624 0s-18.432-4.608-28.16 0zM102.4 338.432a19.968 19.968 0 0 0-20.48 19.968v102.4a32.768 32.768 0 0 0 20.48 2.56h54.784V363.52a51.2 51.2 0 0 0 0-23.04c-20.992-2.56-38.912-3.072-54.784-2.048z m665.6-256H260.096a21.504 21.504 0 0 0-24.064 16.384c-3.072 2.56-2.56 6.656-3.072 10.24v325.12A59.392 59.392 0 0 0 235.52 460.8a28.16 28.16 0 0 0 8.704 2.56h512a69.12 69.12 0 0 0 30.72-2.56 28.16 28.16 0 0 0 0-8.704V108.544a17.92 17.92 0 0 0 0-10.24 22.528 22.528 0 0 0-23.04-16.384zM358.4 204.8h112.64a41.472 41.472 0 0 1 39.424 30.208 39.936 39.936 0 0 1-10.752 39.424 42.496 42.496 0 0 1-30.72 12.288H354.304a58.88 58.88 0 0 1-23.04-3.584 40.448 40.448 0 0 1-24.064-39.424 39.936 39.936 0 0 1 33.28-38.912A82.944 82.944 0 0 1 358.4 204.8z" fill="rgb(var(--assist-color))"></path>
+                    <path fill="rgb(var(--menu-icon-color))" d="M777.216 0a106.496 106.496 0 0 1 77.824 48.128A107.52 107.52 0 0 1 870.4 102.4v153.6h68.096a102.4 102.4 0 0 1 73.216 51.2 120.832 120.832 0 0 1 12.288 39.936v583.68a113.664 113.664 0 0 1-26.112 56.832 106.496 106.496 0 0 1-65.536 34.304H91.136a113.152 113.152 0 0 1-55.808-25.088A106.496 106.496 0 0 1 0 932.352V349.184a112.64 112.64 0 0 1 15.36-45.056A102.4 102.4 0 0 1 92.16 256H153.6V153.6 88.576a96.256 96.256 0 0 1 20.48-51.2A104.96 104.96 0 0 1 247.296 0z m140.288 540.16H83.456v370.688a35.84 35.84 0 0 0 0 17.92 24.576 24.576 0 0 0 13.824 10.752 17.408 17.408 0 0 0 10.24 0h816.64a21.504 21.504 0 0 0 17.92-24.576v-374.784a51.2 51.2 0 0 0-24.576 0z m-204.8 48.64a40.448 40.448 0 0 1 37.888 39.936 44.544 44.544 0 0 1-17.408 34.816l-256 220.16a41.984 41.984 0 0 1-44.032 6.656A72.192 72.192 0 0 1 409.6 870.4l-115.2-132.608a41.984 41.984 0 0 1-13.312-29.184 38.912 38.912 0 0 1 26.112-38.912 39.936 39.936 0 0 1 47.104 10.24c34.304 37.888 67.584 77.312 102.4 115.2 76.288-65.024 153.6-131.072 227.84-196.608a40.96 40.96 0 0 1 28.16-9.728zM870.4 337.92V460.8a98.304 98.304 0 0 0 34.816 2.56 90.624 90.624 0 0 0 35.328-2.56V370.688a70.144 70.144 0 0 0 0-17.92 21.504 21.504 0 0 0-15.36-14.848c-7.68-5.12-17.92 0-26.624 0s-18.432-4.608-28.16 0zM102.4 338.432a19.968 19.968 0 0 0-20.48 19.968v102.4a32.768 32.768 0 0 0 20.48 2.56h54.784V363.52a51.2 51.2 0 0 0 0-23.04c-20.992-2.56-38.912-3.072-54.784-2.048z m665.6-256H260.096a21.504 21.504 0 0 0-24.064 16.384c-3.072 2.56-2.56 6.656-3.072 10.24v325.12A59.392 59.392 0 0 0 235.52 460.8a28.16 28.16 0 0 0 8.704 2.56h512a69.12 69.12 0 0 0 30.72-2.56 28.16 28.16 0 0 0 0-8.704V108.544a17.92 17.92 0 0 0 0-10.24 22.528 22.528 0 0 0-23.04-16.384zM358.4 204.8h112.64a41.472 41.472 0 0 1 39.424 30.208 39.936 39.936 0 0 1-10.752 39.424 42.496 42.496 0 0 1-30.72 12.288H354.304a58.88 58.88 0 0 1-23.04-3.584 40.448 40.448 0 0 1-24.064-39.424 39.936 39.936 0 0 1 33.28-38.912A82.944 82.944 0 0 1 358.4 204.8z"></path>
                 </svg>`,
                 fn: () => method.save()
             }],
         },
+        loading: false,
+        wait: false
     },
     struct: {
         content: '',
@@ -170,7 +195,12 @@ const state  = reactive({
                 { value: 1, label: '显示' },
                 { value: 2, label: '隐藏' },
             ]
-        }
+        },
+        audit: [
+            { value: 0, label: '待审核' },
+            { value: 1, label: '通过' },
+            { value: 2, label: '不通过' },
+        ],
     }
 })
 
@@ -187,13 +217,13 @@ onMounted(async () => {
 const method = {
     init: async () => {
         let id = route.params?.id
-        if (!utils.is.empty(id)) state.item.id = parseInt(id)
-        await method.getTags()
-        if (!utils.is.empty(state.item.id)) {
-            await method.getPage(state.item.id)
-        } else {
-            await method.getConfig()
+        if (!utils.is.empty(id)) {
+            state.item.id = parseInt(id)
+            state.item.loading = true
         }
+        await method.getTags()
+        if (!utils.is.empty(state.item.id)) await method.getPage(state.item.id)
+        else await method.getConfig()
     },
     // 获取文章标签
     getTags: async () => {
@@ -205,7 +235,7 @@ const method = {
     },
     // Editor 切换
     getConfig: async () => {
-        const { code, data } = await axios.get('/api/config/one', { key: 'ARTICLE' })
+        const { code, data } = await axios.get('/api/config/one', { key: 'PAGE' })
         if (code !== 200) return
         if (utils.in.array(data?.json?.editor, ['tinymce', 'vditor'])) {
             state.struct.editor = data.json.editor
@@ -241,6 +271,9 @@ const method = {
         if (!utils.is.empty(data.tags)) {
             state.item.tags = data.tags.split('|').filter(item => !utils.is.empty(item)).map(item => parseInt(item))
         }
+
+        // 关闭加载状态
+        if (!utils.is.empty(id)) state.item.loading = false
     },
     // 保存
     save: async () => {
@@ -263,13 +296,17 @@ const method = {
             if (length < 10) return notyf.warn('你这太水了，10个字都不到。')
         }
         if (utils.is.empty(state.struct?.title)) return notyf.warn('你可能忘记写标题了')
-        if (utils.is.empty(state.struct?.key))   return notyf.warn('唯一键不能为空')
 
         state.struct.tags = !utils.is.empty(state.item.tags) ? `|${state.item.tags.join('|')}|` : ''
+
+        state.item.wait = true
 
         const { code, msg, data } = await axios.post('/api/pages/save', {
             ...state.struct, json: JSON.stringify(state.struct.json)
         })
+
+        state.item.wait = false
+
         if (code !== 200) return notyf.error(msg)
         notyf.success(msg)
 

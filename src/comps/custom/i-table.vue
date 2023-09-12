@@ -5,8 +5,6 @@
           :header-row-style="state.config.table.headerRowStyle" :header-cell-style="state.config.table.headerCellStyle"
           :default-sort="state.config.table.defaultSort" :style="state.config.table.style">
 
-        <!-- v-loading="state.item.loading.data" -->
-
         <!-- 自定义列 - 开始位置 -->
         <slot name="start"></slot>
 
@@ -56,7 +54,6 @@
 </template>
 
 <script setup>
-
 import notyf from "{src}/utils/notyf"
 import utils from '{src}/utils/utils'
 import axios from '{src}/utils/request'
@@ -64,10 +61,6 @@ import { CustomMouseMenu } from '@howdyjs/mouse-menu'
 
 const { ctx, proxy } = getCurrentInstance()
 const emit = defineEmits(['selection:change'])
-
-onMounted( async () => {
-    await method.init()
-})
 
 const props = defineProps({
     opts: {
@@ -95,6 +88,7 @@ const props = defineProps({
             cellStyle: {
                 backgroundColor: 'transparent',
                 border: 'unset',
+                padding: '10px 0'
             },
             headerRowStyle: {
                 backgroundColor: 'transparent !important',
@@ -106,6 +100,7 @@ const props = defineProps({
             style: {
                 background: `rgba(var(--theme-color), calc(var(--theme-opacity) * 0.15))`,
                 backdropFilter: 'blur(10px)',
+                borderRadius: '8px',
             },
         }
     },
@@ -240,7 +235,7 @@ const handle = {
             },
             ...state.config.opts.menu
         })
-        ctx.show(x, y)
+        if (!state.config.opts.menu.hidden) ctx.show(x, y)
         event.preventDefault()
     },
     // 选中

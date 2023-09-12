@@ -2,6 +2,7 @@ import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
+import { useCommStore } from '{src}/store/comm'
 import { list as MenuList } from '{src}/utils/menu'
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
@@ -244,6 +245,9 @@ route.beforeEach(async (to, from, next) => {
             }
             if (!check) return next('/')
         }
+
+        // 设置页面标题
+        useCommStore().nav.title = to.meta.title
 
         next()
 

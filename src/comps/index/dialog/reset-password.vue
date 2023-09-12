@@ -101,9 +101,13 @@
 import utils from '{src}/utils/utils.js'
 import notyf from '{src}/utils/notyf.js'
 import axios from '{src}/utils/request.js'
+import { useCommStore } from '{src}/store/comm'
 
 const { ctx, proxy } = getCurrentInstance()
-const emit  = defineEmits(['finish','login'])
+const emit  = defineEmits(['finish'])
+const store = {
+    comm: useCommStore()
+}
 const state = reactive({
     item: {
         loading:  false,        // 是否加载中
@@ -182,8 +186,7 @@ const method = {
     show: () => (state.item.dialog = true),
     // 点击登录
     login: () => {
-        state.item.dialog = false
-        emit('login')
+        store.comm.switchAuth('login', true)
     },
 }
 

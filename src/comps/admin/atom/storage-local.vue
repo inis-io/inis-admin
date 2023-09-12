@@ -1,5 +1,5 @@
 <template>
-    <div v-load="[state.status.loading, null, null]" class="card">
+    <div v-loading="state.status.loading" class="card mb-3">
         <div class="card-body">
             <i-svg name="serve" color="rgb(var(--assist-color))" size="60px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
@@ -35,7 +35,7 @@
                 <div class="col-6">
                     <div class="form-group mb-3">
                         <label class="form-label required">
-                            <el-tooltip content="签发者，比如：萌卜兔" placement="top">
+                            <el-tooltip content="自定义存储域名" placement="top">
                                 <span>
                                     <i-svg name="hint" size="14px"></i-svg>
                                     <span class="ms-1">域名：</span>

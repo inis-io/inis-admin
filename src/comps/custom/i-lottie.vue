@@ -30,17 +30,17 @@ const props = defineProps({
         type: [String, Number],
         default: '30px'
     },
-    opts: () => ({
+    opts: {
         type: Object,
         default: () => ({
             loop: true,
             autoplay: true,
             animationData: {},
         })
-    })
+    }
 })
 const state = reactive({
-    lottie: null,
+    lottie: Animation | null
 })
 
 nextTick(async () => {
@@ -51,29 +51,27 @@ const method = {
     init: async () => {
         const data = await axios.get(`/assets/json/lottie/${props.name}.json`)
         if (utils.is.empty(data)) return
-        state.lottie = lottie.loadAnimation({
+        const item = lottie.loadAnimation({
             container: dest.value,          // 选择渲染dom
             autoplay: props.modelValue,     // 自动播放
             loop: true,                     // 循环播放
             renderer: 'svg',                // 渲染格式
             animationData: data,            // 渲染动效json
-            ...props.opts,                  // 其他参数
+            // ...props.opts,                  // 其他参数
         })
+
+        state.lottie = item
     }
 }
 
 watch(() => props.modelValue, (value) => {
     if (state.lottie === null) return
     if (value) {
-        state.lottie.play()
+        state.lottie?.play()
     } else {
-        state.lottie.stop()
+        state.lottie?.stop()
     }
 })
-
-// onBeforeUnmount(() => {
-//     proxy.$refs['ctx'].destroy()
-// })
 </script>
 
 <style lang="css" scoped>

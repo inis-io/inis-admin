@@ -1,5 +1,5 @@
 <template>
-    <div v-load="[state.status.loading, null, null]" class="card">
+    <div v-loading="state.status.loading" class="card mb-3">
         <div class="card-body">
             <i-svg name="editor" color="rgb(var(--assist-color))" size="43px" class="position-absolute opacity-25" style="right: 2rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
@@ -10,7 +10,7 @@
                     </template>
                     <span class="d-inline-flex align-items-center">
                         <i-svg name="hint" color="rgb(var(--icon-color))" size="14px"></i-svg>
-                        <span class="ms-1">文章、页面</span>
+                        <span class="ms-1">页面</span>
                     </span>
                 </el-tooltip>
             </h6>
@@ -28,11 +28,11 @@
 
     <el-dialog v-model="state.status.dialog" class="custom" draggable :close-on-click-modal="false">
         <template #header>
-            <strong class="flex-center">文章 和 页面 详细配置</strong>
+            <strong class="flex-center">页面配置</strong>
         </template>
         <template #default>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip placement="top">
@@ -54,7 +54,25 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="用户发布的页面，是否需要审核" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">审核：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-select v-model="state.struct.json.audit" class="d-block custom font-13" placeholder="请选择">
+                            <el-option v-for="item in state.select.audit" :key="item.value" :label="item.label" :value="item.value">
+                                <span class="font-13">{{ item.label }}</span>
+                                <small class="text-muted float-end">{{ item.subtitle }}</small>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="是否允许用户评论" placement="top">
@@ -72,7 +90,7 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label class="form-label">
                             <el-tooltip content="是否显示评论" placement="top">
@@ -102,17 +120,18 @@
 <script setup>
 import notyf from '{src}/utils/notyf.js'
 import axios from '{src}/utils/request.js'
-import utils from '{src}/utils/utils.js'
+import utils from "{src}/utils/utils.js";
 
 const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
     struct: {
-        key: 'ARTICLE',
+        key: 'PAGE',
         json: {
             'editor': 'tinymce',
             'comment': {
                 'allow': 1, 'show': 1
-            }
+            },
+            'audit': 1,
         }
     },
     status: {
@@ -134,7 +153,11 @@ const state = reactive({
                 { value: 1, label: '显示' },
                 { value: 0, label: '隐藏' },
             ]
-        }
+        },
+        audit: [
+            { value: 1, label: '开启', subtitle: '严格一点，防止乱搞' },
+            { value: 0, label: '关闭', subtitle: '宽松一点，方便用户' },
+        ]
     }
 })
 
@@ -149,20 +172,20 @@ const method = {
         state.status.loading = true
 
         const { code, data } = await axios.get('/api/config/one', {
-            key: 'ARTICLE'
+            key: 'PAGE'
         })
 
         state.status.loading = false
 
         if (code !== 200) return
-        state.struct = utils.deepMerge(state.struct, data)
+        state.struct = data
 
         state.status.finish  = true
     },
     change: async value => {
 
         const { code, msg } = await axios.post('/api/config/save', {
-            key: 'ARTICLE',
+            key: 'PAGE',
             json: JSON.stringify({
                 ...state.struct.json,
                 editor: value

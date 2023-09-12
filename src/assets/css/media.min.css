@@ -51,9 +51,10 @@
 /* 当屏幕宽度小于768px时，应用以下样式 */
 @media screen and (max-width: 767px) {
     body[data-layout=topnav] .container-xxl, body[data-layout=topnav] .container-xl{
-        padding-left: 10px;
-        padding-right: 10px;
         max-width: 100% !important;
+    }
+    body[data-layout=topnav] .topnav .container-xxl, body[data-layout=topnav] .topnav .container-xl{
+        padding: 0 !important;
     }
     .page-title-box.hitokoto{
         justify-content: flex-end;
@@ -66,20 +67,14 @@
     }
     #app > .container-fluid{
         margin-top: 60px;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
     }
     footer{
         position: unset;
     }
     .el-dialog.custom{
         --el-dialog-width: 90% !important;
-    }
-    #account-home > .card:nth-child(1) .col-md-8 > .row,
-    #account-home > .card:nth-child(1) .col-md-8 > .row > .col > span {
-        justify-content: center;
-        text-align: center;
-    }
-    #account-home > .card:nth-child(1) .col-md-8 > .row > .col > .el-progress{
-        margin: 0 auto;
     }
     #account-home > .card:nth-child(1) .col-md-4{
         justify-content: center !important;
@@ -90,5 +85,17 @@
     .topnav > .container-fluid{
         padding-left: 0 !important;
         padding-right: 0 !important;
+    }
+    #footer{
+        position: absolute;
+        overflow: hidden;
+    }
+    .card-body{
+        padding-right: .75rem!important;
+        padding-left: .75rem!important;
+    }
+    body[inis-theme] .card,
+    body[inis-theme] .el-tabs__header{
+        margin-bottom: .75rem;
     }
 }

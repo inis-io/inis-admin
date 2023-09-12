@@ -79,10 +79,10 @@
 </template>
 
 <script setup>
-import cache from '{src}/utils/cache.js'
-import utils from '{src}/utils/utils.js'
-import notyf from '{src}/utils/notyf.js'
-import axios from '{src}/utils/request.js'
+import cache from '{src}/utils/cache'
+import utils from '{src}/utils/utils'
+import notyf from '{src}/utils/notyf'
+import axios from '{src}/utils/request'
 
 const { ctx, proxy } = getCurrentInstance()
 const emit  = defineEmits(['finish'])
@@ -92,7 +92,7 @@ const state = reactive({
         dialog: false,  // 是否显示对话框
         upload: false,  // 是否正在上传
     },
-    struct: cache.get('user-info'),
+    struct: cache.get('user-info') || {},
     select: {
         gender: [
             { value: null, label: '保密'},
@@ -107,7 +107,7 @@ const method = {
     show: () => (state.item.dialog = true),
     save: async () => {
 
-        if (utils.is.empty(state.struct.id)) return notyf.warn('请先登录！')
+        if (utils.is.empty(state.struct?.id)) return notyf.warn('请先登录！')
 
         state.item.wait           = true
 
@@ -131,7 +131,7 @@ const method = {
 
         emit('finish', data.user)
 
-        cache.set('user-info', data.user, inis.cache)
+        cache.set('user-info', data.user, 10)
     },
     // 上传
     async upload(field = 'image') {

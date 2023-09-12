@@ -1,5 +1,5 @@
 <template>
-    <div v-load="[state.status.loading, null, null]" class="card">
+    <div v-loading="state.status.loading" class="card mb-3">
         <div class="card-body">
             <i-svg name="ram" color="rgb(var(--assist-color))" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted mt-0">
@@ -17,9 +17,11 @@
                 </el-tooltip>
             </h6>
             <h2 class="m-b-20">
-                <el-switch v-model="state.status.active" v-on:change="method.change" :disabled="!state.status.finish"
-                           active-text="开启" inactive-text="关闭">
-                </el-switch>
+                <el-tooltip content="请不要作死，内存很宝贵，不要用在这种地方，除非你是本地环境或者不怕死" placement="top">
+                    <el-switch v-model="state.status.active" v-on:change="method.change" disabled
+                               active-text="开启" inactive-text="关闭">
+                    </el-switch>
+                </el-tooltip>
             </h2>
             <span class="badge bg-success font-white"> +20% </span>
             <span class="text-muted">

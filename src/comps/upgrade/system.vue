@@ -1,7 +1,7 @@
 <template>
-    <span v-if="state.lottie.show" class="wh-30px position-relative">
+    <span v-if="state.lottie.show" class="wh-30px position-relative upgrade-system">
         <i v-if="state.lottie.play" class="red-dot">.</i>
-        <i-lottie name="beil" v-model="state.lottie.play" v-on:click="state.item.dialog = true"></i-lottie>
+        <i-lottie name="bell" v-model="state.lottie.play" v-on:click="state.item.dialog = true" class="lottie"></i-lottie>
     </span>
     <teleport to="body">
         <el-dialog v-model="state.item.dialog" class="custom pt-0 pb-0" :close-on-click-modal="false" v-on:close="method.close">
@@ -221,8 +221,8 @@ const method = {
 .red-dot {
     display: inline-block;
     color: var(--bs-danger) !important;
-    top: -38px;
-    right: -3px;
+    top: -30px;
+    right: 0;
     font-size: 40px;
     font-style: normal;
     position: absolute;

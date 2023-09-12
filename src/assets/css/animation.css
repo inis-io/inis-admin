@@ -306,3 +306,91 @@ div.loaded div.spinner-box {
     transform: rotate(-45deg);
     width: 1000px;
 }
+
+/* ==================== 摇动 水平方向 - 开始 ==================== */
+@keyframes shake-horizontal {
+    10%, 90% {transform:translate3d(-1px,0,0);}
+    20%, 80% {transform:translate3d(2px,0,0);}
+    30%, 70% {transform:translate3d(-4px,0,0);}
+    40%, 60% {transform:translate3d(4px,0,0);}
+    50%, 50% {transform:translate3d(-4px,0,0);}
+}
+.shake-horizontal.active {
+    animation:shake-horizontal 0.8s cubic-bezier(.36,.07,.19,.97) both;
+    transform:translate3d(0,0,0);
+    backface-visibility:hidden;
+    perspective:1000px;
+}
+/* ==================== 摇动 水平方向 - 结束 ==================== */
+
+/* ==================== 摇动 细微 - 开始 ==================== */
+@keyframes shake-little {
+    0% {transform:translate(0,0)}
+    2% {transform:translate(-1px,1px)}
+    4% {transform:translate(-1px,-1px)}
+    6% {transform:translate(0,0)}
+    8% {transform:translate(1px,1px)}
+    10% {transform:translate(1px,-1px)}
+    12% {transform:translate(0,0)}
+    14% {transform:translate(-1px,1px)}
+    16% {transform:translate(-1px,-1px)}
+    18% {transform:translate(0,0)}
+    20% {transform:translate(1px,1px)}
+    22% {transform:translate(1px,-1px)}
+    24% {transform:translate(0,0)}
+    26% {transform:translate(-1px,1px)}
+    28% {transform:translate(-1px,-1px)}
+    30% {transform:translate(0,0)}
+    32% {transform:translate(1px,1px)}
+    34% {transform:translate(1px,-1px)}
+    36% {transform:translate(0,0)}
+    38% {transform:translate(-1px,1px)}
+    40% {transform:translate(-1px,-1px)}
+    42% {transform:translate(0,0)}
+    44% {transform:translate(1px,1px)}
+    46% {transform:translate(1px,-1px)}
+    48% {transform:translate(0,0)}
+    50% {transform:translate(-1px,1px)}
+    52% {transform:translate(-1px,-1px)}
+    54% {transform:translate(0,0)}
+    56% {transform:translate(1px,1px)}
+    58% {transform:translate(1px,-1px)}
+    60% {transform:translate(0,0)}
+    62% {transform:translate(-1px,1px)}
+    64% {transform:translate(-1px,-1px)}
+    66% {transform:translate(0,0)}
+    68% {transform:translate(1px,1px)}
+    70% {transform:translate(1px,-1px)}
+    72% {transform:translate(0,0)}
+    74% {transform:translate(-1px,1px)}
+    76% {transform:translate(-1px,-1px)}
+    78% {transform:translate(0,0)}
+    80% {transform:translate(1px,1px)}
+    82% {transform:translate(1px,-1px)}
+    84% {transform:translate(0,0)}
+    86% {transform:translate(-1px,1px)}
+    88% {transform:translate(-1px,-1px)}
+    90% {transform:translate(0,0)}
+    92% {transform:translate(1px,1px)}
+    94% {transform:translate(1px,-1px)}
+    96% {transform:translate(0,0)}
+    98% {transform:translate(-1px,1px)}
+    100% {transform:translate(-1px,-1px)}
+}
+.shake-little.active {
+    animation-name: shake-little;
+    animation-duration: 4s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+    transform: translate(0,0);
+}
+.shake-little-hover:hover {
+    animation-name: shake-little;
+    animation-duration: 4s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+    transform: translate(0,0);
+}
+/* ==================== 摇动 细微 - 结束 ==================== */

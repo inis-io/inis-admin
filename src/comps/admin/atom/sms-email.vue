@@ -1,5 +1,5 @@
 <template>
-    <div v-load="[state.status.loading, null, null]" class="card">
+    <div v-loading="state.status.loading" class="card mb-3">
         <div class="card-body">
             <i-svg name="email" color="rgb(var(--assist-color))" size="55px" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
@@ -91,7 +91,7 @@
                 <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label class="form-label">
-                            <el-tooltip content="邮件昵称，可以为空" placement="top">
+                            <el-tooltip content="邮件昵称，可以为空，但不能包含中文" placement="top">
                                 <span>
                                     <i-svg name="hint" size="14px"></i-svg>
                                     <span class="ms-1">邮件昵称：</span>
@@ -221,11 +221,12 @@ const method = {
         // 检查关键配置是否有变化
         if (!utils.object.equal(state.struct, state.backup, field)) return notyf.warn('请先完成邮件服务测试')
 
-        if (utils.is.empty(state.struct.host))  return notyf.warn('请填写邮件服务器地址！')
-        if (utils.is.empty(state.struct.port))  return notyf.warn('请填写邮件服务器端口！')
+        if (utils.is.empty(state.struct.host))      return notyf.warn('请填写邮件服务器地址！')
+        if (utils.is.empty(state.struct.port))      return notyf.warn('请填写邮件服务器端口！')
         if (utils.is.empty(state.struct.account))   return notyf.warn('请填写邮件账号！')
         if (utils.is.empty(state.struct.password))  return notyf.warn('请填写服务密码！')
         if (utils.is.empty(state.struct.sign_name)) return notyf.warn('请填写邮件签名！')
+        if (method.chinese(state.struct.nickname))  return notyf.warn('邮件昵称不能包含中文！')
 
         state.status.wait   = true
 
@@ -239,13 +240,14 @@ const method = {
     },
     test: async () => {
 
-        if (utils.is.empty(state.struct.email)) return notyf.warn('请填写接收者邮箱！')
-        if (utils.is.empty(state.struct.host))  return notyf.warn('请填写邮件服务器地址！')
-        if (utils.is.empty(state.struct.port))  return notyf.warn('请填写邮件服务器端口！')
+        if (utils.is.empty(state.struct.email))     return notyf.warn('请填写接收者邮箱！')
+        if (utils.is.empty(state.struct.host))      return notyf.warn('请填写邮件服务器地址！')
+        if (utils.is.empty(state.struct.port))      return notyf.warn('请填写邮件服务器端口！')
         if (utils.is.empty(state.struct.account))   return notyf.warn('请填写邮件账号！')
         if (utils.is.empty(state.struct.password))  return notyf.warn('请填写服务密码！')
         if (utils.is.empty(state.struct.sign_name)) return notyf.warn('请填写邮件签名！')
         if (!utils.is.email(state.struct.email))    return notyf.warn('接收者邮箱格式不正确！')
+        if (method.chinese(state.struct.nickname))  return notyf.warn('邮件昵称不能包含中文！')
 
         state.status.test         = true
 
@@ -261,6 +263,11 @@ const method = {
 
         notyf.error(`${msg}<br>${data}`)
     },
+    chinese: value => {
+        // 匹配中文字符的Unicode范围
+        let pattern = /[\u4e00-\u9fa5]/
+        return pattern.test(value)
+    }
 }
 
 watch(() => state.struct, () => {

@@ -60,7 +60,7 @@ const state = reactive({
 const method = {
     edit: {
         finish() {
-            state.struct = cache.ge('user-info')
+            state.struct = cache.get('user-info')
         },
         click: () => {
             state.item.edit = true
@@ -69,14 +69,13 @@ const method = {
     },
     save: async () => {
 
-        if (utils.is.empty(state.struct.email))  return notyf.warn('请输入邮箱！')
-        if (!utils.is.email(state.struct.email)) return notyf.warn('邮箱格式不正确！')
-        if (utils.is.empty(state.struct.code))   return notyf.warn('请输入验证码！')
+        if (utils.is.empty(state.struct?.email))  return notyf.warn('请输入邮箱！')
+        if (utils.is.empty(state.struct?.code))   return notyf.warn('请输入验证码！')
 
         state.item.wait     = true
 
         const { code, msg } = await axios.put('/api/users/email', {
-            email: state.struct.email, code: state.struct.code
+            email: state.struct?.email, code: state.struct?.code
         })
 
         state.item.wait     = false
@@ -94,11 +93,10 @@ const method = {
     },
     code: async () => {
 
-        if (utils.is.empty(state.struct.email))  return notyf.warn('请输入邮箱！')
-        if (!utils.is.email(state.struct.email)) return notyf.warn('邮箱格式不正确！')
+        if (utils.is.empty(state.struct?.email))  return notyf.warn('请输入邮箱！')
 
         const { code, msg } = await axios.put('/api/users/email', {
-            email: state.struct.email,
+            email: state.struct?.email,
         })
 
         if (!utils.in.array(code, [200,201])) return notyf.error(msg)
@@ -118,7 +116,7 @@ const method = {
 
         emit('finish', data.user)
 
-        cache.set('user-info', data.user, inis.cache)
+        cache.set('user-info', data.user, 10)
     },
 }
 

@@ -3,11 +3,12 @@ import load from './load.js'
 import lock from './lock.js'
 import imageBox   from './image-box.js'
 import imageScale from './image-scale.js'
+import fancybox from './fancybox.js'
 import slideIn  from '{src}/utils/directives/slide-in.js'
 import { MouseMenuDirective } from '@howdyjs/mouse-menu'
 
 const directives = {
-    imageBox, imageScale, mouseMenu: MouseMenuDirective, load, lock, slideIn
+    imageBox, imageScale, mouseMenu: MouseMenuDirective, load, lock, slideIn, fancybox
 }
 
 export default {

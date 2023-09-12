@@ -113,13 +113,17 @@
 </template>
 
 <script setup>
-import cache from '{src}/utils/cache.js'
 import utils from '{src}/utils/utils.js'
 import notyf from '{src}/utils/notyf.js'
 import axios from '{src}/utils/request.js'
+import cache from "{src}/utils/cache.js";
+import { useCommStore } from '{src}/store/comm'
 
 const { ctx, proxy } = getCurrentInstance()
-const emit  = defineEmits(['finish','login'])
+const emit  = defineEmits(['finish'])
+const store = {
+    comm: useCommStore()
+}
 const state = reactive({
     item: {
         loading:  false,        // 是否加载中
@@ -164,9 +168,14 @@ const method = {
         if (code !== 200) return notyf.error(msg)
 
         notyf.success(msg)
-        cache.set('user-info', data.user, inis.cache)
+        cache.set('user-info', data.user, 10)
         utils.set.cookie(globalThis?.inis?.token_name || 'INIS_LOGIN_TOKEN', data.token, 7 * 24 * 60 * 60)
         state.item.dialog = false
+        // 更新仓库状态
+        store.comm.login.finish = true
+        store.comm.login.user   = data.user
+        store.comm.switchAuth('register', false)
+        // 通知父组件
         emit('finish', data.user)
     },
     // 获取验证码
@@ -190,8 +199,7 @@ const method = {
     show: () => (state.item.dialog = true),
     // 点击登录
     login: () => {
-        state.item.dialog = false
-        emit('login')
+        store.comm.switchAuth('login', true)
     },
 }
 

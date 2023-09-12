@@ -1,27 +1,34 @@
 <template>
-    <div class="container-fluid container-box">
+    <div class="container-fluid container-box px-2 px-lg-3">
         <div class="row">
-            <div v-for="item in 8" :key="item" class="col-md-3">
-                <div v-slide-in class="card">
-                    <div class="card-body p-2">
-                        <el-image :src="'/api/file/rand?name=imgs.txt&size=250x150&redirect=true&id=' + item" fit="cover" class="w-100 cover" style="height: 150px">
-                        </el-image>
-                    </div>
-                </div>
+            <div class="col-lg-9 px-2">
+                <atom-banner-color-thief class="mb-3"></atom-banner-color-thief>
+                <atom-post></atom-post>
+            </div>
+            <div class="col-lg-3 sticky">
+                <base-info></base-info>
+                <atom-ranking></atom-ranking>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import utils from '{src}/utils/utils'
-import axios from '{src}/utils/request'
-
-const { ctx, proxy } = getCurrentInstance()
+import AtomPost from '{src}/comps/index/atom/post.vue'
+import BaseInfo from '{src}/comps/index/user/base-info.vue'
+import AtomRanking from '{src}/comps/index/atom/ranking.vue'
+import AtomHitokoto from '{src}/comps/index/atom/hitokoto.vue'
+import AtomBannerColorThief from '{src}/comps/index/atom/banner/color-thief.vue'
 
 const router = useRouter()
 const state  = reactive({
-    
-})
 
+})
 </script>
+
+<style lang="css" scoped>
+.sticky > :nth-last-child(1){
+    position: sticky;
+    top: 5.8rem;
+}
+</style>

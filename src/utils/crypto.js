@@ -2,7 +2,6 @@ import CryptoJS from 'crypto-js'
 
 // 对称加密
 class AES {
-
     constructor(key, iv) {
         this.iv  = CryptoJS?.enc.Utf8.parse(iv)
         this.key = CryptoJS?.enc.Utf8.parse(key)

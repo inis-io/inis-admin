@@ -1,4 +1,5 @@
 <template>
+    <el-progress v-if="state.progress.show" :percentage="state.progress.value" :color="state.progress.color"></el-progress>
     <editor v-bind="$attrs" :init="state.init"></editor>
 </template>
 
@@ -23,12 +24,6 @@ import 'tinymce/plugins/wordcount'
 
 const { ctx, proxy } = getCurrentInstance()
 
-onMounted(async () => {
-    // const entries = Object.entries(proxy?.$refs['i-ctx'])
-    // for (const [key, value] of entries) ctx[key] = value
-    await tinymce.init({})
-})
-
 const base_url = (process.env.NODE_ENV === 'production' ? (import.meta.env.VITE_BASE || '/') : '/')
 
 const props = defineProps({
@@ -47,9 +42,6 @@ const state = reactive({
         base_url: base_url + 'assets/libs/tinymce',                                          // 基础路径
         plugins: 'lists link image table code wordcount help',
         language: 'zh-Hans',                                                    // 语言
-        // language_url: (process.env.NODE_ENV === 'production' ? '/admin/' : '/') + 'assets/libs/tinymce/langs/zh-Hans.js',                     // 语言包路径
-        // content_css: (process.env.NODE_ENV === 'production' ? '/admin/' : '/') + 'assets/libs/tinymce/skins/content/default/content.css',
-        // skin_url: (process.env.NODE_ENV === 'production' ? '/admin/' : '/') + 'assets/libs/tinymce/skins/ui/oxide',                           // 皮肤
         browser_spellcheck: true,                                               // 拼写检查
         branding: false,                                                        // 去水印
         elementpath: false,                                                     // 禁用编辑器底部的状态栏
@@ -66,7 +58,6 @@ const state = reactive({
         font_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue;PingFang SC;sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun;serifsans-serif;Terminal=terminal;monaco;Times New Roman=times new roman;times', // 字体
         file_picker_types: 'image',
         images_upload_credentials: true,
-        // content_style: '* { color: white; }',
         // 上传
         images_upload_handler: async (blobInfo) => {
 
@@ -74,25 +65,60 @@ const state = reactive({
 
                 const params = new FormData
                 params.append('file', blobInfo.blob())
-                params.append('compress', false)
+
+                state.progress.show = true
 
                 const { data, code, msg } = await axios.post('/api/file/upload', params, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
+                    },
+                    // 上传进度
+                    onUploadProgress: speed => {
+                        state.progress.value = Math.round(speed.loaded / speed.total * 100)
                     }
                 })
 
-                if (code === 200) {
-                    // notyf.success('上传成功！')
-                    // 存放返回成功的图片路径
-                    return data
-                } else notyf.error(msg)
+                if (code !== 200) {
+                    notyf.error(msg)
+                    state.progress.color = 'var(--bs-danger)'
+                    setTimeout(() => (state.progress.show  = false), 3000)
+                }
+
+                const { path } = data
+
+                state.progress.show  = false
+
+                return path
 
             } catch (error) {
                 notyf.error(error)
+                state.progress.color = 'var(--bs-danger)'
+                setTimeout(() => (state.progress.show  = false), 3000)
             }
         },
         ...props.opts,
+    },
+    progress: {
+        value: 0,
+        show : false,
+        color: 'var(--bs-dark)',
+    }
+})
+
+onMounted(async () => {
+    await tinymce.init({})
+})
+
+// 监听进度条的进度，动态改变颜色
+watch(() => state.progress.value, value => {
+    if (value < 30) {
+        state.progress.color = 'var(--bs-dark)'
+    } else if (value < 60) {
+        state.progress.color = 'var(--bs-primary)'
+    } else if (value < 100) {
+        state.progress.color = '#409eff'
+    } else if (value === 100) {
+        state.progress.color = 'var(--bs-success)'
     }
 })
 </script>

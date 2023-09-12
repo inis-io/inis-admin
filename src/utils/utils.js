@@ -170,7 +170,7 @@ class helper{
 
         // 链式操作 compare 属性
         this.compare = {
-            version:(v1,v2,parting) => this.CompareVersion(v1,v2,parting)
+            version:(versionA,versionB,parting) => this.CompareVersion(versionA,versionB,parting)
         }
 
         // 链式操作 to 属性
@@ -785,12 +785,12 @@ class helper{
             } else if (timestampDiff < 3600) {
                 result = Math.floor(timestampDiff / 60) + "分钟前";
             } else if (curDate.getFullYear() === Y && curDate.getMonth() + 1 === m && curDate.getDate() === d) {
-                result = '今天' + zeroize(H) + ':' + zeroize(i);
+                result = '今天 ' + zeroize(H) + ':' + zeroize(i);
             } else {
                 let newDate = new Date((curTimestamp - 86400) * 1000);
 
                 if (newDate.getFullYear() === Y && newDate.getMonth() + 1 === m && newDate.getDate() === d) {
-                    result = '昨天' + zeroize(H) + ':' + zeroize(i);
+                    result = '昨天 ' + zeroize(H) + ':' + zeroize(i);
                 } else if (curDate.getFullYear() === Y) {
                     result = zeroize(m) + '-' + zeroize(d) + ' ' + zeroize(H) + ':' + zeroize(i);
                 } else {
@@ -1797,21 +1797,21 @@ class helper{
      * @param {string} parting [分隔符]
      * @return {boolean}
      */
-    CompareVersion(v1, v2, parting = '.')
+    CompareVersion(versionA, versionB, parting = '.')
     {
-        if (v2 && v1) {
+        if (versionA && versionB) {
 
             // 将两个版本号拆成数字
-            let array2 = v2.split(parting)
-            let array1 = v1.split(parting)
-            let minLength = Math.min(array2.length, array1.length)
+            let arrayA = versionA.split(parting)
+            let arrayB = versionB.split(parting)
+            let minLength = Math.min(arrayA.length, arrayB.length)
             let position = 0
             let diff = 0
 
             // 依次比较版本号每一位大小，当对比得出结果后跳出循环（后文有简单介绍）
-            while (position < minLength && ((diff = parseInt(array2[position]) - parseInt(array1[position])) === 0)) position++;
+            while (position < minLength && ((diff = parseInt(arrayA[position]) - parseInt(arrayB[position])) === 0)) position++;
 
-            diff = (diff !== 0) ? diff: (array2.length - array1.length);
+            diff = (diff !== 0) ? diff: (arrayA.length - arrayB.length);
 
             // 若versionA大于versionB，则返回true
             return diff > 0;
@@ -1831,21 +1831,26 @@ class helper{
     toScroll(number = 0, time)
     {
         if (!time) {
-            document.body.scrollTop = document.documentElement.scrollTop = number;
-            return number;
+            document.body.scrollTop = document.documentElement.scrollTop = number
+            return number
         }
-        const spacingTime = 20; // 设置循环的间隔时间  值越小消耗性能越高
-        let spacingInex = time / spacingTime; // 计算循环的次数
-        let nowTop = document.body.scrollTop + document.documentElement.scrollTop; // 获取当前滚动条位置
-        let everTop = (number - nowTop) / spacingInex; // 计算每次滑动的距离
-        let scrollTimer = setInterval(() => {
-            if (spacingInex > 0) {
-                spacingInex--;
-                this.toScroll(nowTop += everTop);
+        // 设置循环的间隔时间  值越小消耗性能越高
+        const interval = 20
+        // 计算循环的次数
+        let index = time / interval
+        // 获取当前滚动条位置
+        let item  = document.body.scrollTop + document.documentElement.scrollTop
+        // 计算每次滑动的距离
+        let step  = (number - item) / index
+        let timer   = setInterval(() => {
+            if (index > 0) {
+                index--
+                this.toScroll(item += step)
             } else {
-                clearInterval(scrollTimer); // 清除计时器
+                // 清除计时器
+                clearInterval(timer)
             }
-        }, spacingTime);
+        }, interval)
     }
 
     /*
@@ -2449,6 +2454,13 @@ class helper{
         }
     }
 
+    uuid() {
+        const temp = URL.createObjectURL(new Blob())
+        const uuid = temp.toString()
+        // 释放这个url
+        URL.revokeObjectURL(temp)
+        return uuid.substring(uuid.lastIndexOf("/") + 1)
+    }
     // END
 }
 

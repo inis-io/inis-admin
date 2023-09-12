@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid container-box">
-        <div class="row">
-            <div class="col-lg-6 d-lg-flex d-none">
+        <div class="row d-none d-lg-flex">
+            <div class="col-lg-6 d-flex">
                 <el-dropdown v-if="!state.item.tabs.includes('setting')" class="custom mimic me-2" trigger="click">
                     <span class="el-dropdown-link d-flex align-items-center">
                         {{ state.item.sort }}
@@ -26,20 +26,20 @@
         </div>
         <div class="row mt-3">
             <div class="col-12">
-                <el-tabs v-model="state.item.tabs" id="tabs-area">
+                <el-tabs v-model="state.item.tabs" v-on:tab-change="method.change" id="tabs-area" class="circle">
 
                     <el-tab-pane name="all">
                         <template #label>
                             <span class="fw-bolder font-12">全部</span>
                         </template>
-                        <table-qps-warn :params="state.params.all" v-on:refresh="method.refresh" ref="all"></table-qps-warn>
+                        <table-qps-warn :params="state.params.all" v-model:init="state.tabs.all" v-on:refresh="method.refresh" ref="all"></table-qps-warn>
                     </el-tab-pane>
 
                     <el-tab-pane name="remove">
                         <template #label>
                             <span class="fw-bolder font-12">回收站</span>
                         </template>
-                        <table-qps-warn :params="state.params.remove" v-on:refresh="method.refresh" ref="remove" type="remove"></table-qps-warn>
+                        <table-qps-warn :params="state.params.remove" v-model:init="state.tabs.remove" v-on:refresh="method.refresh" ref="remove" type="remove"></table-qps-warn>
                     </el-tab-pane>
 
                     <el-tab-pane name="setting">
@@ -82,8 +82,8 @@ const state  = reactive({
             menuList: [{
                 label: '刷新',
                 icon: `<svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="14" height="14">
-                    <path fill="rgb(var(--assist-color))" d="M608 928c-229.76 0-416-186.24-416-416h-0.128c0-0.416 0.128-0.768 0.128-1.184a95.904 95.904 0 1 0-191.872-1.184c0 0.384-0.128 0.768-0.128 1.184l0.032 0.384c0 0.288 0.096 0.544 0.096 0.8H0c0 282.784 229.216 512 512 512 282.016 0 510.592-227.968 511.872-509.632C1022.592 743.072 836.928 928 608 928z"></path>
-                    <path fill="rgb(var(--assist-color))" d="M1023.872 512H1024c0-282.784-229.216-512-512-512C230.016 0 1.408 227.968 0.128 509.632 1.408 280.96 187.072 96 416 96c229.76 0 416 186.24 416 416h0.128c0 0.416-0.128 0.768-0.128 1.184a96 96 0 0 0 96 96 95.872 95.872 0 0 0 95.872-94.816c0-0.416 0.128-0.768 0.128-1.184l-0.032-0.384c0-0.288-0.096-0.544-0.096-0.8z"></path>
+                    <path fill="rgb(var(--menu-icon-color))" d="M608 928c-229.76 0-416-186.24-416-416h-0.128c0-0.416 0.128-0.768 0.128-1.184a95.904 95.904 0 1 0-191.872-1.184c0 0.384-0.128 0.768-0.128 1.184l0.032 0.384c0 0.288 0.096 0.544 0.096 0.8H0c0 282.784 229.216 512 512 512 282.016 0 510.592-227.968 511.872-509.632C1022.592 743.072 836.928 928 608 928z"></path>
+                    <path fill="rgb(var(--menu-icon-color))" d="M1023.872 512H1024c0-282.784-229.216-512-512-512C230.016 0 1.408 227.968 0.128 509.632 1.408 280.96 187.072 96 416 96c229.76 0 416 186.24 416 416h0.128c0 0.416-0.128 0.768-0.128 1.184a96 96 0 0 0 96 96 95.872 95.872 0 0 0 95.872-94.816c0-0.416 0.128-0.768 0.128-1.184l-0.032-0.384c0-0.288-0.096-0.544-0.096-0.8z"></path>
                 </svg>`,
                 fn: () => method.refresh()
             }],
@@ -98,11 +98,10 @@ const state  = reactive({
             onlyTrashed: true
         },
     },
-})
-
-onMounted(async () => {
-    // 追加鼠标右键菜单
-    state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
+    tabs: {
+        all: false,
+        remove: false,
+    }
 })
 
 // 方法
@@ -125,7 +124,15 @@ const method = {
         // 批量刷新
         for (let item of args) proxy.$refs[item]['init']()
     },
+    // 切换 tab
+    change: (name) => state.tabs[name] = true
 }
+
+onMounted(async () => {
+    state.tabs.all = true
+    // 追加鼠标右键菜单
+    state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
+})
 
 watch(() => state.item.search, (val) => {
 
@@ -137,7 +144,7 @@ watch(() => state.item.search, (val) => {
             ['path', `%${val}%`],
             ['agent', `%${val}%`],
             ['remark', `%${val}%`],
-            ['method', `${val.toUpperCase()}`],
+            ['method', `${val?.toUpperCase()}`],
         ]
         else delete state.params[item].like
     }

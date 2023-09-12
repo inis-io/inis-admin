@@ -1,8 +1,8 @@
 import axios from 'axios'
 import utils from '{src}/utils/utils'
 
-//设置超时
-axios.defaults.timeout = 10 * 1000
+// 设置超时
+axios.defaults.timeout = 60 * 1000
 axios.defaults.baseURL = !utils.is.empty(globalThis?.inis?.api?.uri) ? globalThis?.inis?.api?.uri : ''
 
 // 请求拦截

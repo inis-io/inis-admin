@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from '{src}/app.vue'
 import route  from '{src}/route'
+import { createPinia } from 'pinia'
 
 // 注册 vsg-icons 组件
 import 'virtual:svg-icons-register'
@@ -19,8 +20,10 @@ import socket from '{src}/utils/socket'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
+const pinia = createPinia()
+
 const app = createApp(App)
-app.use(route).use(directives).use(ElementPlus)
+app.use(route).use(directives).use(ElementPlus).use(pinia)
 app.component('i-svg', svg)
 app.component('i-lottie', lottie)
 app.provide('socket', socket)
