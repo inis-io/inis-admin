@@ -231,7 +231,7 @@ const state  = reactive({
         // 封面数据
         cover: {
             // 预览图
-            preview: {},
+            preview: [],
             // 外链图
             links: ''
         },

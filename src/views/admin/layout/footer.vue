@@ -2,8 +2,13 @@
     <footer id="footer" class="text-white user-select-none">
         <span>Copyright © {{ state.year.start }} ~ {{ state.year.end }}</span>
         <span v-if="state.site.show"> &
-            <a :href="state.site.struct.copy.link" target="_blank" class="text-white">
-                {{ state.site.struct.copy.code || '备案码' }}
+            <a :href="state.site.struct?.copy?.link" target="_blank" class="text-white">
+                {{ state.site.struct?.copy?.code || '备案码' }}
+            </a>
+        </span>
+        <span v-if="!utils.is.empty(state.site.struct?.police?.code)"> &
+            <a :href="state.site.struct?.police?.link" target="_blank" class="text-white">
+                {{ state.site.struct?.police?.code || '公安备案' }}
             </a>
         </span>
         <span> & <a href="https://inis.cc" target="_blank" class="text-white">inis {{ state.version.system }}</a></span>
@@ -12,9 +17,9 @@
 </template>
 
 <script setup>
+import utils from '{src}/utils/utils'
 import cache from '{src}/utils/cache'
 import axios from '{src}/utils/request'
-import utils from "{src}/utils/utils.js";
 
 const state = reactive({
     year: {

@@ -36,7 +36,7 @@ const method = {
         if (code !== 200) return
 
         // 本地版本与最新版本对比
-        if (!utils.compare.version(inis?.version, data?.version)) return
+        if (!utils.compare.version(data?.version, inis?.version)) return
 
         state.struct      = data
 

@@ -42,11 +42,11 @@
                                 </div>
                                 <el-avatar :src="store.comm.getLogin.user?.avatar" shape="square" size="medium"></el-avatar>
                             </template>
-                            <el-menu-item index="/admin">
+                            <el-menu-item v-on:click="method.push({ path: '/admin' })" index="/admin">
                                 <i-svg name="console" size="16px" class="me-1"></i-svg>
                                 控制台
                             </el-menu-item>
-                            <el-menu-item index="/admin/account/home">
+                            <el-menu-item v-on:click="method.push({ path: '/admin/account/home' })" index="/admin/account/home">
                                 <i-svg name="personal" size="15px" class="me-1"></i-svg>
                                 个人中心
                             </el-menu-item>
@@ -67,9 +67,12 @@
                      <span v-if="!store.comm.getLogin.finish" class="mx-2">
                         <i-svg name="user" size="26px" color="rgb(var(--assist-color))"></i-svg>
                     </span>
-                    <span v-else v-on:click="push({ path: '/admin' })">
+                    <div v-else v-on:click="push({ path: '/admin' })" class="d-flex align-items-center justify-content-center" style="margin-top: -8px">
+                        <span class="d-block wh-30px">
+                            <upgrade-system></upgrade-system>
+                        </span>
                         <el-avatar :src="store.comm.getLogin.user?.avatar" :size="26" class="mx-2 mirror-scan"></el-avatar>
-                    </span>
+                    </div>
                 </div>
             </nav>
         </div>

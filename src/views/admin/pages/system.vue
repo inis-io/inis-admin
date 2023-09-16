@@ -117,9 +117,12 @@
 
                     <el-tab-pane name="inis">
                         <template #label>
-                            <span class="fw-bolder font-12">inis 社区</span>
+                            <span class="fw-bolder font-12">inis</span>
                         </template>
                         <div class="row">
+                            <div class="col-md-4">
+                                <atom-upgrade ref="upgrade" v-on:refresh="method.refresh"></atom-upgrade>
+                            </div>
                             <div class="col-md-4">
                                 <device-bind ref="device-bind" v-on:refresh="method.refresh"></device-bind>
                             </div>
@@ -136,6 +139,7 @@
 
 <script setup>
 import MouseMenu from '@howdyjs/mouse-menu'
+import { useCommStore } from '{src}/store/comm'
 import { config as MenuConfig, list as MenuList } from '{src}/utils/menu'
 import AtomSmsEmail from '{src}/comps/admin/atom/sms-email.vue'
 import AtomSmsAliyun from '{src}/comps/admin/atom/sms-aliyun.vue'
@@ -157,7 +161,7 @@ import AtomPage from '{src}/comps/admin/atom/page.vue'
 import AtomArticle from '{src}/comps/admin/atom/article.vue'
 import AtomSiteInfo from '{src}/comps/admin/atom/site-info.vue'
 import DeviceBind from '{src}/comps/inis/device/bind.vue'
-import { useCommStore } from '{src}/store/comm'
+import AtomUpgrade from '{src}/comps/admin/atom/upgrade.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 const store  = {
@@ -180,7 +184,7 @@ const state  = reactive({
         },
     },
     refresh: {
-        inis    : ['device-bind'],
+        inis    : ['device-bind','upgrade'],
         other   : ['site-info','page','article'],
         optimize: ['cache-redis','cache-file','cache-ram'],
         sms     : ['sms-email','sms-aliyun','sms-tencent'],

@@ -1384,18 +1384,51 @@ body[inis-theme] .vditor-resize > div{
 body[inis-theme] .markdown blockquote{
     font-size: 14px;
     padding: 6px 23px;
-    margin: 22px 0;
-    border-left: .25em solid rgb(var(--assist-color));
-    background-color: #f5f5f5;
-    font-weight: 400;
-}
-body[inis-theme] .markdown blockquote > p {
     margin: 10px 0;
+    border-left: .25em solid rgb(var(--assist-color));
+    background: rgba(var(--theme-color), var(--theme-opacity)) !important;
+    backdrop-filter: var(--theme-blur);
+    font-weight: 400;
+    -webkit-box-shadow: #0000000d 0 1px 2px;
+    box-shadow: #0000000d 0 1px 2px;
+    border-radius: 0 6px 6px 0;
+}
+body[inis-theme] .markdown p,
+body[inis-theme] .markdown blockquote > p {
+    margin: 5px 0;
+}
+body[inis-theme] .markdown ol{
+    margin-bottom: 0;
 }
 body[inis-theme] .markdown img{
-    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    width: 80%;
     height: auto;
+    max-height: 300px;
+    border-radius: 6px;
     object-fit: cover;
+}
+body[inis-theme] .markdown table {
+    border: unset;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+body[inis-theme] .markdown table td{
+    padding: 8px 12px;
+    min-width: 0;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    position: relative;
+    text-align: left;
+    z-index: 1;
+}
+body[inis-theme] .markdown table tr{
+    background-color: #f8f8f8;
+}
+body[inis-theme] .markdown table tr:nth-child(2n) {
+    background-color: #fff;
 }
 /* ==================== 自定义 markdown - 结束 ==================== */
 /* ==================== 自定义 右键菜单 - 开始 ==================== */
@@ -1473,4 +1506,25 @@ body[inis-theme] .upgrade-system .lottie span svg path{
 }
 body[inis-theme] .bg-image{
     background-image: linear-gradient(90deg, #f5faff, #e8f2ff);
+}
+body[inis-theme] .red-dot {
+    display: inline-block;
+    color: var(--bs-danger) !important;
+    top: -35px;
+    right: 0;
+    font-size: 40px;
+    font-style: normal;
+    position: absolute;
+    animation: red-dot 1s infinite;
+}
+@keyframes red-dot {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

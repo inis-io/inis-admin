@@ -39,14 +39,18 @@ const state = reactive({
         placeholder:'请输入内容 ...',
         promotion: false,                                                       // 高级升级促销选项
         height: 600,
-        base_url: base_url + 'assets/libs/tinymce',                                          // 基础路径
+        base_url: base_url + 'assets/libs/tinymce',                             // 基础路径
         plugins: 'lists link image table code wordcount help',
+        mobile: {
+            menubar: true,
+        },
         language: 'zh-Hans',                                                    // 语言
         browser_spellcheck: true,                                               // 拼写检查
         branding: false,                                                        // 去水印
         elementpath: false,                                                     // 禁用编辑器底部的状态栏
         statusbar: false,                                                       // 隐藏编辑器底部的状态栏
         // paste_data_images: false,                                            // 不允许粘贴图像
+        convert_urls: false,                                                    // 禁止自动转换url
         content_style: `
             * { color: rgb(${utils.get.css.var('--theme-font-color')}); }
             html{scrollbar-width: thin;scrollbar-color: rgba(0,0,0,.2) transparent;}

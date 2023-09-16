@@ -1,6 +1,6 @@
 <template>
     <span v-if="state.lottie.show" class="wh-30px position-relative upgrade-system">
-        <i v-if="state.lottie.play" class="red-dot">.</i>
+<!--        <i v-if="state.lottie.play" class="red-dot">.</i>-->
         <i-lottie name="bell" v-model="state.lottie.play" v-on:click="state.item.dialog = true" class="lottie"></i-lottie>
     </span>
     <teleport to="body">
@@ -15,24 +15,32 @@
             </template>
             <template #default>
                 <div v-if="!state.loading.finish">
-                    <div class="flex-center flex-column">
-                        <h3>发现新的 inis版本，是否立即更新？</h3>
-                    </div>
-                    <div class="container-xxl mt-2">
-                        <el-scrollbar v-loading="state.loading.markdown" height="400px">
+                    <el-alert type="success" :closable="false" center class="box-shadow-light">
+                        <template #title>
+                            <i-svg name="!" size="15px" color="var(--el-color-success)"></i-svg>
+                            <span class="ms-1">发现新的 inis 版本，是否立即更新？</span>
+                        </template>
+                    </el-alert>
+                    <div v-if="!utils.is.empty(state.struct.content)" class="container-xxl mt-2 markdown">
+                        <el-scrollbar max-height="400px">
                             <div v-html="method.markdown(state.struct.content)" class="white-space-line"></div>
                         </el-scrollbar>
                     </div>
                 </div>
                 <div v-else>
-                    <h3 class="flex-center flex-column mb-3">更新已完成，但还需要等待后续操作</h3>
-                    <el-tabs v-model="state.item.tabs" id="tabs-area">
+                    <el-alert type="success" :closable="false" center class="mb-3 box-shadow-light">
+                        <template #title>
+                            <i-svg name="!" size="15px" color="var(--el-color-success)"></i-svg>
+                            <span class="ms-1">更新已完成，但还需要等待后续操作</span>
+                        </template>
+                    </el-alert>
+                    <el-tabs v-model="state.item.tabs" id="tabs-area" class="tag">
 
                         <el-tab-pane name="wait">
                             <template #label>
                                 <span class="fw-bolder font-12">宝塔用户等两分钟</span>
                             </template>
-                            <div class="card">
+                            <div class="card radius-10">
                                 <div class="card-body p-2">
                                     <p>如果您是宝塔用户，且满足以下条件，只需要等待两分钟即可</p>
                                     <p>1、【次要】使用了 Go项目 部署的本程序</p>
@@ -46,7 +54,7 @@
                             <template #label>
                                 <span class="fw-bolder font-12">急！一刻都不想等</span>
                             </template>
-                            <div class="card">
+                            <div class="card radius-10">
                                 <div class="card-body p-2">
                                     <p>如果您比较着急，希望马上启动本程序，按照以下步骤操作即可</p>
                                     <p>1、找到本程序的启动按钮（windows系统双击可执行程序）</p>
@@ -86,7 +94,6 @@ const state = reactive({
     loading: {
         finish  : false,  // 升级完成
         upgrade : false,
-        markdown: true,
     },
     lottie: {
         show: false,
@@ -123,7 +130,7 @@ const method = {
         await method.version()
 
         // 本地版本与最新版本对比
-        if (!utils.compare.version(state.version, state.struct?.version)) return
+        if (!utils.compare.version(state.struct?.version, state.version)) return
 
         state.lottie.show = true
 
@@ -175,12 +182,14 @@ const method = {
     },
     // 解析Markdown
     markdown: content => {
-        const md = new MarkdownIt()
-        state.loading.markdown = false
+        const md   = new MarkdownIt()
         return md.render(content)
     },
     // 升级
     upgrade: async () => {
+
+        // 删除缓存 - 防止升级完成导致重复升级
+        cache.del('system-version-local')
 
         state.loading.upgrade = true
 
@@ -216,27 +225,3 @@ const method = {
     },
 }
 </script>
-
-<style lang="css" scoped>
-.red-dot {
-    display: inline-block;
-    color: var(--bs-danger) !important;
-    top: -30px;
-    right: 0;
-    font-size: 40px;
-    font-style: normal;
-    position: absolute;
-    animation: red-dot 1s infinite;
-}
-@keyframes red-dot {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-</style>

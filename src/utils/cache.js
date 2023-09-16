@@ -29,6 +29,6 @@ export default {
         cache?.set(key, AES.encrypt(JSON.stringify(value)), unix)
     },
     has: key => !utils.is.empty(cache?.get(prefix + key)),
-    del: cache?.remove,
+    del: key => cache?.remove(prefix + key),
     clear: cache?.flush,
 }

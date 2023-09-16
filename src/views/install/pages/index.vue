@@ -399,12 +399,8 @@ const method = {
     // 重试
     retry: async () => {
 
-        if (state.retry.count > 3) return notyf.error('安装失败，请联系兔子，QQ：97783391', {
+        if (state.retry.count > 5) return notyf.error('安装失败，请联系兔子，QQ：97783391', {
             duration: 10 * 60 * 1000,
-        })
-
-        notyf.info(`安装异常，请不要刷新页面，正在自动重试 ${state.retry.count}！`, {
-            duration: 10 * 1000,
         })
 
         await method.sleep(state.retry.time)

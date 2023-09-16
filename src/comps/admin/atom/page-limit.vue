@@ -1,7 +1,7 @@
 <template>
     <div v-loading="state.status.loading" class="card mb-3">
         <div class="card-body">
-            <i-svg name="security-1" size="60px" color="rgb(var(--assist-color))" class="position-absolute opacity-25" style="right: 1.5rem"></i-svg>
+            <i-svg name="env" size="50px" color="rgb(var(--assist-color))" class="position-absolute opacity-25" style="right: 1.7rem"></i-svg>
             <h6 class="text-muted text-uppercase mt-0">
                 <el-tooltip placement="top">
                     <template #content>

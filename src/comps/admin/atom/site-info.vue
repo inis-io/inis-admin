@@ -37,7 +37,7 @@
                             <el-tooltip content="ICP备案码" placement="top">
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">备案码：</span>
+                                    <span class="ms-1">ICP 备案码：</span>
                                 </span>
                             </el-tooltip>
                         </label>
@@ -50,11 +50,37 @@
                             <el-tooltip content="工信部网址，如：https://beian.miit.gov.cn" placement="top">
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">备案链接：</span>
+                                    <span class="ms-1">ICP 备案链接：</span>
                                 </span>
                             </el-tooltip>
                         </label>
                         <el-input v-model="state.struct.json.copy.link" placeholder="如：https://beian.miit.gov.cn"></el-input>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="公安备案码" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">公安备案码：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-input v-model="state.struct.json.police.code" placeholder="公安备案码"></el-input>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="公安备案网址，如：https://www.beian.gov.cn" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">公安备案链接：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-input v-model="state.struct.json.police.link" placeholder="如：https://www.beian.gov.cn"></el-input>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -69,7 +95,7 @@
                         </label>
                         <el-input v-model="state.struct.json.avatar" class="custom" placeholder="填写图片地址或点击上传">
                             <template #suffix>
-                                <el-button v-on:click="method.upload()" :loading="state.upload.avatar">
+                                <el-button v-on:click="method.upload('avatar')" :loading="state.upload.avatar">
                                     <i-svg v-if="!state.upload.avatar" name="upload" color="rgb(var(--icon-color))" size="14px"></i-svg>
                                     <span class="ms-1">上传</span>
                                 </el-button>
@@ -89,7 +115,7 @@
                         </label>
                         <el-input v-model="state.struct.json.favicon" class="custom" placeholder="填写图片地址或点击上传">
                             <template #suffix>
-                                <el-button v-on:click="method.upload()" :loading="state.upload.favicon">
+                                <el-button v-on:click="method.upload('favicon')" :loading="state.upload.favicon">
                                     <i-svg v-if="!state.upload.favicon" name="upload" color="rgb(var(--icon-color))" size="14px"></i-svg>
                                     <span class="ms-1">上传</span>
                                 </el-button>
@@ -165,9 +191,10 @@
 </template>
 
 <script setup>
-import notyf from '{src}/utils/notyf.js'
-import axios from '{src}/utils/request.js'
-import utils from "{src}/utils/utils.js";
+import cache from '{src}/utils/cache'
+import utils from '{src}/utils/utils'
+import notyf from '{src}/utils/notyf'
+import axios from '{src}/utils/request'
 
 const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
@@ -185,10 +212,13 @@ const state = reactive({
                 code: '',
                 link: '',
             },
+            police: {
+                code: '',
+                link: '',
+            },
             date: '',
             keyword: '',
             description: '',
-
         },
         remark: '站点信息',
     },
@@ -221,7 +251,7 @@ const method = {
 
         if (code === 204) return  method.save()
         if (code !== 200) return
-        state.struct = data
+        state.struct = utils.object.deep.merge(state.struct, data)
 
         // 处理关键词
         if (data.json.keyword) {
@@ -248,6 +278,9 @@ const method = {
         if (code !== 200) return notyf.error('保存失败：' + msg)
 
         state.status.dialog = false
+
+        // 删除本地缓存
+        cache.del('site-info')
     },
     // 上传
     async upload(field = 'image') {
@@ -263,15 +296,15 @@ const method = {
             const params = new FormData
             params.append('file', input.files[0])
 
-            state.item.upload         = true
+            state.upload[field]       = true
             // 上传图片
             const { code, msg, data } = await axios.post('/api/file/upload', params)
 
-            state.item.upload         = false
+            state.upload[field]       = false
 
             if (code !== 200) return notyf.error(msg)
             // 设置图片
-            state.struct[field] = data.path
+            state.struct.json[field] = data.path
             // 清空 input
             input.value = ''
             notyf.info('上传成功！')

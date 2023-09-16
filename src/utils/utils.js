@@ -170,7 +170,7 @@ class helper{
 
         // 链式操作 compare 属性
         this.compare = {
-            version:(versionA,versionB,parting) => this.CompareVersion(versionA,versionB,parting)
+            version:(newVersion,oldVersion,parting) => this.CompareVersion(newVersion,oldVersion,parting)
         }
 
         // 链式操作 to 属性
@@ -1792,18 +1792,18 @@ class helper{
 
     /*
      * @name 版本比对
-     * @param {string} versionA [新版本]
-     * @param {string} versionB [旧版本]
+     * @param {string} newVersion [新版本]
+     * @param {string} oldVersion [旧版本]
      * @param {string} parting [分隔符]
      * @return {boolean}
      */
-    CompareVersion(versionA, versionB, parting = '.')
+    CompareVersion(newVersion, oldVersion, parting = '.')
     {
-        if (versionA && versionB) {
+        if (newVersion && oldVersion) {
 
             // 将两个版本号拆成数字
-            let arrayA = versionA.split(parting)
-            let arrayB = versionB.split(parting)
+            let arrayA = newVersion.split(parting)
+            let arrayB = oldVersion.split(parting)
             let minLength = Math.min(arrayA.length, arrayB.length)
             let position = 0
             let diff = 0
@@ -1813,7 +1813,7 @@ class helper{
 
             diff = (diff !== 0) ? diff: (arrayA.length - arrayB.length);
 
-            // 若versionA大于versionB，则返回true
+            // 若newVersion大于oldVersion，则返回true
             return diff > 0;
 
         } else {

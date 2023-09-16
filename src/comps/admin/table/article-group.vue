@@ -158,7 +158,6 @@ import notyf from '{src}/utils/notyf.js'
 import axios from '{src}/utils/request.js'
 import ITable from '{src}/comps/custom/i-table.vue'
 import { config as MenuConfig } from '{src}/utils/menu.js'
-import API from "{src}/api/index.js";
 
 const emit  = defineEmits(['refresh','update:init'])
 const props = defineProps({
@@ -317,6 +316,38 @@ const method = {
         // 重新加载数据
         await method.init()
     },
+    // 上传
+    async upload(field = 'image') {
+
+        // 创建一个 input
+        const input  = document.createElement('input')
+        input.type   = 'file'
+        input.accept = 'image/*'
+
+        // 监听 input 的 change 事件
+        input.addEventListener('change', async () => {
+            // 创建一个 formData
+            const params = new FormData
+            params.append('file', input.files[0])
+
+            state.item.upload         = true
+
+            // 上传图片
+            const { code, msg, data } = await axios.post('/api/file/upload', params)
+
+            state.item.upload         = false
+
+            if (code !== 200) return notyf.error(msg)
+            // 设置图片
+            state.struct[field] = data.path
+            // 清空 input
+            input.value = ''
+            notyf.info('上传成功！')
+        })
+
+        // 触发 input 的 click 事件
+        input.click()
+    },
     // 规则选中事件
     change(){
         let array = []
@@ -337,6 +368,13 @@ const method = {
     omit  : (text = null, length = 10, omission = ' ... ', location = 'center') => {
         if (utils.is.empty(text)) return '空'
         return utils.string.omit(text, length, omission, location)
+    },
+    // 图片大小
+    imageSize(url = '', size = '50x50') {
+        // 判断 url 是否为空
+        if (utils.is.empty(url)) return url
+        // 返回新的 url
+        return url.includes('?') ? `${url}&size=${size}` : `${url}?size=${size}`
     },
 }
 
