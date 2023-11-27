@@ -143,7 +143,7 @@ const method = {
 
         state.item.wait     = true
 
-        const { code, msg } = await axios.post('/api/comm/reset-passowd', {
+        const { code, msg } = await axios.post('/api/comm/reset-password', {
             ...state.struct, password: state.password.value
         })
 
@@ -165,7 +165,7 @@ const method = {
 
         state.item.loading  = true
 
-        const { code, msg } = await axios.post('/api/comm/reset-passowd', {
+        const { code, msg } = await axios.post('/api/comm/reset-password', {
             social: state.struct.social,
             account: state.struct.account,
         })

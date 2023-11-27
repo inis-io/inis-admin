@@ -62,7 +62,6 @@ const remove = (el) => {
         el.loading = null
     }, 300)
 }
-
 export default {
     mounted(el, binding) {
         const { open } = config(binding)

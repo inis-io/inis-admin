@@ -1,17 +1,17 @@
 <template>
-    <footer id="footer" class="text-white user-select-none">
+    <footer id="footer" class="text-dark user-select-none">
         <span>Copyright © {{ state.year.start }} ~ {{ state.year.end }}</span>
         <span v-if="state.site.show"> &
-            <a :href="state.site.struct?.copy?.link" target="_blank" class="text-white">
+            <a :href="state.site.struct?.copy?.link" target="_blank" class="text-dark">
                 {{ state.site.struct?.copy?.code || '备案码' }}
             </a>
         </span>
         <span v-if="!utils.is.empty(state.site.struct?.police?.code)"> &
-            <a :href="state.site.struct?.police?.link" target="_blank" class="text-white">
+            <a :href="state.site.struct?.police?.link" target="_blank" class="text-dark">
                 {{ state.site.struct?.police?.code || '公安备案' }}
             </a>
         </span>
-        <span> & <a href="https://inis.cc" target="_blank" class="text-white">inis {{ state.version.system }}</a></span>
+        <span> & <a href="https://inis.cc" target="_blank" class="text-dark">inis {{ state.version.system }}</a></span>
         <span> & theme {{ state.version.theme }}</span>
     </footer>
 </template>

@@ -7,7 +7,7 @@ const config = {
     hasIcon: true,
     iconType: 'svg-icon',
     menuWidth: 140,
-    customClass: 'dark-howdy-menu',
+    customClass: 'dark-howdy-menu scale-up-top-left',
     useLongPressInMobile: true,
     menuWrapperCss: {
         background: '#0b0b0bcc',

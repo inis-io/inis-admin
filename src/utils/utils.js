@@ -1065,12 +1065,7 @@ class helper{
      */
     isNull(value = "")
     {
-        let result = false;
-
-        if (value == null || typeof (value) == 'undefined' || value.length === 0) result = true;
-        else result = false;
-
-        return result;
+        return value == null || typeof (value) == 'undefined' || value.length === 0
     }
 
     /**

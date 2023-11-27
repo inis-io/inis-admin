@@ -31,7 +31,7 @@ nextTick(() => {
     body.setAttribute('data-layout', 'topnav')
     // body.setAttribute('inis-theme', 'dark')
     body.setAttribute('inis-theme', theme)
-    body.classList.add('user-select-none')
+    // body.classList.add('user-select-none')
     // 给 app 添加一个 class
     const app = document.querySelector('#app')
     app.classList.add('index')

@@ -1,5 +1,6 @@
 <template>
     <div class="container-fluid container-box">
+
     </div>
 </template>
 
@@ -9,6 +10,8 @@ const state  = reactive({
 
 })
 
+// https://aweme.snssdk.com/aweme/v1/play/?video_id=v0200fg10000cjkn3jnog65ud67mo85g&ratio=1080p&line=0
+
 onMounted(async () => {
     await method.init()
 })
@@ -16,6 +19,13 @@ onMounted(async () => {
 const method = {
     init: async () => {
 
+    },
+    screen: {
+        // 强制全屏
+        full: () => {
+
+            // 打印当前时间戳
+        }
     }
 }
 

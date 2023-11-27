@@ -78,9 +78,10 @@ body[inis-theme] #background{
     display: none;
 }
 body[inis-theme] .text-white{
-    color: rgb(var(--vice-font-color)) !important;
+    /*color: rgb(var(--vice-font-color)) !important;*/
 }
 body[inis-theme] .card{
+    border-radius: 8px;
     -webkit-box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
     box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
 }
@@ -368,6 +369,12 @@ body[inis-theme] .el-tabs__header{
     border-radius: 6px;
     box-shadow: unset !important;
     padding: 6px 20px;
+}
+body[inis-theme] .comment-box .el-tabs__header{
+    padding: 0;
+}
+body[inis-theme] .comment-box .el-tabs__item {
+    padding: 0 10px;
 }
 body[inis-theme] .overall .el-tabs__header{
     border-radius: unset;
@@ -864,6 +871,20 @@ body[inis-theme] .el-input .el-input__wrapper input{
 body[inis-theme] .el-input .el-input__wrapper input:hover, body[inis-theme] .el-input .el-input__wrapper input:focus{
     border-bottom: 2px solid rgb(var(--assist-color))!important;
 }
+body[inis-theme] .el-input.custom.comment-box{
+    display: flex;
+    flex-direction: column;
+}
+body[inis-theme] .el-input.custom.comment-box .el-input__wrapper input,
+body[inis-theme] .el-input.custom.comment-box .el-input__wrapper input:hover,
+body[inis-theme] .el-input.custom.comment-box .el-input__wrapper input:focus{
+    border-bottom: unset !important;
+}
+body[inis-theme] .el-input.custom.comment-box .el-input-group__append{
+    display: block;
+    box-shadow: unset;
+    background-color: unset;
+}
 /* ==================== 自定义 el-input - 结束 ==================== */
 /* ==================== 自定义 el-textarea - 开始 ==================== */
 body[inis-theme] .el-textarea textarea{
@@ -1106,25 +1127,25 @@ body[inis-theme] .modal .modal-footer{
 /* ==================== 自定义 bootstrap btn - 开始 ==================== */
 body[inis-theme] .btn-info{
     color: var(--theme-font-color);
-    background-color: rgba(var(--color-info), 1);
-    border-color: rgba(var(--color-info), 1);
+    background-color: rgba(var(--inis-blue), 1);
+    border-color: rgba(var(--inis-blue), 1);
 }
 body[inis-theme] .btn-info:hover{
-    background-color: rgba(var(--color-info), 0.8);
-    border-color: rgba(var(--color-info), 0.8);
+    background-color: rgba(var(--inis-blue), 0.8);
+    border-color: rgba(var(--inis-blue), 0.8);
     backdrop-filter: var(--theme-blur);
 }
 body[inis-theme] .btn-info:not(:disabled):not(.disabled).active,
 body[inis-theme] .btn-info:not(:disabled):not(.disabled):active,
 body[inis-theme] .show>.btn-info.dropdown-toggle{
     color: var(--theme-font-color);
-    background-color: rgba(var(--color-info), 0.8);
-    border-color: rgba(var(--color-info), 0.8);
+    background-color: rgba(var(--inis-blue), 0.8);
+    border-color: rgba(var(--inis-blue), 0.8);
 }
 body[inis-theme] .btn-info:not(:disabled):not(.disabled).active:focus,
 body[inis-theme] .btn-info:not(:disabled):not(.disabled):active:focus,
 body[inis-theme] .show>.btn-info.dropdown-toggle:focus{
-    box-shadow: 0 0 0 0.2rem rgba(var(--color-info), 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(var(--inis-blue), 0.5);
 }
 
 body[inis-theme] .btn-blue{
@@ -1151,12 +1172,12 @@ body[inis-theme] .show>.btn-blue.dropdown-toggle:focus{
     -webkit-box-shadow: 0 2px 6px 0 rgba(var(--inis-blue), 0.5)
 }
 
-body[inis-theme] .btn.disabled,
-body[inis-theme] .btn:disabled,
-body[inis-theme] fieldset:disabled .btn{
-    opacity: unset;
-    border: unset;
-}
+/*body[inis-theme] .btn.disabled,*/
+/*body[inis-theme] .btn:disabled,*/
+/*body[inis-theme] fieldset:disabled .btn{*/
+/*    opacity: unset;*/
+/*    border: unset;*/
+/*}*/
 body[inis-theme] .btn-outline-light:hover{
     color: rgb(var(--theme-font-color));
     background: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
@@ -1430,6 +1451,9 @@ body[inis-theme] .markdown table tr{
 body[inis-theme] .markdown table tr:nth-child(2n) {
     background-color: #fff;
 }
+body[inis-theme] .markdown > p{
+    text-indent: 24px;
+}
 /* ==================== 自定义 markdown - 结束 ==================== */
 /* ==================== 自定义 右键菜单 - 开始 ==================== */
 body[inis-theme] .__menu__wrapper.dark-howdy-menu .__menu__item{
@@ -1468,6 +1492,90 @@ body[inis-theme] .box-shadow-light{
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 }
 /* ==================== 自定义 box-shadow - 开始 ==================== */
+/* ==================== 代码框功能美化 - 开始 ==================== */
+body[inis-theme] .markdown code::-webkit-scrollbar{width:6px;height:6px}
+body[inis-theme] .markdown code::-webkit-scrollbar-thumb{border-radius:6px;background-color:#777}
+body[inis-theme] .markdown code ::selection{background:#344449;color:#fff;text-shadow:none}
+body[inis-theme] .markdown pre{position:relative;border-radius:4px;background:#21252a}
+body[inis-theme] .markdown pre .repair{position:absolute;width:6px;height:6px;background:#21252a;right:0;bottom:0}
+body[inis-theme] .markdown .hljs ul{margin:0 !important;list-style:decimal}
+body[inis-theme] .markdown .hljs ul li{padding:5px!important;line-height:14px}
+body[inis-theme] .markdown .hljs ul li::marker{color:#999}
+body[inis-theme] .markdown pre .head{color:white;background:#161616;height:30px}
+body[inis-theme] .markdown pre .head:before{position:relative;top:10px;left:10px;z-index:2;-webkit-border-radius:50%;border-radius:50%;background:#fc625d;-webkit-box-shadow:20px 0 #fdbc40,40px 0 #35cd4b;box-shadow:20px 0 #fdbc40,40px 0 #35cd4b;content:" ";display: block;width: 1em;height: 1em;}
+body[inis-theme] .markdown pre:hover .head .code-language{opacity:1;transition:all .3s ease}
+body[inis-theme] .markdown pre:hover .head .copy{opacity:1;transition:all .6s ease;}
+body[inis-theme] .markdown pre .head > p{display:flex;justify-content:center;margin-top:-5px}
+body[inis-theme] .markdown pre .head .code-language{opacity:0;font-weight:bold;font-size:.9em;font-family:Ubuntu,sans-serif;transition:all .3s ease}
+body[inis-theme] .markdown pre .head .copy{display: flex;opacity:0;position:absolute;right:10px;border:1px solid white;padding:0 10px;border-radius:4px;margin-top:-2px;cursor:pointer;transition:all .3s ease}
+body[inis-theme] .markdown pre code.hljs {
+	display:block;
+	overflow-x:auto;
+	padding:0 1em;
+    max-height: 300px;
+}
+body[inis-theme] .markdown code.hljs {
+	padding:3px 5px
+}
+body[inis-theme] .markdown .hljs {
+	color: #ddd;
+    margin: unset;
+    border: unset;
+}
+body[inis-theme] .markdown .hljs-keyword,
+body[inis-theme] .markdown .hljs-literal,
+body[inis-theme] .markdown .hljs-name,
+body[inis-theme] .markdown .hljs-selector-tag,
+body[inis-theme] .markdown .hljs-strong,
+body[inis-theme] .markdown .hljs-tag {
+	color:#f92672
+}
+body[inis-theme] .markdown .hljs-code {
+	color:#66d9ef
+}
+body[inis-theme] .markdown .hljs-attribute,
+body[inis-theme] .markdown .hljs-link,
+body[inis-theme] .markdown .hljs-regexp,
+body[inis-theme] .markdown .hljs-symbol {
+	color:#bf79db
+}
+body[inis-theme] .markdown .hljs-addition,
+body[inis-theme] .markdown .hljs-built_in,
+body[inis-theme] .markdown .hljs-bullet,
+body[inis-theme] .markdown .hljs-emphasis,
+body[inis-theme] .markdown .hljs-section,
+body[inis-theme] .markdown .hljs-selector-attr,
+body[inis-theme] .markdown .hljs-selector-pseudo,
+body[inis-theme] .markdown .hljs-string,
+body[inis-theme] .markdown .hljs-subst,
+body[inis-theme] .markdown .hljs-template-tag,
+body[inis-theme] .markdown .hljs-template-variable,
+body[inis-theme] .markdown .hljs-title,
+body[inis-theme] .markdown .hljs-type,
+body[inis-theme] .markdown .hljs-variable {
+	color:#a6e22e
+}
+body[inis-theme] .markdown .hljs-class .hljs-title,
+body[inis-theme] .markdown .hljs-title.class_ {
+	color:#fff
+}
+body[inis-theme] .markdown .hljs-comment,
+body[inis-theme] .markdown .hljs-deletion,
+body[inis-theme] .markdown .hljs-meta,
+body[inis-theme] .markdown .hljs-quote {
+	color:#75715e
+}
+body[inis-theme] .markdown .hljs-doctag,
+body[inis-theme] .markdown .hljs-keyword,
+body[inis-theme] .markdown .hljs-literal,
+body[inis-theme] .markdown .hljs-section,
+body[inis-theme] .markdown .hljs-selector-id,
+body[inis-theme] .markdown .hljs-selector-tag,
+body[inis-theme] .markdown .hljs-title,
+body[inis-theme] .markdown .hljs-type {
+	font-weight:700
+}
+/* ==================== 代码框功能美化 - 结束 ==================== */
 
 body[inis-theme] .yellow-orange{
     color: rgb(var(--theme-color));
@@ -1506,6 +1614,12 @@ body[inis-theme] .upgrade-system .lottie span svg path{
 }
 body[inis-theme] .bg-image{
     background-image: linear-gradient(90deg, #f5faff, #e8f2ff);
+}
+body[inis-theme] .text-bg-muted {
+    background: #fafafa;
+}
+body[inis-theme] .text-muted {
+    color: #8a8a8a !important;
 }
 body[inis-theme] .red-dot {
     display: inline-block;

@@ -9,22 +9,22 @@ class AES {
 
     // 加密
     encrypt(text) {
-        let encrypted = CryptoJS?.AES.encrypt(text, this.key, {
+        let item = CryptoJS?.AES.encrypt(text, this.key, {
             iv: this.iv,
             mode: CryptoJS?.mode.CBC,
             padding: CryptoJS?.pad.Pkcs7
         })
-        return encrypted.toString()
+        return item.toString()
     }
 
     // 解密
     decrypt(text) {
-        let decrypted = CryptoJS?.AES.decrypt(text, this.key, {
+        let item = CryptoJS?.AES.decrypt(text, this.key, {
             iv: this.iv,
             mode: CryptoJS?.mode.CBC,
             padding: CryptoJS?.pad.Pkcs7
         })
-        return decrypted.toString(CryptoJS?.enc.Utf8)
+        return item.toString(CryptoJS?.enc.Utf8)
     }
 }
 

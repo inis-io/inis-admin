@@ -205,10 +205,6 @@ const state  = reactive({
 })
 
 onMounted(async () => {
-    document.querySelectorAll('.container-fluid').forEach(el => {
-        el.classList.remove('container-fluid')
-        el.classList.add('container-xxl')
-    })
     await method.init()
     // 追加鼠标右键菜单
     state.item.menu.menuList.push(...[{line: true}, ...await MenuList()])
@@ -351,13 +347,5 @@ document.addEventListener('contextmenu', (event) => {
     event.preventDefault()
     // 判断点击在不在 #tabs-area 区域内，在不显示右键菜单
     if (!event?.target?.closest('#tinymce')) proxy.$refs['global-menu']?.show(event.x, event.y)
-})
-
-// 组件注销前 - 重置 container-xxl
-onBeforeUnmount(() => {
-    document.querySelectorAll('.container-xxl').forEach(el => {
-        el.classList.remove('container-xxl')
-        el.classList.add('container-fluid')
-    })
 })
 </script>

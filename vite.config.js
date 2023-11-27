@@ -164,8 +164,13 @@ export default ({ mode }) => {
                         return `static/${ext}/${timestamp}.[name][extname]`
                     },
                     chunkFileNames: `static/js/${timestamp}.[name].js`,
-                    entryFileNames: `static/js/${timestamp}.[name].js`
-                }
+                    entryFileNames: `static/js/${timestamp}.[name].js`,
+                    manualChunks(id) {
+                        if (id.includes('node_modules')) {
+                            return id.toString().split('node_modules/')[1].split('/')[0].toString()
+                        }
+                    }
+                },
             },
         },
         server: {

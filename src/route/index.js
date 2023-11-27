@@ -30,6 +30,11 @@ const index = {
         meta: { title: '首页' },
         component: () => import('{src}/views/index/pages/index.vue'),
     },{
+        path: '/article/:id(\\d+)?',
+        name: 'index-article-detail',
+        meta: { title: '文章详情' },
+        component: () => import('{src}/views/index/pages/article[id].vue'),
+    },{
         path: '/test',
         name: 'index-test',
         meta: { title: '测试' },

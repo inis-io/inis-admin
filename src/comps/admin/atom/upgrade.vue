@@ -28,7 +28,7 @@
             </h2>
             <div class="d-flex justify-content-between">
                 <span>当前版本：{{ state.version }}</span>
-                <span>最新版本：{{ state.struct.version }}</span>
+                <span>最新版本：{{ state.struct.version || '∞' }}</span>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
             <strong class="flex-center">更新日志</strong>
         </template>
         <template #default>
-            <div class="container-xxl">
+            <div v-if="!utils.is.empty(state.struct)" class="container-xxl">
                 <div class="d-flex justify-content-between align-items-center px-2 mb-2">
                     <el-tooltip :content="`${state.struct.result?.author?.nickname}：${state.struct.result?.author?.description}`" placement="top">
                         <div class="d-flex align-items-center pointer">
@@ -59,6 +59,11 @@
                     <el-scrollbar max-height="400px">
                         <div v-html="method.markdown(state.struct.content)" class="white-space-line"></div>
                     </el-scrollbar>
+                </div>
+            </div>
+            <div v-else class="container-xxl">
+                <div class="el-alert el-alert--success is-light box-shadow-light flex-center">
+                    无更新日志
                 </div>
             </div>
         </template>
