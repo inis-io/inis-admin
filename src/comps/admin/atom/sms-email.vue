@@ -21,7 +21,7 @@
             </h2>
             <span class="badge bg-danger font-white"> 推荐 </span>
             <span class="text-muted">
-                因为不花钱，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
+                因为不花钱，<span v-on:click="method.show()" class="text-dark pointer">点我配置</span>
             </span>
         </div>
     </div>

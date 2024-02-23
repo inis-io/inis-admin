@@ -1,16 +1,34 @@
 <template>
     <div class="container-fluid container-box">
-
+        <div class="card card-body">
+            <div class="d-flex flex-wrap">
+                <i-level v-for="item in 99" :value="item" :key="item" size="60"></i-level>
+            </div>
+            <i-donate height="30vh" wx="https://inis.cn/api/file/rand?id=1&name=imgs.txt" alipay="https://inis.cn/api/file/rand?id=2&name=imgs.txt"></i-donate>
+        </div>
     </div>
 </template>
 
 <script setup>
+import axios from '{src}/utils/request'
+import ILevel from '{src}/comps/custom/i-level.vue'
+import IDonate from "{src}/comps/custom/i-donate.vue";
+
 const { proxy } = getCurrentInstance()
 const state  = reactive({
 
 })
 
 // https://aweme.snssdk.com/aweme/v1/play/?video_id=v0200fg10000cjkn3jnog65ud67mo85g&ratio=1080p&line=0
+
+// axios.get('/api/users/one', {
+//     or: [
+//         ['id', '=', 1],
+//         ['account', '=', 'admin']
+//     ]
+// }).then(res => {
+//     console.log(res)
+// })
 
 onMounted(async () => {
     await method.init()

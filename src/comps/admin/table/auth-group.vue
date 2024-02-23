@@ -289,8 +289,8 @@ const state  = reactive({
             { prop: 'key', label: '识别码', width: 80, slot: true, align: 'center' },
             { prop: 'users', label: '成员', width: 180, slot: true },
             { prop: 'remark' , label: '备注', width: 150, slot: true },
-            { prop: 'update_time', label: '更新时间', width: 120, sortable: true },
-            { prop: 'create_time', label: '创建时间', width: 120, sortable: true },
+            { prop: 'update_time', label: '更新时间', width: 140, sortable: true },
+            { prop: 'create_time', label: '创建时间', width: 140, sortable: true },
         ],
         menu: {
             ...MenuConfig,

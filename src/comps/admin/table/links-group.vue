@@ -39,7 +39,7 @@
 
         <template #i-name="{ scope = {} }">
             <span v-on:dblclick="method.edit(scope)" class="d-flex align-items-center">
-                <el-avatar v-if="!utils.is.empty(scope?.avatar)" :src="method.imageSize(scope?.avatar)" shape="square" size="small" class="me-2"></el-avatar>
+                <el-avatar v-if="!utils.is.empty(scope?.avatar)" :src="method.imageSize(scope?.avatar)" shape="square" :size="20" class="me-1"></el-avatar>
                 <el-tooltip :content="scope.name" :disabled="utils.is.empty(scope.name)" placement="top">
                     <span>{{ method.omit(scope?.name, 10, ' ...', 'end') }}</span>
                 </el-tooltip>
@@ -173,8 +173,8 @@ const state  = reactive({
         columns: [
             { prop: 'name', label: '名称', width: 150, slot: true, fixed: left },
             { prop: 'description' , label: '描述', width: 200, slot: true },
-            { prop: 'update_time', label: '更新时间', width: 120, sortable: true },
-            { prop: 'create_time', label: '创建时间', width: 120, sortable: true },
+            { prop: 'update_time', label: '更新时间', width: 140, sortable: true },
+            { prop: 'create_time', label: '创建时间', width: 140, sortable: true },
         ],
         menu: {
             ...MenuConfig,

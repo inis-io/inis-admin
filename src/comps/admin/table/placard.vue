@@ -146,6 +146,21 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group mb-3">
+                        <label class="form-label">
+                            <el-tooltip content="备注而已，页面上不会显示此项" placement="top">
+                                <span>
+                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
+                                    <span class="ms-1">备注：</span>
+                                </span>
+                            </el-tooltip>
+                        </label>
+                        <el-input v-model="state.struct.remark" :autosize="{ minRows: 1, maxRows: 10 }" placeholder="备注一下，避免忘记！" type="textarea"></el-input>
+                    </div>
+                </div>
+            </div>
         </template>
         <template #footer>
             <el-button v-on:click="state.item.dialog = false">取 消</el-button>
@@ -206,9 +221,10 @@ const state  = reactive({
         columns: [
             { prop: 'title', label: '标题', width: 150, slot: true, fixed: left },
             { prop: 'url', label: '链接', width: 150, slot: true },
-            { prop: 'content', label: '内容', width: 200, slot: true },
-            { prop: 'update_time', label: '更新时间', width: 120, sortable: true },
-            { prop: 'create_time', label: '创建时间', width: 120, sortable: true },
+            { prop: 'content', label: '内容', width: 190, slot: true },
+            { prop: 'remark' , label: '备注', width: 190, slot: true },
+            { prop: 'update_time', label: '更新时间', width: 140, sortable: true },
+            { prop: 'create_time', label: '创建时间', width: 140, sortable: true },
         ],
         menu: {
             ...MenuConfig,

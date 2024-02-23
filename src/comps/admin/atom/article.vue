@@ -15,13 +15,13 @@
                 </el-tooltip>
             </h6>
             <h2 class="m-b-20">
-                <el-switch v-model="state.struct.json.editor" v-on:change="method.change" :disabled="!state.status.finish"
+                <el-switch v-model="state.cache.json.editor" v-on:change="method.change" :disabled="!state.status.finish"
                            active-value="tinymce" inactive-value="vditor" active-text="富文本" inactive-text="Markdown">
                 </el-switch>
             </h2>
             <span class="badge bg-success font-white"> 更多 </span>
             <span class="text-muted">
-                其它配置信息，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
+                其它配置信息，<span v-on:click="method.show()" class="text-dark pointer">点我配置</span>
             </span>
         </div>
     </div>
@@ -46,7 +46,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-select v-model="state.struct.json.editor" class="d-block custom font-13" placeholder="请选择">
+                        <el-select v-model="state.cache.json.editor" class="d-block custom font-13" placeholder="请选择">
                             <el-option v-for="item in state.select.editor" :key="item.value" :label="item.label" :value="item.value">
                                 <span class="font-13">{{ item.label }}</span>
                                 <small class="text-muted float-end">{{ item.value }}</small>
@@ -118,16 +118,21 @@
 </template>
 
 <script setup>
-import notyf from '{src}/utils/notyf.js'
-import axios from '{src}/utils/request.js'
-import utils from "{src}/utils/utils.js";
+import cache from '{src}/utils/cache'
+import notyf from '{src}/utils/notyf'
+import axios from '{src}/utils/request'
 
 const { ctx, proxy } = getCurrentInstance()
 const state = reactive({
+    cache: {
+        name: 'article',
+        json: {
+            editor: 'tinymce'
+        }
+    },
     struct: {
         key: 'ARTICLE',
         json: {
-            'editor': 'tinymce',
             'comment': {
                 'allow': 1, 'show': 1
             },
@@ -168,6 +173,8 @@ onMounted(async () => {
 const method = {
     init: async () => {
 
+        method.cache()
+
         state.status.finish  = false
         state.status.loading = true
 
@@ -183,19 +190,7 @@ const method = {
         state.status.finish  = true
     },
     change: async value => {
-
-        const { code, msg } = await axios.post('/api/config/save', {
-            key: 'ARTICLE',
-            json: JSON.stringify({
-                ...state.struct.json,
-                editor: value
-            })
-        })
-
-        if (code === 200) return
-
-        state.struct.json.editor = state.struct.json.editor === 'tinymce' ? 'vditor' : 'tinymce'
-        notyf.error(msg)
+        cache.set(state.cache.name, { ...state.cache.json, editor: value })
     },
     show() {
         if (!state.status.finish) return notyf.warn('配置获取失败，无法进行配置！')
@@ -215,6 +210,20 @@ const method = {
         if (code !== 200) return notyf.error('保存失败：' + msg)
 
         state.status.dialog = false
+
+        cache.set(state.cache.name, state.cache.json)
+    },
+    // 获取缓存
+    cache: (json = state.cache.json) => {
+
+        // 缓存存在 - 直接返回
+        if (cache.has(state.cache.name)) {
+            state.cache.json = cache.get(state.cache.name)
+            return
+        }
+
+        // 缓存不存在 - 保存缓存
+        cache.set(state.cache.name, json)
     },
 }
 

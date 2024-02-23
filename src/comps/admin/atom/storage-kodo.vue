@@ -21,7 +21,7 @@
             </h2>
             <span class="badge bg-info font-white"> 一般 </span>
             <span class="text-muted ms-1">
-                不是很好用，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
+                不是很好用，<span v-on:click="method.show()" class="text-dark pointer">点我配置</span>
             </span>
         </div>
     </div>

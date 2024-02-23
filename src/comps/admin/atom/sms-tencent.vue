@@ -21,7 +21,7 @@
             </h2>
             <span class="badge bg-primary font-white"> 企业 </span>
             <span class="text-muted">
-                也可以用这个，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
+                也可以用这个，<span v-on:click="method.show()" class="text-dark pointer">点我配置</span>
             </span>
         </div>
     </div>

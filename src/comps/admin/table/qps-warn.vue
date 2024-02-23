@@ -109,8 +109,8 @@ const state  = reactive({
             { prop: 'ip', label: 'IP', width: 120, slot: true, fixed: left },
             { prop: 'route', label: '路由', width: 150, slot: true },
             { prop: 'agent' , label: 'User-Agent', width: 250, slot: true },
-            { prop: 'update_time', label: '更新时间', width: 120, sortable: true },
-            { prop: 'create_time', label: '创建时间', width: 120, sortable: true },
+            { prop: 'update_time', label: '更新时间', width: 140, sortable: true },
+            { prop: 'create_time', label: '创建时间', width: 140, sortable: true },
         ],
         menu: {
             ...MenuConfig,

@@ -214,8 +214,8 @@ const state  = reactive({
         columns: [
             { prop: 'name', label: '名称', width: 250, slot: true, fixed: left },
             { prop: 'remark' , label: '备注', width: 200, slot: true },
-            { prop: 'update_time', label: '更新时间', width: 120, sortable: true },
-            { prop: 'create_time', label: '创建时间', width: 120, sortable: true },
+            { prop: 'update_time', label: '更新时间', width: 140, sortable: true },
+            { prop: 'create_time', label: '创建时间', width: 140, sortable: true },
         ],
         menu: {
             ...MenuConfig,

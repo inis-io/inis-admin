@@ -1,69 +1,83 @@
 <template>
-    <div class="w-100 text-bg-muted py-1 radius-5">
-        <el-input v-model="state.struct.content" v-on:focus="method.focus" v-on:blur="method.blur" placeholder="玩命开发中 . . ." class="custom comment-box px-2" ref="el-input">
-            <template #append>
-                <!-- v-if="state.focus" -->
-                <div v-if="state.focus" class="d-flex justify-content-between align-items-center">
-                    <el-popover placement="bottom" :width="300" trigger="click" class="p-0">
+    <div class="w-100 py-1 radius-5 comment">
+        <el-progress v-if="state.progress.show" :percentage="state.progress.value" :color="state.progress.color"></el-progress>
+        <div v-bind="$attrs" ref="vditor"></div>
+        <div v-if="state.focus" class="d-flex justify-content-between align-items-center px-2">
+            <el-popover placement="bottom" :width="300" trigger="click" class="p-0">
 
-                        <el-tabs active-name="qq" tab-position="bottom" class="comment-box">
-                            <el-tab-pane name="qq">
-                                <template #label>
-                                    <span class="font-12">QQ</span>
-                                </template>
-                                <div class="tags overflow-y-auto" style="max-height: 100px;">
-                                    <small v-for="(item, index) in 20" :key="index" class="item py-1 px-2 pointer white-space-nowrap user-select-none">
-                                        <span v-on:click="method.insert(`QQ${item}`)">QQ{{ item }}</span>
-                                    </small>
-                                </div>
-                            </el-tab-pane>
+                <el-tabs active-name="qq" tab-position="bottom" class="comment-box">
 
-                            <el-tab-pane name="bilibili">
-                                <template #label>
-                                    <span class="font-12">B站</span>
-                                </template>
-                                <div class="tags">
-                                    <small v-for="(item, index) in 20" :key="index" class="item py-1 px-2 pointer white-space-nowrap user-select-none">
-                                        <span v-on:click="method.insert(`B站${item}`)">B站{{ item }}</span>
-                                    </small>
-                                </div>
-                            </el-tab-pane>
-
-                            <el-tab-pane name="tiktok">
-                                <template #label>
-                                    <span class="font-12">抖音</span>
-                                </template>
-                                <div class="tags">
-                                    <small v-for="(item, index) in 20" :key="index" class="item py-1 px-2 pointer white-space-nowrap user-select-none">
-                                        <span v-on:click="method.insert(`抖音${item}`)">抖音{{ item }}</span>
-                                    </small>
-                                </div>
-                            </el-tab-pane>
-                        </el-tabs>
-
-                        <template #reference>
-                            <el-button type="success" class="p-0" style="height: 20px; width: 20px" size="small">
-                                <i-svg name="emoji" color="#8a8a8a" size="15px"></i-svg>
-                            </el-button>
+                    <el-tab-pane v-for="(item, index) in state.emoji.data" :key="index" :name="index">
+                        <template #label>
+                            <span class="font-12">{{ method.name(index) }}</span>
                         </template>
-                    </el-popover>
-                    <el-button :disabled="!state.struct.content" type="primary" size="small" class="btn btn-info text-white">发送</el-button>
-                </div>
-            </template>
-        </el-input>
+                        <div class="tags overflow-y-auto" style="max-height: 200px;">
+                            <small v-for="(src, key) in item" :key="key" class="p-1 white-space-nowrap user-select-none">
+                                <el-image v-on:click="method.insert(`![](${src})`)" :src="src" fit="cover" style="width: 24px; height: 24px" class="pointer item"></el-image>
+                            </small>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+
+                <template #reference>
+                    <el-button class="p-0" style="height: 20px; width: 20px" size="small">
+                        <i-svg name="emoji" color="#8a8a8a" size="15px"></i-svg>
+                    </el-button>
+                </template>
+            </el-popover>
+            <el-button v-on:click="method.send()" :disabled="!state.send" type="primary" size="small" class="btn btn-info text-white" style="line-height: 0">
+                发送
+            </el-button>
+        </div>
     </div>
 </template>
 
 <script setup>
+import Vditor from 'vditor'
+import 'vditor/dist/index.css'
 import utils from '{src}/utils/utils'
+import notyf from '{src}/utils/notyf'
+import axios from '{src}/utils/request'
+import { useCommStore } from '{src}/store/comm'
+
+const emit  = defineEmits(['finish'])
+const props = defineProps({
+    pid: {
+        type: Number,
+        default: 0,
+    },
+    bindType: {
+        type: String,
+        default: 'article',
+        required: true,
+    },
+    bindId: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
+})
 
 const { ctx, proxy } = getCurrentInstance()
+const store = {
+    comm: useCommStore(),
+}
 const state  = reactive({
-    focus: false,
-    struct: {
-        content: ''
+    send  : false,
+    focus : false,
+    emoji : {
+        show: false,
+        data: [],
+    },
+    vditor: Vditor,
+    progress: {
+        value: 0,
+        show : false,
+        color: 'var(--bs-dark)',
     }
 })
+
+const base_url = (process.env.NODE_ENV === 'production' ? (import.meta.env.VITE_BASE || '/') : '/')
 
 const method = {
     // 当选择器的输入框失去焦点时触发
@@ -83,24 +97,150 @@ const method = {
         }
     },
     // 当选择器的输入框获得焦点时触发
-    focus: (event) => {
+    focus: () => {
         state.focus = true
     },
     // 插入内容
     insert: (content) => {
-        // 原生 JS 在光标处插入内容
-        const input = proxy.$refs['el-input'].$refs.input
-        const start = input.selectionStart
-        const end   = input.selectionEnd
-        const value = input.value
-        input.value = value.slice(0, start) + content + value.slice(end)
-        input.selectionStart = input.selectionEnd = start + content.length
-        // 更新数据
-        state.struct.content = input.value
-    }
+        // 在末尾处插入内容
+        state.vditor.insertValue(content, true)
+    },
+    vditor: () => {
+        return new Vditor(proxy.$refs['vditor'], {
+            // 最小高度
+            minHeight: 30,
+            cdn: base_url + 'assets/libs/vditor',
+            // cdn: 'https://unpkg.com/vditor@3.9.3',
+            placeholder: '尊重是评论打动人心的入场券！',
+            toolbar: [],
+            cache: {
+                enable: false,          // 关闭缓存
+            },
+            preview: {
+                hljs: {
+                    enable: true,       // 启用代码高亮
+                    // lineNumber: true,   // 启用行号
+                },
+                math: {
+                    engine: 'MathJax',
+                },
+            },
+            // after: () => {
+            //     state.item.setValue(props.modelValue)
+            // },
+            upload: {
+                accept: 'image/*, video/*',
+                multiple: false,
+                // 上传失败自定义方法
+                handler: async files => {
+
+                    // 创建一个 formData
+                    const params = new FormData
+                    params.append('file', files[0])
+
+                    state.progress.show = true
+
+                    const { code, msg, data } = await axios.post('/api/file/upload', params, {
+                        // 上传进度
+                        onUploadProgress: speed => {
+                            state.progress.value = Math.round(speed.loaded / speed.total * 100)
+                        }
+                    })
+
+                    if (code !== 200) {
+                        notyf.error(msg)
+                        state.progress.color = 'var(--bs-danger)'
+                        setTimeout(() => (state.progress.show  = false), 3000)
+                        return
+                    }
+
+                    const { path } = data
+
+                    if (method.fileFormat(path) === 'image') {
+                        state.vditor.insertValue(`![](${path})`)
+                    } else if (method.fileFormat(path) === 'video') {
+                        state.vditor.insertValue(`<video src="${path}" controls>Not Support</video>`)
+                    } else {
+                        state.vditor.insertValue(`${path}`)
+                    }
+
+                    state.progress.show  = false
+                },
+                filename: name => {
+                    return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5.)]/g, '')
+                    .replace(/[?\\/:|<>*\[\]()$%{}@~]/g, '')
+                    .replace('/\\s/g', '');
+                },
+            },
+            // 编辑器焦点变化时触发
+            focus: () => {
+                state.focus = true
+            },
+            // 编辑器失去焦点时触发
+            blur: () => {
+                // 如果评论内容为空
+                state.focus = !utils.is.empty(state.vditor.getValue())
+            },
+            // 编辑器内容变化时触发
+            input: (value) => {
+                state.send = !utils.is.empty(value)
+            },
+        })
+    },
+    // 文件格式
+    fileFormat(url = null){
+
+        let result  = 'other'
+        const image = ['png','jpg','jpeg','gif','webp','svg','ico']
+        const video = ['avi','mp4']
+        const array = url.split('.')
+        const pop   = array.pop()
+
+        if (utils.in.array(pop, image))      result = 'image'
+        else if (utils.in.array(pop, video)) result = 'video'
+
+        return result
+    },
+    // 获取表情包
+    emoji: async () => {
+        const { data } = await axios.get('/api/file/emoji')
+        state.emoji.data = data
+    },
+    // name 转义
+    name: (name) => {
+        const fields = {
+            'qq': 'QQ', 'bilibili': 'B站', 'tiktok': '抖音'
+        }
+        return fields[name] || name
+    },
+    // 发送评论
+    send: async () => {
+
+        const content = state.vditor.getValue()
+
+        if (utils.is.empty(content)) return notyf.warn('评论内容不能为空')
+
+        const { code, msg } = await axios.post('/api/comment/create', {
+            content, bind_id: props.bindId, bind_type: props.bindType, pid: props.pid, editor: 'markdown'
+        })
+
+        if (code !== 200) return notyf.error(msg)
+
+        state.vditor.setValue('')
+        state.send  = false
+        state.focus = false
+
+        // 评论完成
+        emit('finish')
+    },
 }
 
 onMounted(() => {
+    state.vditor = method.vditor()
+    method.emoji()
+})
 
+watch(() => state.emoji.data, (val) => {
+    state.emoji.show = !utils.is.empty(val)
 })
 </script>

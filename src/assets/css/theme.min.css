@@ -918,6 +918,10 @@ body[inis-theme] .el-textarea textarea::-webkit-scrollbar-thumb{
 body[inis-theme] .el-textarea textarea::-webkit-scrollbar-track{
     background-color:rgba(0,0,0,.1)
 }
+body[inis-theme] .el-textarea.custom.comment-box textarea{
+    border-bottom: unset !important;
+    resize: none;
+}
 /* ==================== 自定义 el-textarea - 结束 ==================== */
 /* ==================== 自定义 el-carousel - 开始 ==================== */
 body[inis-theme] .el-carousel.color-thief .el-carousel__item{
@@ -1400,6 +1404,18 @@ body[inis-theme] .vditor-input::placeholder {
 body[inis-theme] .vditor-resize > div{
     background-color: #f6f8fa38;
 }
+body[inis-theme] .comment .vditor .vditor-toolbar{
+    display: none;
+}
+body[inis-theme] .comment .vditor .vditor-reset img{
+    width: 24px;
+}
+body[inis-theme] .comment .vditor .vditor-content{
+    min-height: unset;
+}
+body[inis-theme] .comment .vditor .vditor-reset {
+    padding: 4px 0 0 12px !important;
+}
 /* ==================== 自定义 Vditor 编辑器 - 结束 ==================== */
 /* ==================== 自定义 markdown - 开始 ==================== */
 body[inis-theme] .markdown blockquote{
@@ -1429,6 +1445,16 @@ body[inis-theme] .markdown img{
     max-height: 300px;
     border-radius: 6px;
     object-fit: cover;
+}
+body[inis-theme] .comment.markdown img{
+    display: unset;
+    width: auto;
+}
+/* 如果图片链接中包含 emoji，强制大小为 30px */
+body[inis-theme] .comment.markdown img[src*="emoji"]{
+    width: 26px;
+    height: 26px;
+    margin: 0 5px;
 }
 body[inis-theme] .markdown table {
     border: unset;
@@ -1641,4 +1667,37 @@ body[inis-theme] .red-dot {
     100% {
         opacity: 0;
     }
+}
+body[inis-theme] .svg-icon{
+    outline: 0;
+}
+
+body[inis-theme] .h-title {
+    position: relative;
+    --width: 40px;
+}
+
+body[inis-theme] .h-title:after {
+    content: "";
+    bottom: 0;
+    background-color: rgb(var(--assist-color));
+    box-shadow: 1px 1px 3px -1px rgb(var(--assist-color));
+    border-radius: 5px;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    top: auto;
+    transition: .3s;
+    width: var(--width);
+}
+
+body[inis-theme] .h-title:hover:after {
+    width: calc(var(--width) * 2);
+}
+
+body[inis-theme] .text-bg-muted{
+    background: #fafafa;
+}
+body[inis-theme] .btn.disabled, body[inis-theme] .btn:disabled, body[inis-theme] fieldset:disabled .btn{
+    border: unset !important;
 }

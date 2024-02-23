@@ -23,7 +23,7 @@
             </h2>
             <span class="badge bg-success font-white"> +30% </span>
             <span class="text-muted">
-                综合提升，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
+                综合提升，<span v-on:click="method.show()" class="text-dark pointer">点我配置</span>
             </span>
         </div>
     </div>

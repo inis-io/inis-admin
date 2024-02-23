@@ -194,6 +194,7 @@
 </template>
 
 <script setup>
+import cache from '{src}/utils/cache'
 import utils from '{src}/utils/utils'
 import notyf from '{src}/utils/notyf'
 import axios from '{src}/utils/request'
@@ -285,18 +286,24 @@ const method = {
         }
         await method.getGroup()
         await method.getTags()
-        if (!utils.is.empty(state.item.id)) {
-            await method.getArticle(state.item.id)
-        } else {
-            await method.getConfig()
-        }
+        if (!utils.is.empty(state.item.id))  await method.getArticle(state.item.id)
+        else await method.getConfig()
     },
     // Editor 切换
     getConfig: async () => {
-        const { code, data } = await axios.get('/api/config/one', { key: 'ARTICLE' })
-        if (code !== 200) return
-        if (utils.in.array(data?.json?.editor, ['tinymce', 'vditor'])) {
-            state.struct.editor = data.json.editor
+
+        const cacheName = 'article'
+
+        // 缓存不存在 - 直接返回
+        if (!cache.has(cacheName)) {
+            state.struct.editor = 'tinymce'
+            return
+        }
+
+        // 缓存存在 - 获取缓存
+        const json = cache.get(cacheName)
+        if (utils.in.array(json?.editor, ['tinymce', 'vditor'])) {
+            state.struct.editor = json?.editor
         } else {
             state.struct.editor = 'tinymce'
         }

@@ -22,7 +22,7 @@
             </h2>
             <span class="badge bg-success font-white"> 更多 </span>
             <span class="text-muted">
-                其它配置信息，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
+                其它配置信息，<span v-on:click="method.show()" class="text-dark pointer">点我配置</span>
             </span>
         </div>
     </div>

@@ -344,8 +344,8 @@ const state  = reactive({
             { prop: 'email',   label: '邮箱', width: 120, slot: true },
             { prop: 'phone',   label: '电话', width: 120, slot: true },
             { prop: 'remark' , label: '备注', width: 180, slot: true },
-            { prop: 'login_time', label: '最近登录', width: 120, sortable: true, slot: true },
-            { prop: 'create_time', label: '创建时间', width: 120, sortable: true },
+            { prop: 'login_time', label: '最近登录', width: 140, sortable: true, slot: true },
+            { prop: 'create_time', label: '创建时间', width: 140, sortable: true },
         ],
         menu: {
             ...MenuConfig,

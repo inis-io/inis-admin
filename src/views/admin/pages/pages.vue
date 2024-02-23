@@ -169,7 +169,7 @@ onMounted(async () => {
     let root = state.user?.result?.auth?.all ?? false
     if (!root) {
         for (let item of allow) state.params[item].where.push(['uid', '=', state.user?.id])
-    } else state.item.setting = true
+    }
 
     state.tabs.all = true
 

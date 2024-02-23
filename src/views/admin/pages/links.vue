@@ -24,8 +24,8 @@
                     </span>
                     <template #dropdown>
                         <el-dropdown-item v-for="(item, index) in state.select.group" :key="index" v-on:click="method.group(item)">
-                            <el-avatar shape="square" :src="method.imageSize(item?.avatar)" size="small" class="me-2"></el-avatar>
-                            {{ item.label }}
+                            <el-avatar shape="square" v-if="item?.avatar" :src="method.imageSize(item?.avatar)" :size="20" class="me-1"></el-avatar>
+                            <span>{{ item.label }}</span>
                         </el-dropdown-item>
                     </template>
                 </el-dropdown>

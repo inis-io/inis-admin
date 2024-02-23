@@ -59,6 +59,7 @@ import utils from '{src}/utils/utils'
 import { push } from '{src}/utils/route'
 import { useCommStore } from '{src}/store/comm'
 import UserSignIn from '{src}/comps/index/user/sign-in.vue'
+import ILevel from '{src}/comps/custom/i-level.vue'
 
 const { ctx, proxy } = getCurrentInstance()
 

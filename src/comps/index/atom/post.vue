@@ -57,7 +57,7 @@
                                         <span class="ms-1">{{ item.result?.comment?.count || 0 }}</span>
                                     </span>
                                 </span>
-                                <span>{{ utils.natureTime(item.last_update) }}</span>
+                                <span>{{ utils.natureTime(item.last_update || item.update_time) }}</span>
                             </template>
                         </atom-banner-cover>
                         <p class="mb-0 mt-2 limit-1-line"> {{ item.title }}</p>

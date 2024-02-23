@@ -23,7 +23,7 @@
             </h2>
             <span class="badge bg-primary font-white"> +5% </span>
             <span class="text-muted ms-1">
-                安全性提升，<span v-on:click="method.show()" class="text-white pointer">点我配置</span>
+                安全性提升，<span v-on:click="method.show()" class="text-dark pointer">点我配置</span>
             </span>
         </div>
     </div>
