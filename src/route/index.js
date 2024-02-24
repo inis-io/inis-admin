@@ -88,6 +88,11 @@ const admin = {
         meta: { title: '公告' },
         component: () => import('{src}/views/admin/pages/placard.vue'),
     },{
+        path: '/admin/level',
+        name: 'admin-level',
+        meta: { title: '等级' },
+        component: () => import('{src}/views/admin/pages/level.vue'),
+    },{
         path: '/admin/comment',
         name: 'admin-comment',
         meta: { title: '评论' },

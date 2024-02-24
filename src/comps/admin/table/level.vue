@@ -9,7 +9,7 @@
             <el-table-column :fixed="right" label="操作" width="100" class-name="text-end">
                 <template #default="scope">
                     <span class="d-flex justify-content-end">
-                        <el-button v-on:click="method.edit(scope.row)" class="custom" size="small">
+                        <el-button v-on:click="method.edit(scope.row)" size="small">
                             <i-svg color="rgb(var(--icon-color))" name="edit" size="16px"></i-svg>
                         </el-button>
                         <el-button v-on:click="method.delete(scope.row.id, true)" size="small" class="ms-0">
@@ -23,7 +23,7 @@
             <el-table-column :fixed="right" label="操作" width="160" class-name="text-end">
                 <template #default="scope">
                     <span class="d-flex justify-content-end">
-                        <el-button v-on:click="method.restore(scope.row.id)" class="custom" size="small">
+                        <el-button v-on:click="method.restore(scope.row.id)" size="small">
                             <i-svg color="rgb(var(--icon-color))" name="restore" size="16px"></i-svg>
                         </el-button>
                         <el-button v-on:click="method.edit(scope.row)" size="small" class="ms-0">
@@ -37,50 +37,21 @@
             </el-table-column>
         </template>
 
-        <template #i-nickname="{ scope = {} }">
-            <span v-on:dblclick="method.edit(scope)" class="d-flex align-items-center">
-                <el-tooltip :disabled="utils.is.empty(scope.description)" placement="top">
-                    <template #content>
-                        <span v-html="method.autoWrap(scope.nickname + '：' + scope.description)"></span>
-                    </template>
-                    <el-avatar shape="square" :src="method.imageSize(scope?.avatar)" size="small" class="me-1"></el-avatar>
-                </el-tooltip>
-                <el-tooltip v-if="!utils.is.empty(scope.url)" :content="`链接：${scope.url}`" placement="top">
-                    <i-svg color="rgb(var(--icon-color))" v-on:click="method.window(scope.url)" name="link" size="12px" class="me-1"></i-svg>
-                </el-tooltip>
-                <el-tooltip :content="scope.nickname" :disabled="utils.is.empty(scope.nickname)" placement="top">
-                    <span>{{ method.omit(scope?.nickname, 4, ' ...', 'end') }}</span>
-                </el-tooltip>
-            </span>
-        </template>
-
-        <template #i-account="{ scope = {} }">
-            <el-tooltip :content="'双击复制：' + scope?.account" :disabled="utils.is.empty(scope?.account)" placement="top">
-                <span v-on:dblclick="method.copy(scope?.account, '复制成功！')">
-                    {{ method.omit(scope?.account) }}
-                </span>
+        <template #i-name="{ scope = {} }">
+            <el-tooltip :content="scope.name" :disabled="utils.is.empty(scope.name)" placement="top">
+                <div class="d-flex align-items-center">
+                    <span class="limit-1-line">{{ scope?.name || '-' }}</span>
+                </div>
             </el-tooltip>
         </template>
 
-        <template #i-email="{ scope = {} }">
-            <el-tooltip :content="'双击复制：' + scope?.email" :disabled="utils.is.empty(scope?.email)" placement="top">
-                <span v-on:dblclick="method.copy(scope?.email, '复制成功！')">
-                    {{ method.omit(scope?.email, 9) }}
-                </span>
+        <template #i-description="{ scope = {} }">
+            <el-tooltip :disabled="utils.is.empty(scope.description)" placement="top">
+                <template #content>
+                    <span v-html="method.autoWrap(scope.description)"></span>
+                </template>
+                <span class="limit-1-line">{{ scope?.description || '-' }}</span>
             </el-tooltip>
-        </template>
-
-        <template #i-phone="{ scope = {} }">
-            <el-tooltip :content="'双击复制：' + scope?.phone" :disabled="utils.is.empty(scope?.phone)" placement="top">
-                <span v-on:dblclick="method.copy(scope?.phone, '复制成功！')">
-                    {{ method.omit(scope?.phone, 7, '***') }}
-                </span>
-            </el-tooltip>
-        </template>
-
-        <template #i-login_time="{ scope = { login_time: 0 } }">
-            <span v-if="scope?.login_time === 0">从未登录</span>
-            <span v-else>{{ utils.time.nature(scope?.login_time) }}</span>
         </template>
 
         <template #i-remark="{ scope = {} }">
@@ -88,9 +59,7 @@
                 <template #content>
                     <span v-html="method.autoWrap(scope.remark)"></span>
                 </template>
-                <span v-on:dblclick="method.copy(scope.remark, '复制成功！')">
-                    {{ method.omit(scope?.remark) }}
-                </span>
+                <span class="limit-1-line">{{ scope?.remark || '-' }}</span>
             </el-tooltip>
         </template>
 
@@ -98,143 +67,47 @@
 
     <el-dialog v-model="state.item.dialog" class="custom" draggable :close-on-click-modal="false">
         <template #header>
-            <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '添 加' : '编 辑' }} 用 户</strong>
+            <strong class="flex-center">{{ utils.is.empty(state.struct.id) ? '添 加' : '编 辑' }} 等 级</strong>
         </template>
         <template #default>
             <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group mb-3">
-                        <label class="form-label">
-                            <el-tooltip content="这位兄dei叫什么？" placement="top">
-                                <span>
-                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">昵称：</span>
-                                </span>
-                            </el-tooltip>
-                        </label>
-                        <el-input v-model="state.struct.nickname"></el-input>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group mb-3">
-                        <label class="form-label required">
-                            <el-tooltip content="（必须）可用于账密登录" placement="top">
-                                <span>
-                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">账号：</span>
-                                </span>
-                            </el-tooltip>
-                        </label>
-                        <el-input v-model="state.struct.account"></el-input>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                        <label class="form-label">
-                            <el-tooltip content="建议设置一个头像，效果更佳" placement="top">
-                                <span>
-                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">头像：</span>
-                                </span>
-                            </el-tooltip>
-                        </label>
-                        <el-input v-model="state.struct.avatar" class="custom" placeholder="填写图片地址或点击上传图片">
-                            <template #suffix>
-                                <el-button v-on:click="method.upload('avatar')" :loading="state.item.upload">
-                                    <i-svg v-if="!state.item.upload" name="upload" color="rgb(var(--icon-color))" size="14px"></i-svg>
-                                    <span class="ms-1">上传</span>
-                                </el-button>
-                            </template>
-                        </el-input>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-md-4">
                     <div class="form-group mb-3">
-                        <label class="form-label required">
-                            <el-tooltip content="（必须）可用于邮箱验证码登录" placement="top">
+                        <label class="form-label">
+                            <el-tooltip content="该等级对应的名称" placement="top">
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">邮箱：</span>
+                                    <span class="ms-1">名称：</span>
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-input v-model="state.struct.email"></el-input>
+                        <el-input v-model="state.struct.name" placeholder="名称"></el-input>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label class="form-label">
-                            <el-tooltip content="可用于手机验证码登录" placement="top">
+                            <el-tooltip content="等级：0 ~ ∞" placement="top">
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">手机：</span>
+                                    <span class="ms-1">等级：</span>
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-input v-model="state.struct.phone"></el-input>
+                        <el-input-number v-model="state.struct.value" :min="0" class="w-100 d-flex" placeholder="等级"></el-input-number>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label class="form-label">
-                            <el-tooltip content="为空不修改，反之修改密码" placement="top">
+                            <el-tooltip content="达到该等级所需要的经验值为多少？" placement="top">
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">密码：</span>
+                                    <span class="ms-1">经验值：</span>
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-input v-model="state.struct.password" placeholder="为空不修改密码"></el-input>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group mb-3">
-                        <label class="form-label">
-                            <el-tooltip content="为该用户分配权限，默认只有公共权限" placement="top">
-                                <span>
-                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">权限：</span>
-                                </span>
-                            </el-tooltip>
-                        </label>
-                        <el-select v-model="state.struct.result.auth.group.ids" multiple collapse-tags placeholder="请选择权限" class="d-block custom font-13">
-                            <el-option v-for="item in state.select.auth_group" :key="item.value" :label="item.label" :value="item.value">
-                                <span class="font-13">{{ item.label }}</span>
-                            </el-option>
-                        </el-select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mb-3">
-                        <label class="form-label">
-                            <el-tooltip content="您的性别是？" placement="top">
-                                <span>
-                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">性别：</span>
-                                </span>
-                            </el-tooltip>
-                        </label>
-                        <el-select v-model="state.struct.gender" class="d-block custom font-13" placeholder="请选择">
-                            <el-option v-for="item in state.select.gender" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group mb-3">
-                        <label class="form-label">
-                            <el-tooltip content="为这个用户设置一个专属的头衔，彰显与众不同" placement="top">
-                                <span>
-                                    <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">专属头衔：</span>
-                                </span>
-                            </el-tooltip>
-                        </label>
-                        <el-input v-model="state.struct.title" placeholder="独领风骚"></el-input>
+                        <el-input-number v-model="state.struct.exp" :min="0" class="w-100 d-flex" placeholder="所需经验值"></el-input-number>
                     </div>
                 </div>
             </div>
@@ -242,14 +115,14 @@
                 <div class="col-lg-12">
                     <div class="form-group mb-3">
                         <label class="form-label">
-                            <el-tooltip content="简单的介绍一下" placement="top">
+                            <el-tooltip content="针对这个等级的一句话描述" placement="top">
                                 <span>
                                     <i-svg color="rgb(var(--icon-color))" name="hint" size="14px"></i-svg>
-                                    <span class="ms-1">个人简介：</span>
+                                    <span class="ms-1">描述：</span>
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-input v-model="state.struct.description" :autosize="{ minRows: 3, maxRows: 10 }" type="textarea"></el-input>
+                        <el-input v-model="state.struct.description" :autosize="{ minRows: 3, maxRows: 10 }" type="textarea" placeholder="一句话描述"></el-input>
                     </div>
                 </div>
             </div>
@@ -264,7 +137,7 @@
                                 </span>
                             </el-tooltip>
                         </label>
-                        <el-input v-model="state.struct.remark" :autosize="{ minRows: 3, maxRows: 10 }" placeholder="备注一下，避免忘记！" type="textarea"></el-input>
+                        <el-input v-model="state.struct.remark" :autosize="{ minRows: 4, maxRows: 10 }" placeholder="备注一下，避免忘记！" type="textarea"></el-input>
                     </div>
                 </div>
             </div>
@@ -282,6 +155,7 @@ import notyf from '{src}/utils/notyf.js'
 import axios from '{src}/utils/request.js'
 import ITable from '{src}/comps/custom/i-table.vue'
 import { config as MenuConfig } from '{src}/utils/menu.js'
+import ILevel from "{src}/comps/custom/i-level.vue";
 
 const emit  = defineEmits(['refresh','update:init'])
 const props = defineProps({
@@ -317,34 +191,22 @@ const right = computed(() => {
 const { ctx, proxy } = getCurrentInstance()
 const state  = reactive({
     item: {
-        table: 'users',
+        table: 'level',
         dialog: false,
         upload: false,
         wait: false,
     },
-    struct: {
-        remark: null,
-        result: {
-            auth: {
-                all: false,
-                root: false,
-                group: {
-                    ids: [],
-                    list: [],
-                },
-            }
-        }
-    },
+    struct: {},
     opts: {
-        url: '/api/users/all',
+        url: '/api/level/all',
         params: props.params,
         columns: [
-            { prop: 'nickname',label: '昵称', width: 130, slot: true, fixed: left },
-            { prop: 'account', label: '账号', width: 130, slot: true },
-            { prop: 'email',   label: '邮箱', width: 120, slot: true },
-            { prop: 'phone',   label: '电话', width: 120, slot: true },
-            { prop: 'remark' , label: '备注', width: 150, slot: true },
-            { prop: 'login_time', label: '最近登录', width: 140, sortable: true, slot: true },
+            { prop: 'name'  , label: '名称', width: 100, slot: true, fixed: left },
+            { prop: 'value', label: '等级', width: 80, align: 'center' },
+            { prop: 'exp', label: '经验值', width: 80, align: 'center' },
+            { prop: 'description', label: '描述', width: 180, slot: true },
+            { prop: 'remark' , label: '备注', width: 180, slot: true },
+            { prop: 'update_time', label: '更新时间', width: 140, sortable: true },
             { prop: 'create_time', label: '创建时间', width: 140, sortable: true },
         ],
         menu: {
@@ -374,63 +236,28 @@ const state  = reactive({
             }],
         }
     },
-    // 下拉框
-    select: {
-        auth_group: [],
-        gender: [
-            { value: null, label: '保密'},
-            { value: 'boy', label: '男' },
-            { value: 'girl', label: '女' },
-        ]
-    },
 })
 
 const method = {
     // 刷新数据
     init: async () => {
-        state.struct = {
-            remark: null,
-            result: {
-                auth: {
-                    all: false,
-                    root: false,
-                    group: {
-                        ids: [],
-                        list: [],
-                    },
-                }
-            }
-        }
         // 重新加载数据
         await proxy.$refs['i-table']['init']()
-    },
-    // 获取权限分组
-    async authGroup() {
-        const { code, data } = await axios.get('/api/auth-group/column',{
-            field: 'id,name'
-        })
-        if (code !== 200) return
-        state.select.auth_group = data.map(item => ({ value: item.id, label: item.name }))
-    },
-    // 更新用户权限
-    async updateAuthGroup(uid = null, ids = []) {
-        if (utils.is.empty(uid)) return
-        const { code, msg } = await axios.put('/api/auth-group/uids', { uid, ids })
-        if (code !== 200) return notyf.error(msg)
     },
     // 保存数据
     save: async (params = state.struct || {}) => {
 
-        if (utils.is.empty(params))          return notyf.warn('你在想什么？什么都不填！')
-        if (utils.is.empty(params?.account)) return notyf.warn('账号还是要设置的！')
-        if (!utils.is.empty(params?.email))  if (!utils.is.email(params?.email)) return notyf.warn('邮箱格式不正确！')
-        if (!utils.is.empty(params?.phone))  if (!utils.is.phone(params?.phone)) return notyf.warn('手机号格式不正确！')
+        params = JSON.parse(JSON.stringify(params))
 
-        state.item.wait           = true
+        if (utils.is.empty(params)) return notyf.warn('你在想什么？什么都不填！')
+        if (utils.is.empty(params?.name)) return notyf.warn('等级名称不能为空！')
+        if (utils.is.empty(params?.value)) return notyf.warn('等级不能为空！')
 
-        const { code, msg, data } = await axios.post(`/api/${state.item.table}/save`, params)
+        state.item.wait     = true
 
-        state.item.wait           = false
+        const { code, msg } = await axios.post(`/api/${state.item.table}/save`, params)
+
+        state.item.wait     = false
 
         if (code !== 200) return notyf.error(msg)
 
@@ -438,19 +265,14 @@ const method = {
         state.item.dialog = false
         // 重新加载数据
         await method.init()
-        // 更新用户权限
-        await method.updateAuthGroup(data.id, params.result.auth.group.ids)
     },
     // 编辑数据
     edit: struct => {
-        state.struct = struct
+        state.struct      = struct
         state.item.dialog = true
     },
     // 显示盒子
-    show: () => {
-        method.init()
-        state.item.dialog = true
-    },
+    show: () => (state.item.dialog = true),
      // 真删 和 软删
     async delete(ids = [], isSoft = true) {
 
@@ -484,44 +306,6 @@ const method = {
         // 重新加载数据
         await method.init()
     },
-    // 上传
-    async upload(field = 'image') {
-
-        // 创建一个 input
-        const input  = document.createElement('input')
-        input.type   = 'file'
-        input.accept = 'image/*'
-
-        // 监听 input 的 change 事件
-        input.addEventListener('change', async () => {
-            // 创建一个 formData
-            const params = new FormData
-            params.append('file', input.files[0])
-
-            state.item.upload         = true
-
-            // 上传图片
-            const { code, msg, data } = await axios.post('/api/file/upload', params)
-
-            state.item.upload         = false
-
-            if (code !== 200) return notyf.error(msg)
-            // 设置图片
-            state.struct[field] = data.path
-            // 清空 input
-            input.value = ''
-            notyf.info('上传成功！')
-        })
-
-        // 触发 input 的 click 事件
-        input.click()
-    },
-    // 打开新窗口
-    window(url = null, target = '_blank'){
-        if (utils.is.empty(url)) return
-        // 新窗口打开
-        globalThis.open(url, target)
-    },
     // 图片大小
     imageSize(url = '', size = '50x50') {
         // 判断 url 是否为空
@@ -547,13 +331,12 @@ const method = {
     },
     // 省略文本
     omit  : (text = null, length = 10, omission = ' ... ', location = 'center') => {
-        if (utils.is.empty(text)) return '-'
+        if (utils.is.empty(text)) return '空'
         return utils.string.omit(text, length, omission, location)
     },
 }
 
 onMounted(async () => {
-    await method.authGroup()
     if (props.init) await method.init()
 })
 

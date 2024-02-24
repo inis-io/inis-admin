@@ -54,19 +54,27 @@
             </span>
         </template>
 
-        <template #i-content="{ scope = {} }">
-            <el-tooltip :disabled="utils.is.empty(scope.content)" placement="top">
-                <template #content>
-                    <span v-html="method.autoWrap(scope.content)"></span>
-                </template>
-                <span>{{ method.omit(scope?.content) }}</span>
-            </el-tooltip>
-        </template>
+        <el-tooltip :disabled="utils.is.empty(scope.content)" placement="top">
+            <template #content>
+                <span class="user-select-text comment markdown">
+                    <i-markdown v-if="scope.editor === 'markdown'" v-model="scope.content"></i-markdown>
+                    <span v-else-if="scope.editor === 'html'" v-html="scope.content"></span>
+                    <span v-else>{{ scope?.content || '-' }}</span>
+                </span>
+            </template>
+            <span class="user-select-text comment markdown limit-1-line">
+                <i-markdown v-if="scope.editor === 'markdown'" v-model="scope.content"></i-markdown>
+                <span v-else-if="scope.editor === 'html'" v-html="scope.content"></span>
+                <span v-else>{{ scope?.content || '-' }}</span>
+            </span>
+        </el-tooltip>
 
         <template #i-source="{ scope = {} }">
-            <span v-if="!utils.is.empty(scope?.result?.article?.title)">
-                文章：《{{ method.omit(scope?.result?.article?.title) }}》
-            </span>
+            <el-tooltip :content="method.autoWrap(scope?.result?.article?.title)" :disabled="utils.is.empty(scope?.result?.article?.title)" placement="top">
+                <span v-if="!utils.is.empty(scope?.result?.article?.title)" class="limit-1-line">
+                    文章：《{{ scope?.result?.article?.title || '-' }}》
+                </span>
+            </el-tooltip>
         </template>
 
     </i-table>
@@ -104,6 +112,7 @@ import utils from '{src}/utils/utils.js'
 import notyf from '{src}/utils/notyf.js'
 import axios from '{src}/utils/request.js'
 import ITable from '{src}/comps/custom/i-table.vue'
+import IMarkdown from '{src}/comps/custom/i-markdown.vue'
 import { config as MenuConfig } from '{src}/utils/menu.js'
 
 const emit  = defineEmits(['refresh','update:init'])

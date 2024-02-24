@@ -187,6 +187,9 @@ body[inis-theme] .btn-auto:focus {
     -webkit-box-shadow: var(--box-shadow);
     box-shadow: var(--box-shadow);
 }
+body[inis-theme] .btn-auto:disabled{
+    border-color: rgba(var(--theme-color), calc(var(--theme-opacity) * 0.8));
+}
 body[inis-theme] .nav-tabs.nav-bordered{
     border-bottom: unset;
 }
