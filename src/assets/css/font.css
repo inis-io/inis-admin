@@ -1,0 +1,23 @@
+.letter-spacing {
+    letter-spacing: 0.2em;
+}
+@font-face{
+     font-family: font-clock; src: url('{src}/assets/font/DS-DIGIT.TTF')
+ }
+ .font-clock{
+     font-family: font-clock, serif;
+ }
+
+ @font-face{
+     font-family: font-note-semi-bold; src: url('{src}/assets/font/Note-Script-SemiBold.ttf')
+ }
+.font-note-semi-bold{
+    font-family: font-note-semi-bold, serif;
+}
+
+ @font-face{
+     font-family: font-note-extra-bold; src: url('{src}/assets/font/Note-Script-ExtraBold.ttf')
+ }
+.font-note-extra-bold{
+    font-family: font-note-extra-bold, serif;
+}

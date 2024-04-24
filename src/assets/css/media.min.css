@@ -12,7 +12,7 @@
     }
     body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-lg, body[data-layout=topnav] .container-md,
     body[data-layout=topnav] .container-sm {
-        max-width: 1200px !important;
+        max-width: 1300px !important;
     }
 }
 

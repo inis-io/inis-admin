@@ -40,6 +40,12 @@ const index = {
         meta: { title: '测试' },
         component: () => import('{src}/views/index/pages/test.vue'),
     },{
+        // token 是 jwt token
+        path: '/oauth/:token',
+        name: 'index-oauth',
+        meta: { title: '三方登录' },
+        component: () => import('{src}/views/index/pages/oauth.vue'),
+    },{
         path: '/icons',
         name: 'index-icons',
         meta: { title: '图标' },
@@ -162,6 +168,11 @@ const admin = {
         name: 'admin-qps-warn',
         meta: { title: 'QPS预警' },
         component: () => import('{src}/views/admin/pages/qps-warn.vue'),
+    },{
+        path: '/admin/badge',
+        name: 'admin-badge',
+        meta: { title: '徽章' },
+        component: () => import('{src}/views/admin/pages/badge.vue'),
     },{
         path: '/admin/test',
         name: 'admin-test',

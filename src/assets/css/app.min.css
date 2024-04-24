@@ -884,3 +884,35 @@ select.customize:disabled:hover, select.customize:disabled:focus, select.customi
     width: 100%;
     height: 100%;
 }
+.black-gray{
+	background: linear-gradient(325deg, #2d3738 40%, #3c4444 42%) !important;
+}
+.black-gray-gradual{
+    position: relative;
+    border-radius: 20px;
+	background-color: #0f0f0f;
+    backdrop-filter: blur(10px) saturate(160%);
+	-webkit-backdrop-filter: blur(10px) saturate(160%);
+}
+.black-gray-gradual:after, .black-gray-gradual:before {
+    top: 0;
+    left: 0;
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    border-radius: 20px;
+}
+.black-gray-gradual:before {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    opacity: .75;
+    background: linear-gradient(120deg, hsla(0, 0%, 100%, .3), rgba(255, 255, 255, 0.05));
+}
+.black-gray-gradual:after {
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    margin: -1px;
+    background: linear-gradient(120deg, hsla(0, 0%, 100%, .15), hsla(0, 0%, 100%, .01));
+}

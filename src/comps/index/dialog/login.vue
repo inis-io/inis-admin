@@ -60,6 +60,18 @@
                     <span v-if="parseInt(store.config.getAllowRegister?.value) === 1" class="mx-2">|</span>
                     <span v-if="parseInt(store.config.getAllowRegister?.value) === 1" v-on:click="method.register()" class="pointer">注册帐号</span>
                 </div>
+<!--                <div class="d-flex justify-content-center mt-3">-->
+<!--                    <span class="flex-center mx-1">-->
+<!--                        <el-button v-on:click="method.oauth('qq')" round>-->
+<!--                            <i-svg name="qq" size="24px"></i-svg>-->
+<!--                        </el-button>-->
+<!--                    </span>-->
+<!--                    <span class="flex-center mx-1">-->
+<!--                        <el-button round>-->
+<!--                            <i-svg name="github" size="26px"></i-svg>-->
+<!--                        </el-button>-->
+<!--                    </span>-->
+<!--                </div>-->
             </div>
         </template>
         <template #footer>
@@ -218,6 +230,11 @@ const method = {
         // 返回服务器时间戳
         return data.unix
     },
+    // 三方授权登录
+    oauth: (target = 'qq') => {
+        // 打印当前时间戳
+        window.open(`/api/oauth/${target}?key=inis`, "oauth", "width=800,height=500,top=100,left=100")
+    }
 }
 
 watch(() => state.item.tabs, (val) => {

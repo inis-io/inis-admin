@@ -124,13 +124,13 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-$theme-color: #409eff;
+$theme-color: #2481FA;
 .level-badge-wrapper {
     position: relative;
 }
 .level-value {
-    left: 50%;
     top: 50%;
+    left: 50%;
     color: #fff;
     width: 100%;
     height: 100%;

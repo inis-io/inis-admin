@@ -81,9 +81,9 @@ body[inis-theme] .text-white{
     /*color: rgb(var(--vice-font-color)) !important;*/
 }
 body[inis-theme] .card{
-    border-radius: 8px;
-    -webkit-box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
-    box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
 body[inis-theme] .card:hover{
     transition: 0.5s;
@@ -472,6 +472,16 @@ body[inis-theme] .el-input__wrapper {
     backdrop-filter: var(--theme-blur);
     box-shadow: unset;
 }
+body[inis-theme] .el-select__wrapper{
+    box-shadow: unset;
+    background-color: unset;
+    border-bottom: 1px solid rgb(var(--assist-color)) !important;
+    border-radius: 0;
+}
+body[inis-theme] .el-select__wrapper.is-hovering:not(.is-focused){
+    box-shadow: unset;
+    border-bottom: 2px solid rgb(var(--assist-color)) !important;
+}
 body[inis-theme] .el-select__popper.el-popper{
     border: unset;
     backdrop-filter: var(--theme-blur);
@@ -617,7 +627,7 @@ body[inis-theme] .el-menu.custom .el-sub-menu .nav-icon svg path{
 }
 body[inis-theme] .el-menu-item, body[inis-theme] .el-sub-menu__title{
     font-size: 13px;
-    padding: 0 10px;
+    padding: 0 10px !important;
 }
 body[inis-theme] .el-menu--horizontal{
     border-bottom: unset;
@@ -1110,6 +1120,18 @@ body[inis-theme] .el-calendar.sign-in .check-in:after{
     border: 1px solid rgb(var(--inis-blue));
 }
 /* ==================== 自定义 el-calendar - 结束 ==================== */
+/* ==================== 自定义 el-progress - 开始 ==================== */
+body[inis-theme] .el-progress .el-progress-bar__outer{
+    background: #ffffff4d;
+}
+/* ==================== 自定义 el-progress - 结束 ==================== */
+/* ==================== 自定义 el-message - 开始 ==================== */
+body[inis-theme] .el-message{
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 6px 16px #00000014, 0 3px 6px -4px #0000001f, 0 9px 28px 8px #0000000d;
+}
+/* ==================== 自定义 el-message - 结束 ==================== */
 
 
 /* ==================== 自定义 bootstrap modal - 开始 ==================== */
@@ -1648,7 +1670,7 @@ body[inis-theme] .text-bg-muted {
     background: #fafafa;
 }
 body[inis-theme] .text-muted {
-    color: #8a8a8a !important;
+    color: #888 !important;
 }
 body[inis-theme] .red-dot {
     display: inline-block;
@@ -1703,4 +1725,7 @@ body[inis-theme] .text-bg-muted{
 }
 body[inis-theme] .btn.disabled, body[inis-theme] .btn:disabled, body[inis-theme] fieldset:disabled .btn{
     border: unset !important;
+}
+.box-bg-image{
+    background-image: linear-gradient(170deg, rgba(36, 129, 250, 0.05) 0, #fff 60%, #fff 100%);
 }

@@ -1,5 +1,4 @@
 import { Notyf } from 'notyf'
-import config from "bootstrap/js/src/util/config.js";
 
 const notyf = new Notyf({
     position: { x: 'right', y: 'top' },

@@ -54,20 +54,22 @@
             </span>
         </template>
 
-        <el-tooltip :disabled="utils.is.empty(scope.content)" placement="top">
-            <template #content>
-                <span class="user-select-text comment markdown">
-                    <i-markdown v-if="scope.editor === 'markdown'" v-model="scope.content"></i-markdown>
-                    <span v-else-if="scope.editor === 'html'" v-html="scope.content"></span>
+        <template #i-content="{ scope = {} }">
+            <el-tooltip :disabled="utils.is.empty(scope.content)" placement="top">
+                <template #content>
+                    <span class="user-select-text comment markdown">
+                        <i-markdown v-if="scope?.editor === 'markdown'" v-model="scope.content"></i-markdown>
+                        <span v-else-if="scope?.editor === 'html'" v-html="scope.content"></span>
+                        <span v-else>{{ scope?.content || '-' }}</span>
+                    </span>
+                </template>
+                <span class="user-select-text comment markdown limit-1-line">
+                    <i-markdown v-if="scope?.editor === 'markdown'" v-model="scope.content"></i-markdown>
+                    <span v-else-if="scope?.editor === 'html'" v-html="scope.content"></span>
                     <span v-else>{{ scope?.content || '-' }}</span>
                 </span>
-            </template>
-            <span class="user-select-text comment markdown limit-1-line">
-                <i-markdown v-if="scope.editor === 'markdown'" v-model="scope.content"></i-markdown>
-                <span v-else-if="scope.editor === 'html'" v-html="scope.content"></span>
-                <span v-else>{{ scope?.content || '-' }}</span>
-            </span>
-        </el-tooltip>
+            </el-tooltip>
+        </template>
 
         <template #i-source="{ scope = {} }">
             <el-tooltip :content="method.autoWrap(scope?.result?.article?.title)" :disabled="utils.is.empty(scope?.result?.article?.title)" placement="top">

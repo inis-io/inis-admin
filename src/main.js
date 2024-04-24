@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from '{src}/app.vue'
-import route  from '{src}/route'
+import route from '{src}/route'
 import { createPinia } from 'pinia'
 
 // 注册 vsg-icons 组件
@@ -34,7 +34,7 @@ app.config.globalProperties.$api = API
 app.mount('#app')
 
 const { VITE_LOG_ERROR, VITE_LOG_WARN } = import.meta.env
-// 屏蔽错误信息
-if (VITE_LOG_ERROR === 'false') app.config.errorHandler = () => null
-// 屏蔽警告信息
-if (VITE_LOG_WARN  === 'false') app.config.warnHandler  = () => null
+// // 屏蔽错误信息
+// if (VITE_LOG_ERROR === 'false') app.config.errorHandler = () => null
+// // 屏蔽警告信息
+// if (VITE_LOG_WARN  === 'false') app.config.warnHandler  = () => null

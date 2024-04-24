@@ -79,7 +79,7 @@ const list = async () => {
             <path fill="rgb(var(--menu-icon-color))" opacity=".5" d="M673.5872 224.128l-160.4096 91.8272L347.52 220.16 507.1616 128zM338.7136 788.1472L179.2 695.9872v-172.9536l159.744 91.8272v173.44z m496.4352-264.576v172.4928l-155.8272 89.856-0.4608-172.2368 156.16-90.2144z"></path>
         </svg>`,
         items: [
-            '/admin/users', '/admin/bill', '/admin/order', '/admin/comment', '/admin/placard', '/admin/banner', '/admin/tags', '/admin/level', '/admin/links',
+            '/admin/users', '/admin/bill', '/admin/order', '/admin/comment', '/admin/placard', '/admin/banner', '/admin/tags', '/admin/badge', '/admin/level', '/admin/links',
             '/admin/links/group', '/admin/system/version', '/admin/system'
         ],
         children: [],
